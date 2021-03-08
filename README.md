@@ -1,9 +1,12 @@
 # Evolve Legacy Reborn
 
 #### 介绍/Instruction
-//English instruction are empty now.
-该项目旨在对《遗产进化》进行修改，使其能够在局域网环境下免Steam进行游玩。
+//English instruction are empty now.   
+该项目旨在对《遗产进化》进行修改，使其能够在局域网环境下，免Steam进行游玩。   
 进化(已停服） 游戏地址：https://store.steampowered.com/app/273350/
+进化停服说明，及遗产进化是什么（L）公告地址（中文）：
+https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-%E7%9A%84%E9%87%8D%E8%A6%81%E5%85%AC%E5%91%8A   
+
 
 
 #### 软件架构
