@@ -12,7 +12,7 @@ https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-%E7%9A%84%E9%87%8D
 #### 软件架构
 软件架构说明:
 该项目目前基于Goldberg_emulator和mitmproxy发挥作用；
-为方便使用，某些时候会使用Netch(https://github.com/NetchX/Netch)对游戏进行代理。
+为方便使用，某些时候会使用Netch(https://github.com/NetchX/Netch )对游戏进行代理。
 
 #### 安装教程
 
