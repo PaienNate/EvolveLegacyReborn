@@ -18,16 +18,17 @@
 2.  xxxx
 3.  xxxx
 
-#### 使用说明
+#### 说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  Evolve_goldberg文件夹内为goldberg_emulator的源码，源fork位置：https://gitlab.com/Mr_Goldberg/goldberg_emulator 有部分修改   
+2.  Evolve_ServerEmulator内为配置好的mitmproxy脚本及需要的json文件   
+3.  picture文件夹内存放的是我的小静态页面使用的图片。   
+4.  目前还没有成品啦！   
 
 #### 参与贡献
 
 参与贡献的人员：
-@Nemirtingas(Gitlab) 协助解决游戏黑屏的验证检查
+@Nemirtingas(Gitlab) 协助解决游戏黑屏的验证检查（十分感谢！没有这位大佬的帮助，真的就卡住了）
 @schmogmog 协助进行测试
 @nemerod 初期对游戏代码进行了分析，并给出了游戏连接的服务器列表
 @kiagam 初期使用Python等工具抓取，为后来使用mitmproxy提供思路。
@@ -35,7 +36,7 @@
 
 #### 帮助我们？
 
-（因为没怎么用过Github，这些是从说明里拿到的数据）
+（因为唯一的中文语言开发者没怎么用过Github，这些是从说明里拿到的数据）
 1.  Fork 本仓库
 2.  新建 Feat_xxx 分支
 3.  提交代码
