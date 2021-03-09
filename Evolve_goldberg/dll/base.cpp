@@ -704,7 +704,7 @@ HINTERNET (WINAPI *Real_WinHttpConnect)(
   IN INTERNET_PORT nServerPort,
   IN DWORD         dwReserved
 );
-
+//Add a function to convert ANSI to Unicode.
 std::wstring ANSIToUnicode(const std::string& str)
 {
     std::wstring ret;
@@ -721,6 +721,7 @@ std::wstring ANSIToUnicode(const std::string& str)
     return ret;
 }
 
+//Delete the "LAN_ONLY" function, then give it a redirect to the server I need.
 HINTERNET WINAPI Mine_WinHttpConnect(
   IN HINTERNET     hSession,
   IN LPCWSTR       pswzServerName,
@@ -773,6 +774,7 @@ HINTERNET (WINAPI *Real_WinHttpOpenRequest)(
 
 );
 
+// Open the "HTTPS" to "HTTP"
 HINTERNET WINAPI Mine_WinHttpOpenRequest(
   IN HINTERNET hConnect,
   IN LPCWSTR   pwszVerb,
@@ -789,7 +791,9 @@ HINTERNET WINAPI Mine_WinHttpOpenRequest(
 
     return Real_WinHttpOpenRequest(hConnect, pwszVerb, pwszObjectName, pwszVersion, pwszReferrer, ppwszAcceptTypes, dwFlags);
 }
-//Add Wintrust support:
+
+//Add Wintrust hook support to avoid game's black screen:
+//Lots of thanks to Nemirtingas.
 static decltype(WinVerifyTrust)* pfnWinVerifyTrust;
 
 LONG Mine_WinVerifyTrust(
@@ -806,6 +810,7 @@ static bool network_functions_attached = false;
 BOOL WINAPI DllMain( HINSTANCE, DWORD dwReason, LPVOID ) {
     HMODULE wintrust = GetModuleHandle("wintrust.dll");//加入wintrust注入
     switch ( dwReason ) {
+          //Here's code are like a shit as I am just a beginner of C++.
         case DLL_PROCESS_ATTACH:
             DetourTransactionBegin();
             DetourUpdateThread(GetCurrentThread());
