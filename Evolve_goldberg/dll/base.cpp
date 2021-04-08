@@ -480,6 +480,17 @@ struct ips_test {
     uint32_t ip_to;
 };
 
+
+
+
+//提前file_exists的位置，方便后面使用
+inline bool file_exists(const std::string& name) {
+    struct stat buffer;
+    return (stat(name.c_str(), &buffer) == 0);
+}
+//写一个全局变量
+struct sockaddr replaceaddr;
+
 static std::vector<struct ips_test> adapter_ips;
 
 void set_adapter_ips(uint32_t *from, uint32_t *to, unsigned num_ips)
@@ -513,12 +524,11 @@ static bool is_adapter_ip(unsigned char *ip)
 
     return false;
 }
-
+// I use this check to redirect the 2K check.
 static bool is_lan_ip(const sockaddr *addr, int namelen)
 {
     if (!namelen) return false;
-
-    if (addr->sa_family == AF_INET) {
+        if (addr->sa_family == AF_INET) {
         struct sockaddr_in *addr_in = (struct sockaddr_in *)addr;
         unsigned char ip[4];
         memcpy(ip, &addr_in->sin_addr, sizeof(ip));
@@ -549,14 +559,140 @@ static bool is_lan_ip(const sockaddr *addr, int namelen)
         if (ip[0] == 0xfd) return true; //unique local
         //TODO: ipv4 mapped?
     }
+	//If not LAN IP, there will redirect.
+    //不是LAN IP的，在这里会被拦截到
+    if (addr->sa_family == AF_INET) {
+        struct sockaddr_in *addr_in = (struct sockaddr_in *)addr;
+        unsigned char ip[4];
+        memcpy(ip, &addr_in->sin_addr, sizeof(ip));
+        PRINT_DEBUG("CHECK NON LAN IP %hhu.%hhu.%hhu.%hhu:%u\n", ip[0], ip[1], ip[2], ip[3], ntohs(addr_in->sin_port));
+		//check if there have serverip.txt/serverport.txt, if have,redirect to it; Or ignore it.
+        //修改这一部分，使它强行定位到某个IP和某个Port，否则正常访问。
+        if (file_exists(get_full_program_path() + "serverip.txt"))
+       {
+            std::ifstream readFile(get_full_program_path() + "serverip.txt");
+            //Read and put it in.
+            std::string temp;
+            readFile >> temp;
+            const std::string& tempip = temp;
+			//Put it in.
+            //这里得到了String的临时IP，接下来将这个IP想办法放进去
+            addr_in->sin_addr.s_addr = inet_addr(temp.c_str());
+            PRINT_DEBUG("Crack 2K DLC Check - IP\n");
+        }
+        
+        if (file_exists(get_full_program_path() + "serverport.txt"))
+        {
+            std::ifstream readFile(get_full_program_path() + "serverport.txt");
+            std::string temp;
+            readFile >> temp;
+            int port = atoi(temp.c_str());
+            addr_in->sin_port = htons(port);
+            PRINT_DEBUG("Crack 2K DLC Check - PORT\n");
+        }
+		//Send it back
+        //修改后，将修改的转回sockaddr,通过重新赋值给该指针来修改指针指向的值。
+        addr = (struct sockaddr*)addr_in;
+		//display the new IP for debug.
+        //记得重新读取IP的值……
+        memcpy(ip, &addr_in->sin_addr, sizeof(ip));
+        PRINT_DEBUG("NOW LAN IP %hhu.%hhu.%hhu.%hhu:%u\n", ip[0], ip[1], ip[2], ip[3], ntohs(addr_in->sin_port));
+        return true;
+    }
 
     PRINT_DEBUG("NOT LAN IP\n");
     return false;
 }
+//static bool is_lan_ip(const sockaddr *addr, int namelen)
+//{
+//    if (!namelen) return false;
+//
+//    if (addr->sa_family == AF_INET) {
+//        struct sockaddr_in *addr_in = (struct sockaddr_in *)addr;
+//        unsigned char ip[4];
+//        memcpy(ip, &addr_in->sin_addr, sizeof(ip));
+//        PRINT_DEBUG("CHECK LAN IP %hhu.%hhu.%hhu.%hhu:%u\n", ip[0], ip[1], ip[2], ip[3], ntohs(addr_in->sin_port));
+//        if (is_adapter_ip(ip)) return true;
+//        if (ip[0] == 127) return true;
+//        if (ip[0] == 10) return true;
+//        if (ip[0] == 192 && ip[1] == 168) return true;
+//        if (ip[0] == 169 && ip[1] == 254 && ip[2] != 0) return true;
+//        if (ip[0] == 172 && ip[1] >= 16 && ip[1] <= 31) return true;
+//        if ((ip[0] == 100) && ((ip[1] & 0xC0) == 0x40)) return true;
+//        if (ip[0] == 239) return true; //multicast
+//        if (ip[0] == 0) return true; //Current network
+//        if (ip[0] == 192 && (ip[1] == 18 || ip[1] == 19)) return true; //Used for benchmark testing of inter-network communications between two separate subnets.
+//        if (ip[0] >= 224) return true; //ip multicast (224 - 239) future use (240.0.0.0–255.255.255.254) broadcast (255.255.255.255)
+//    } else if (addr->sa_family == AF_INET6) {
+//        struct sockaddr_in6 *addr_in6 = (struct sockaddr_in6 *)addr;
+//        unsigned char ip[16];
+//        unsigned char zeroes[16] = {};
+//        memcpy(ip, &addr_in6->sin6_addr, sizeof(ip));
+//        PRINT_DEBUG("CHECK LAN IP6 %hhu.%hhu.%hhu.%hhu.%hhu.%hhu.%hhu.%hhu...%hhu\n", ip[0], ip[1], ip[2], ip[3], ip[4], ip[5], ip[6], ip[7], ip[15]);
+//        if (((ip[0] == 0xFF) && (ip[1] < 3) && (ip[15] == 1)) ||
+//        ((ip[0] == 0xFE) && ((ip[1] & 0xC0) == 0x80))) return true;
+//        if (memcmp(zeroes, ip, sizeof(ip)) == 0) return true;
+//        if (memcmp(zeroes, ip, sizeof(ip) - 1) == 0 && ip[15] == 1) return true;
+//        if (ip[0] == 0xff) return true; //multicast
+//        if (ip[0] == 0xfc) return true; //unique local
+//        if (ip[0] == 0xfd) return true; //unique local
+//        //TODO: ipv4 mapped?
+//    }
+//
+//    PRINT_DEBUG("NOT LAN IP\n");
+//    return false;
+//}
+
+//static bool hook_twok(const sockaddr* addr, int namelen)
+//{
+//    struct sockaddr_in stu;
+//    if (!namelen) return false;
+//    //如果sa_family代表ipv4
+//    if (addr->sa_family == AF_INET) {
+//        //定义结构体
+//        struct sockaddr_in *addr_in = (struct sockaddr_in*)addr;
+//        //为IP准备的
+//        unsigned char ip[4];
+//        //拷贝sin_addr到IP内
+//        memcpy(ip, &addr_in->sin_addr, sizeof(ip));
+//        //开始检查
+//        PRINT_DEBUG("Find this: %hhu.%hhu.%hhu.%hhu:%u\n", ip[0], ip[1], ip[2], ip[3], ntohs(addr_in->sin_port));
+//        //修改这一部分，使它强行定位到某个IP和某个Port，否则正常访问。
+//        PRINT_DEBUG("Crack 2K DLC Check - IP\n");
+//        if (file_exists(get_full_program_path() + "serverip.txt"))
+//        {
+//            std::ifstream readFile(get_full_program_path() + "serverip.txt");
+//            //Read and put it in.
+//            std::string temp;
+//            readFile >> temp;
+//            const std::string& tempip = temp;
+//            //这里得到了String的临时IP，接下来将这个IP想办法放进去
+//            &addr_in.sin_addr.s_addr = inet_addr(tempip.c_str());
+//        }
+//        PRINT_DEBUG("Crack 2K DLC Check - PORT\n");
+//        if (file_exists(get_full_program_path() + "serverport.txt"))
+//        {
+//            PRINT_DEBUG("Crack MultiPlayer Check - Port\n");
+//            std::ifstream readFile(get_full_program_path() + "serverport.txt");
+//            std::string temp;
+//            readFile >> temp;
+//            int port = atoi(temp.c_str());
+//            &addr_in.sin_port = htons(port);
+//        }
+//        //都没过说明不是，返回false
+//    }
+//    PRINT_DEBUG("NOT LAN IP\n");
+//    return false;
+//}
 
 int ( WINAPI *Real_SendTo )( SOCKET s, const char *buf, int len, int flags, const sockaddr *to, int tolen) = sendto;
 int ( WINAPI *Real_Connect )( SOCKET s, const sockaddr *addr, int namelen ) = connect;
 int ( WINAPI *Real_WSAConnect )( SOCKET s, const sockaddr *addr, int namelen, LPWSABUF lpCallerData, LPWSABUF lpCalleeData, LPQOS lpSQOS, LPQOS lpGQOS) = WSAConnect;
+
+// These are hooked ws2_32.dll. The game with ca-bundle.crt will use these.
+// If you see that, could you help me for something? In china there use a tools to coop,
+// but it also hook ws2_32.dll, so both of them will failed to use.
+// Do you have some solution for that?
 
 static int WINAPI Mine_SendTo( SOCKET s, const char *buf, int len, int flags, const sockaddr *to, int tolen) {
     PRINT_DEBUG("Mine_SendTo\n");
@@ -589,10 +725,7 @@ static int WINAPI Mine_WSAConnect( SOCKET s, const sockaddr *addr, int namelen, 
     }
 }
 
-inline bool file_exists (const std::string& name) {
-  struct stat buffer;   
-  return (stat (name.c_str(), &buffer) == 0); 
-}
+
 
 HMODULE (WINAPI *Real_GetModuleHandleA)(LPCSTR lpModuleName) = GetModuleHandleA;
 HMODULE WINAPI Mine_GetModuleHandleA(LPCSTR lpModuleName)
@@ -704,7 +837,7 @@ HINTERNET (WINAPI *Real_WinHttpConnect)(
   IN INTERNET_PORT nServerPort,
   IN DWORD         dwReserved
 );
-//Add a function to convert ANSI to Unicode.
+
 std::wstring ANSIToUnicode(const std::string& str)
 {
     std::wstring ret;
@@ -721,7 +854,6 @@ std::wstring ANSIToUnicode(const std::string& str)
     return ret;
 }
 
-//Delete the "LAN_ONLY" function, then give it a redirect to the server I need.
 HINTERNET WINAPI Mine_WinHttpConnect(
   IN HINTERNET     hSession,
   IN LPCWSTR       pswzServerName,
@@ -774,7 +906,6 @@ HINTERNET (WINAPI *Real_WinHttpOpenRequest)(
 
 );
 
-// Open the "HTTPS" to "HTTP"
 HINTERNET WINAPI Mine_WinHttpOpenRequest(
   IN HINTERNET hConnect,
   IN LPCWSTR   pwszVerb,
@@ -791,9 +922,7 @@ HINTERNET WINAPI Mine_WinHttpOpenRequest(
 
     return Real_WinHttpOpenRequest(hConnect, pwszVerb, pwszObjectName, pwszVersion, pwszReferrer, ppwszAcceptTypes, dwFlags);
 }
-
-//Add Wintrust hook support to avoid game's black screen:
-//Lots of thanks to Nemirtingas.
+//Add Wintrust support:
 static decltype(WinVerifyTrust)* pfnWinVerifyTrust;
 
 LONG Mine_WinVerifyTrust(
@@ -809,8 +938,8 @@ LONG Mine_WinVerifyTrust(
 static bool network_functions_attached = false;
 BOOL WINAPI DllMain( HINSTANCE, DWORD dwReason, LPVOID ) {
     HMODULE wintrust = GetModuleHandle("wintrust.dll");//加入wintrust注入
+    //setSystemInputMethod();//添加函数调用
     switch ( dwReason ) {
-          //Here's code are like a shit as I am just a beginner of C++.
         case DLL_PROCESS_ATTACH:
             DetourTransactionBegin();
             DetourUpdateThread(GetCurrentThread());
@@ -832,10 +961,17 @@ BOOL WINAPI DllMain( HINSTANCE, DWORD dwReason, LPVOID ) {
                 PRINT_DEBUG("Hooking lan only functions\n");
                 DetourTransactionBegin();
                 DetourUpdateThread( GetCurrentThread() );
-                DetourAttach( &(PVOID &)Real_SendTo, Mine_SendTo );
-                DetourAttach( &(PVOID &)Real_Connect, Mine_Connect );
-                DetourAttach( &(PVOID &)Real_WSAConnect, Mine_WSAConnect );
 
+                HMODULE qs = GetModuleHandle("evoali.dll");
+                if (qs)
+                {
+                    Real_SendTo = (decltype(Real_SendTo))GetProcAddress(qs, "sendto");
+                    DetourAttach(&(PVOID&)Real_SendTo, Mine_SendTo);
+                    Real_Connect = (decltype(Real_Connect))GetProcAddress(qs, "connect");
+                    DetourAttach(&(PVOID&)Real_Connect, Mine_Connect);
+                    Real_WSAConnect = (decltype(Real_WSAConnect))GetProcAddress(qs, "WSAConnect");
+                    DetourAttach(&(PVOID&)Real_WSAConnect, Mine_WSAConnect);
+                }
                 HMODULE winhttp = GetModuleHandle("winhttp.dll");
                 if (winhttp) {
                     Real_WinHttpConnect = (decltype(Real_WinHttpConnect))GetProcAddress(winhttp, "WinHttpConnect");
@@ -844,7 +980,6 @@ BOOL WINAPI DllMain( HINSTANCE, DWORD dwReason, LPVOID ) {
                     Real_WinHttpOpenRequest = (decltype(Real_WinHttpOpenRequest))GetProcAddress(winhttp, "WinHttpOpenRequest");
                     DetourAttach( &(PVOID &)Real_WinHttpOpenRequest, Mine_WinHttpOpenRequest );
                 }
-    
                 DetourTransactionCommit();
                 network_functions_attached = true;
             }
@@ -859,9 +994,12 @@ BOOL WINAPI DllMain( HINSTANCE, DWORD dwReason, LPVOID ) {
             if (network_functions_attached) {
                 DetourTransactionBegin();
                 DetourUpdateThread( GetCurrentThread() );
+                if (Real_SendTo)
+                {
                 DetourDetach( &(PVOID &)Real_SendTo, Mine_SendTo );
                 DetourDetach( &(PVOID &)Real_Connect, Mine_Connect );
                 DetourDetach( &(PVOID &)Real_WSAConnect, Mine_WSAConnect );
+                }
                 if (Real_WinHttpConnect) {
                     DetourDetach( &(PVOID &)Real_WinHttpConnect, Mine_WinHttpConnect );
                      DetourDetach( &(PVOID &)Real_WinHttpOpenRequest, Mine_WinHttpOpenRequest );
