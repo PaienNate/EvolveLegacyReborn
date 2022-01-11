@@ -1,4 +1,5 @@
 # Evolve Legacy Reborn
+国内联机群号：366237012
 
 #### 介绍/Instruction
 
