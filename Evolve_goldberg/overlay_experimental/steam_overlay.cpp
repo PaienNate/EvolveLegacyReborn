@@ -9,8 +9,6 @@
 #include <imgui.h>
 
 #include "../dll/dll.h"
-//Pinenut: import base.h to get the Chinese font's location.
-#include "../dll/base.h"
 
 #include "Renderer_Detector.h"
 
@@ -282,8 +280,7 @@ void Steam_Overlay::FriendConnect(Friend _friend)
     if (id != 0)
     {
         auto& item = friends[_friend];
-        //Add Chinese support.
-        item.window_title = std::move(_friend.name() + u8" playing/æ­£åœ¨æ¸¸ç© " + std::to_string(_friend.appid()));
+        item.window_title = std::move(_friend.name() + u8" ÕıÔÚÓÎÍæ(is playing) " + std::to_string(_friend.appid()));
         item.window_state = window_state_none;
         item.id = id;
         memset(item.chat_input, 0, max_chat_len);
@@ -346,7 +343,7 @@ void Steam_Overlay::AddInviteNotification(std::pair<const Friend, friend_window_
         notif.id = id;
         notif.type = notification_type_invite;
         notif.frd = &wnd_state;
-        notif.message = wnd_state.first.name() + u8" invited you to join a game\nï¼ˆé‚€è¯·åŠ å…¥ï¼Œè®°å¾—å…³é—­è¾“å…¥æ³•ï¼‰";
+        notif.message = wnd_state.first.name() + u8"ÑûÇëÄú¼ÓÈëËûÃÇµÄÓÎÏ·(invited you to join a game)";
         notif.start_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
         notifications.emplace_back(notif);
     }
@@ -386,8 +383,8 @@ void Steam_Overlay::BuildContextMenu(Friend const& frd, friend_window_state& sta
     if (ImGui::BeginPopupContextItem("Friends_ContextMenu", 1))
     {
         bool close_popup = false;
-        //Add Chinese support.
-        if (ImGui::Button(u8"Chat/èŠå¤©"))
+
+        if (ImGui::Button(u8"ÁÄÌì(Chat)"))
         {
             state.window_state |= window_state_show;
             close_popup = true;
@@ -395,13 +392,13 @@ void Steam_Overlay::BuildContextMenu(Friend const& frd, friend_window_state& sta
         // If we have the same appid, activate the invite/join buttons
         if (settings->get_local_game_id().AppID() == frd.appid())
         {
-            if (i_have_lobby && ImGui::Button(u8"Invite/é‚€è¯·###PopupInvite"))
+            if (i_have_lobby && ImGui::Button(u8"ÑûÇë(invite)###PopupInvite"))
             {
                 state.window_state |= window_state_invite;
                 has_friend_action.push(frd);
                 close_popup = true;
             }
-            if (state.joinable && ImGui::Button(u8"Join/åŠ å…¥###PopupJoin"))
+            if (state.joinable && ImGui::Button(u8"¼ÓÈë(join)###PopupJoin"))
             {
                 state.window_state |= window_state_join;
                 has_friend_action.push(frd);
@@ -425,7 +422,7 @@ void Steam_Overlay::BuildFriendWindow(Friend const& frd, friend_window_state& st
     bool show = true;
     bool send_chat_msg = false;
 
-    float width = ImGui::CalcTextSize("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA").x;
+    float width = ImGui::CalcTextSize(u8"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA").x;
     
     if (state.window_state & window_state_need_attention && ImGui::IsWindowFocused())
     {
@@ -446,15 +443,15 @@ void Steam_Overlay::BuildFriendWindow(Friend const& frd, friend_window_state& st
         // Fill this with the chat box and maybe the invitation
         if (state.window_state & (window_state_lobby_invite | window_state_rich_invite))
         {
-            ImGui::LabelText("##label", u8"%s invited you to join the game.\nï¼ˆé‚€è¯·åŠ å…¥æ¸¸æˆï¼‰", frd.name().c_str());
+            ImGui::LabelText("##label", u8"%sÕıÔÚÑûÇëÄúÒ»Æğ³©¿ì¡áÁª»ú.£¨is inviting you)", frd.name().c_str());
             ImGui::SameLine();
-            if (ImGui::Button(u8"Accept/æ¥å—"))
+            if (ImGui::Button(u8"Í¬Òâ(Accept)"))
             {
                 state.window_state |= window_state_join;
                 this->has_friend_action.push(frd);
             }
             ImGui::SameLine();
-            if (ImGui::Button(u8"Refuse/æ‹’ç»"))
+            if (ImGui::Button(u8"¾Ü¾ø(Reject)"))
             {
                 state.window_state &= ~(window_state_lobby_invite | window_state_rich_invite);
             }
@@ -483,7 +480,7 @@ void Steam_Overlay::BuildFriendWindow(Friend const& frd, friend_window_state& st
         // |------------------------------|
         float wnd_width = ImGui::GetWindowContentRegionWidth();
         ImGuiStyle &style = ImGui::GetStyle();
-        wnd_width -= ImGui::CalcTextSize(u8"Send/å‘é€").x + style.FramePadding.x * 2 + style.ItemSpacing.x + 1;
+        wnd_width -= ImGui::CalcTextSize(u8"×ßÄã").x + style.FramePadding.x * 2 + style.ItemSpacing.x + 1;
 
         ImGui::PushItemWidth(wnd_width);
         if (ImGui::InputText("##chat_line", state.chat_input, max_chat_len, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -494,7 +491,7 @@ void Steam_Overlay::BuildFriendWindow(Friend const& frd, friend_window_state& st
 
         ImGui::SameLine();
 
-        if (ImGui::Button(u8"Send/å‘é€"))
+        if (ImGui::Button(u8"×ßÄã"))
         {
             send_chat_msg = true;
         }
@@ -554,39 +551,39 @@ void Steam_Overlay::BuildNotifications(int width, int height)
                 ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(Notification::r, Notification::g, Notification::b, Notification::max_alpha));
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(255, 255, 255, Notification::max_alpha*2));
             }
-
-            ImGui::SetNextWindowPos(ImVec2((float)width - width * Notification::width, Notification::height* font_size* i));
-            ImGui::SetNextWindowSize(ImVec2(width* Notification::width, Notification::height* font_size));
-            ImGui::Begin(std::to_string(it->id).c_str(), nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus |
+            
+            ImGui::SetNextWindowPos(ImVec2((float)width - width * Notification::width, Notification::height * font_size * i ));
+            ImGui::SetNextWindowSize(ImVec2( width * Notification::width, Notification::height * font_size ));
+            ImGui::Begin(std::to_string(it->id).c_str(), nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | 
                 ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoDecoration);
 
             switch (it->type)
             {
-            case notification_type_achievement:
-                ImGui::TextWrapped("%s", it->message.c_str());
-                break;
-            case notification_type_invite:
-            {
-                ImGui::TextWrapped("%s", it->message.c_str());
-                if (ImGui::Button(u8"Join/é‚€è¯·"))
-                {
-                    it->frd->second.window_state |= window_state_join;
-                    friend_actions_temp.push(it->frd->first);
-                    it->start_time = std::chrono::seconds(0);
-                }
-            }
-            break;
-            case notification_type_message:
-                ImGui::TextWrapped("%s", it->message.c_str()); break;
+                case notification_type_achievement:
+                    ImGui::TextWrapped("%s", it->message.c_str());
+                    break;
+                case notification_type_invite:
+                    {
+                        ImGui::TextWrapped("%s", it->message.c_str());
+                        if (ImGui::Button(u8"¼ÓÈë"))
+                        {
+                            it->frd->second.window_state |= window_state_join;
+                            friend_actions_temp.push(it->frd->first);
+                            it->start_time = std::chrono::seconds(0);
+                        }
+                    }
+                    break;
+                case notification_type_message:
+                    ImGui::TextWrapped("%s", it->message.c_str()); break;
             }
 
             ImGui::End();
 
             ImGui::PopStyleColor(3);
         }
-        notifications.erase(std::remove_if(notifications.begin(), notifications.end(), [&now](Notification& item) {
+        notifications.erase(std::remove_if(notifications.begin(), notifications.end(), [&now](Notification &item) {
             return (now - item.start_time) > Notification::show_time;
-            }), notifications.end());
+        }), notifications.end());
     }
 
     if (!friend_actions_temp.empty()) {
@@ -597,6 +594,7 @@ void Steam_Overlay::BuildNotifications(int width, int height)
         }
     }
 }
+
 inline bool file_exiss(const std::string& name) {
     struct stat buffer;
     return (stat(name.c_str(), &buffer) == 0);
@@ -618,7 +616,6 @@ std::string get_full_program_pat()
     return program_path.substr(0, program_path.rfind(PATH_SEPARATOR)).append(PATH_SEPARATOR);
 }
 
-//Add Chinese Font support.
 void Steam_Overlay::CreateFonts()
 {
     ImGuiIO& io = ImGui::GetIO();
@@ -630,9 +627,9 @@ void Steam_Overlay::CreateFonts()
 
     fontcfg.SizePixels = std::round(io.DisplaySize.y / 68);
     //Add Chinese Font Support.
-    if (file_exiss(get_full_program_pat() + "overlayfont.ttf"))
+    if (file_exiss(get_full_program_pat() + "pinenutfont.ttf"))
     {
-        std::string fontpath = get_full_program_path() + "overlayfont.ttf";
+        std::string fontpath = get_full_program_path() + "pinenutfont.ttf";
         font_default = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 32.0f, nullptr, io.Fonts->GetGlyphRangesChineseFull());
         font_notif = io.Fonts->AddFontFromFileTTF(fontpath.c_str(), 32.0f, nullptr, io.Fonts->GetGlyphRangesChineseFull());
     }
@@ -642,6 +639,7 @@ void Steam_Overlay::CreateFonts()
         font_notif = io.Fonts->AddFontDefault(&fontcfg);
     }
     fontcfg.SizePixels = std::round(io.DisplaySize.y / 60);
+
     ImGuiStyle& style = ImGui::GetStyle();
     style.WindowRounding = 0.0; // Disable round window
 }
@@ -672,50 +670,45 @@ void Steam_Overlay::OverlayProc()
 
         bool show = true;
 
-        if (ImGui::Begin(u8"Goldberg SteamOverlay-Evolve Crack credit: @Nemirtingas, @schmogmog, @nemerod, @kiagam, @pinenut", &show, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus))
+        if (ImGui::Begin("Goldberg SteamOverlay Evolve-Version.Credit:Nemirtingas,schmogmog,nemerod,kiagam,pinenut,pikapika.", &show, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus))
         {
-            //Add a judge for evolve or other game.
-            if (settings->get_local_game_id().AppID() == 273350)
-            {
-            ImGui::LabelText("##label", u8"Username(ç”¨æˆ·åï¼‰: %s(%llu)ï¼ˆæ­£åœ¨æ¸¸ç©ï¼‰ playing %u(EVOLVE REBORN)",
+            ImGui::LabelText("##label", u8"ÓÃ»§Ãû(username): %s(%llu) ÕıÔÚÓÎÍæ(is playing) %u",
                 settings->get_local_name(),
                 settings->get_local_steam_id().ConvertToUint64(),
                 settings->get_local_game_id().AppID());
-            }
-            else
-            {
-                ImGui::LabelText("##label", u8"Username(ç”¨æˆ·åï¼‰: %s(%llu)ï¼ˆæ­£åœ¨æ¸¸ç©ï¼‰ playing %u(OTHER GAME)",
-                    settings->get_local_name(),
-                    settings->get_local_steam_id().ConvertToUint64(),
-                    settings->get_local_game_id().AppID());
-            }
             ImGui::SameLine();
             Base_Hook* hook = Renderer_Detector::Inst().get_renderer();
-            ImGui::LabelText("##label", u8"Renderer(æ¸²æŸ“æ–¹å¼): %s", (hook == nullptr ? "Unknown" : hook->get_lib_name()));
+            ImGui::LabelText("##label", u8"äÖÈ¾·½Ê½(render): %s", (hook == nullptr ? "Unknown" : hook->get_lib_name()));
 
             ImGui::Spacing();
 
-            ImGui::LabelText("##label", u8"Friends(ç‰¹åˆ«æé†’ï¼šè¯·ä½¿ç”¨è‹±æ–‡è¾“å…¥æ³•ï¼Œä¸­æ–‡è¾“å…¥æ³•ä¼šå¯¼è‡´æ¸¸æˆå´©æºƒï¼ï¼)");
+            ImGui::LabelText("##label", u8"ºÃÓÑÁĞ±í(Friend List)");
 
             std::lock_guard<std::recursive_mutex> lock(overlay_mutex);
             if (!friends.empty())
             {
-                ImGui::ListBoxHeader("##label", friends.size());
-                std::for_each(friends.begin(), friends.end(), [this](std::pair<Friend const, friend_window_state> &i)
+                if (ImGui::ListBoxHeader("##label", friends.size()))
                 {
-                    ImGui::PushID(i.second.id-base_friend_window_id+base_friend_item_id);
-
-                    ImGui::Selectable(i.second.window_title.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick);
-                    BuildContextMenu(i.first, i.second);
-                    if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0))
+                    std::for_each(friends.begin(), friends.end(), [this](std::pair<Friend const, friend_window_state> &i)
                     {
-                        i.second.window_state |= window_state_show;
-                    }
-                    ImGui::PopID();
+                        ImGui::PushID(i.second.id-base_friend_window_id+base_friend_item_id);
 
-                    BuildFriendWindow(i.first, i.second);
-                });
-                ImGui::ListBoxFooter();
+                        ImGui::Selectable(i.second.window_title.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick);
+                        BuildContextMenu(i.first, i.second);
+                        if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0))
+                        {
+                            i.second.window_state |= window_state_show;
+                        }
+                        ImGui::PopID();
+
+                        BuildFriendWindow(i.first, i.second);
+                    });
+                    ImGui::ListBoxFooter();
+                }
+            }
+            else
+            {
+                ImGui::LabelText("##label", u8"ÔİÊ±Ã»ÓĞËÑµ½¡£(NO FRIEND NOW)");
             }
         }
         ImGui::End();
@@ -741,13 +734,13 @@ void Steam_Overlay::Callback(Common_Message *msg)
         {
             Steam_Messages const& steam_message = msg->steam_messages();
             // Change color to cyan for friend
-            friend_info->second.chat_history.append("\x1""00FFFFFF", 9).append(steam_message.message()).append("\n", 1);
+            friend_info->second.chat_history.append(steam_message.message()).append("\n", 1);
             if (!(friend_info->second.window_state & window_state_show))
             {
                 friend_info->second.window_state |= window_state_need_attention;
             }
 
-            AddMessageNotification(friend_info->first.name() + " says: " + steam_message.message());
+            AddMessageNotification(friend_info->first.name() + u8" Ëµ(says): " + steam_message.message());
             NotifyUser(friend_info->second);
         }
     }
@@ -801,7 +794,7 @@ void Steam_Overlay::RunCallbacks()
                     msg.set_dest_id(friend_id);
                     network->sendTo(&msg, true);
 
-                    friend_info->second.chat_history.append("\x1""00FF00FF", 9).append(input).append("\n", 1);
+                    friend_info->second.chat_history.append(input).append("\n", 1);
                 }
                 *input = 0; // Reset the input field
                 friend_info->second.window_state &= ~window_state_send_message;
@@ -830,22 +823,34 @@ void Steam_Overlay::RunCallbacks()
                     callbacks->addCBResult(data.k_iCallback, &data, sizeof(data));
 
                     friend_info->second.window_state &= ~window_state_lobby_invite;
-                } else
+                } else {
                 // The user got a rich presence invite and accepted it
-                if (friend_info->second.window_state & window_state_rich_invite)
-                {
-                    GameRichPresenceJoinRequested_t data = {};
-                    data.m_steamIDFriend.SetFromUint64(friend_id);
-                    strncpy(data.m_rgchConnect, friend_info->second.connect, k_cchMaxRichPresenceValueLength - 1);
-                    callbacks->addCBResult(data.k_iCallback, &data, sizeof(data));
+                    if (friend_info->second.window_state & window_state_rich_invite)
+                    {
+                        GameRichPresenceJoinRequested_t data = {};
+                        data.m_steamIDFriend.SetFromUint64(friend_id);
+                        strncpy(data.m_rgchConnect, friend_info->second.connect, k_cchMaxRichPresenceValueLength - 1);
+                        callbacks->addCBResult(data.k_iCallback, &data, sizeof(data));
 
-                    friend_info->second.window_state &= ~window_state_rich_invite;
-                } else if (connect.length() > 0)
-                {
-                    GameRichPresenceJoinRequested_t data = {};
-                    data.m_steamIDFriend.SetFromUint64(friend_id);
-                    strncpy(data.m_rgchConnect, connect.c_str(), k_cchMaxRichPresenceValueLength - 1);
-                    callbacks->addCBResult(data.k_iCallback, &data, sizeof(data));
+                        friend_info->second.window_state &= ~window_state_rich_invite;
+                    } else if (connect.length() > 0)
+                    {
+                        GameRichPresenceJoinRequested_t data = {};
+                        data.m_steamIDFriend.SetFromUint64(friend_id);
+                        strncpy(data.m_rgchConnect, connect.c_str(), k_cchMaxRichPresenceValueLength - 1);
+                        callbacks->addCBResult(data.k_iCallback, &data, sizeof(data));
+                    }
+
+                    //Not sure about this but it fixes sonic racing transformed invites
+                    FriendGameInfo_t friend_game_info = {};
+                    steamFriends->GetFriendGamePlayed(friend_id, &friend_game_info);
+                    uint64 lobby_id = friend_game_info.m_steamIDLobby.ConvertToUint64();
+                    if (lobby_id) {
+                        GameLobbyJoinRequested_t data;
+                        data.m_steamIDLobby.SetFromUint64(lobby_id);
+                        data.m_steamIDFriend.SetFromUint64(friend_id);
+                        callbacks->addCBResult(data.k_iCallback, &data, sizeof(data));
+                    }
                 }
 
                 friend_info->second.window_state &= ~window_state_join;

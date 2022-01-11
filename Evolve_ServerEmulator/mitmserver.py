@@ -3,12 +3,14 @@
 # 链接：https://www.zhihu.com/question/422464846/answer/1521657468
 # 来源：知乎
 # 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+import ipaddress
 
+from mitmproxy.addons.block import Block
 from mitmproxy.options import Options
 from mitmproxy.proxy.config import ProxyConfig
 from mitmproxy.proxy.server import ProxyServer
 from mitmproxy.tools.dump import DumpMaster
-from mitmproxy import http
+from mitmproxy import http, ctx
 
 import threading
 import asyncio
@@ -20,8 +22,6 @@ import os
 import datetime
 
 # Sorry I don't use english to make this file.
-
-
 
 
 # 搬运他们到这里……
@@ -62,6 +62,44 @@ def readjson(jsonname):
         return f.read()
 
 
+class MyBlock:
+    def load(self, loader):
+        print("尝试加载MyBlock!")
+        loader.add_option(
+            "block_global", bool, False,
+            """
+            Block connections from globally reachable networks, as defined in
+            the IANA special purpose registries.
+            """
+        )
+        loader.add_option(
+            "block_private", bool, False,
+            """
+            Block connections from private networks, as defined in the IANA
+            special purpose registries. This option does not affect loopback
+            addresses.
+            """
+        )
+
+    def clientconnect(self, layer):
+        astr = layer.client_conn.address[0]
+
+        parts = astr.rsplit("%", 1)
+        address = ipaddress.ip_address(parts[0])
+        if isinstance(address, ipaddress.IPv6Address):
+            address = address.ipv4_mapped or address
+
+        if address.is_loopback:
+            return
+
+        if ctx.options.block_private and address.is_private:
+            ctx.log.warn("Client connection from %s killed by block_private" % astr)
+            layer.reply.kill()
+        if ctx.options.block_global and address.is_global:
+            ctx.log.warn("Client connection from %s killed by block_global" % astr)
+            layer.reply.kill()
+
+
 class Addon(object):
     def __init__(self):
         print("EvolveEmulator插件成功挂载！\nEvolveEmulator addon is successfully running!")
@@ -70,7 +108,7 @@ class Addon(object):
         print("\n")
 
     def request(self, flow) -> None:
-        #print("我觉得这里怎么不得执行一下啊嗯?")
+        # print("我觉得这里怎么不得执行一下啊嗯?")
         if "doorman/1" in flow.request.pretty_url:
             evolvecrack(readjson("doorman.json"), "Game are Trying to request doorman in 2K", twokheader, flow)
         elif "telemetry/1" in flow.request.pretty_url:
@@ -252,7 +290,7 @@ if __name__ == "__main__":
     # This is an egg,and it doesn't have any useful function, Like a joke, so just ignore it,please?
     d1 = datetime.datetime.today()
     d2 = datetime.datetime(2019, 10, 16)
-    if(d1 - d2).days % 365 == 0:
+    if (d1 - d2).days % 365 == 0:
         print("小(夹)彩(私)蛋(活)！今天是对于作者来讲很重要的周年纪念日哦！")
         print("Hey!Today is a very important day for author! Anniversary!")
     else:
@@ -272,7 +310,7 @@ if __name__ == "__main__":
         print("下面的是motd的公告/包含的信息不由我做主。")
         print("The thing below will read from motd.txt, I don't know what in it.")
         print("===========================MOTD START===================================")
-        with open("motd.txt", "r",encoding="utf-8") as fr:
+        with open("motd.txt", "r", encoding="utf-8") as fr:
             for line in fr:
                 print(line)
         print("===========================MOTD OVER===================================")
@@ -285,49 +323,51 @@ if __name__ == "__main__":
                 print("Read successfully!The port now is :\n" + str(line))
                 print("正在修改端口号。\nChanging the server port...")
                 serverport = int(line)
-    # 添加昵称修改部分
-    if os.path.exists("local_save.txt"):
-        localsave = read_file("local_save.txt")
-        if os.path.exists(localsave + "\\" + "settings" + "\\" + "account_name.txt"):
-            account_name = read_file(localsave + "\\" + "settings" + "\\" + "account_name.txt")
-            if account_name == "Goldberg":
-                print("您要考虑修改一个名字吗？这个名字是默认名字，辨识度很差！\n"
-                      "Do you wanna to change the name? This name is the default name, "
-                      "there will lots of people named that.\n")
-                choose = input("输入Y来修改名字，输入其他不修改名字并启动游戏\nInput Y then press Enter to change the name, Others to run "
-                               "the game without changing the name\n")
-                if choose == "Y" or choose == "y":
-                    newname = input("请输入新的名字！（不支持中文！）\nPlease Input your new name!")
-                    with open(localsave + "\\" + "settings" + "\\" + "account_name.txt", "w+", encoding="utf-8") as f:
-                        f.write(newname)
-                    print("修改新名字成功，新名字为：" + newname + "\n Set new name successfully!New name is" + newname)
-        else:
-            print("看起来这是您第一次启动游戏。请按照向导设置您的游戏属性！\nSeems this is the first time you run the game,please follow the "
-                  "guide to set your game!")
-            newname = input("请输入您游戏内的名字！（不支持中文！）\nPlease Input your new name!")
-            #先得创建文件夹
-            os.mkdir(localsave + "\\" + "settings")
-            with open(localsave + "\\" + "settings" + "\\" + "account_name.txt", "w+", encoding="utf-8") as f:
-                f.write(newname)
-            print("设置名字成功，您游戏内的名字为：" + newname + "\n Set the name successfully, your new name is" + newname)
-
+    # 关闭昵称修改部分
+    # if os.path.exists("local_save.txt"):
+    #     localsave = read_file("local_save.txt")
+    #     if os.path.exists(localsave + "\\" + "settings" + "\\" + "account_name.txt"):
+    #         account_name = read_file(localsave + "\\" + "settings" + "\\" + "account_name.txt")
+    #         if account_name == "Goldberg":
+    #             print("您要考虑修改一个名字吗？这个名字是默认名字，辨识度很差！\n"
+    #                   "Do you wanna to change the name? This name is the default name, "
+    #                   "there will lots of people named that.\n")
+    #             choose = input("输入Y来修改名字，输入其他不修改名字并启动游戏\nInput Y then press Enter to change the name, Others to run "
+    #                            "the game without changing the name\n")
+    #             if choose == "Y" or choose == "y":
+    #                 newname = input("请输入新的名字！（不支持中文！）\nPlease Input your new name!")
+    #                 with open(localsave + "\\" + "settings" + "\\" + "account_name.txt", "w+", encoding="utf-8") as f:
+    #                     f.write(newname)
+    #                 print("修改新名字成功，新名字为：" + newname + "\n Set new name successfully!New name is" + newname)
+    #     else:
+    #         print("看起来这是您第一次启动游戏。请按照向导设置您的游戏属性！\nSeems this is the first time you run the game,please follow the "
+    #               "guide to set your game!")
+    #         newname = input("请输入您游戏内的名字！（不支持中文！）\nPlease Input your new name!")
+    #         #先得创建文件夹
+    #         os.mkdir(localsave + "\\" + "settings")
+    #         with open(localsave + "\\" + "settings" + "\\" + "account_name.txt", "w+", encoding="utf-8") as f:
+    #             f.write(newname)
+    #         print("设置名字成功，您游戏内的名字为：" + newname + "\n Set the name successfully, your new name is" + newname)
     options = Options(listen_host='0.0.0.0', listen_port=serverport, http2=True, confdir="./certs",
-                      mode="reverse:http://www.baidu.com")
+                      mode="reverse:http://127.0.0.1:5555")
     m = DumpMaster(options, with_termlog=False, with_dumper=False)
     config = ProxyConfig(options)
     m.server = ProxyServer(config)
     m.addons.add(Addon())
-    print("服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）")
+    block_addon = m.addons.get("block")
+    m.addons.remove(block_addon)
+    m.addons.add(MyBlock())
+    print("服务器已经运行！请配置您的serverip为127.0.0.1。您也可以在局域网内做自建服务器。")
     print("Server is running, Port = " + str(serverport) + ", Please configure your serverip to 127.0.0.1（A default "
                                                            "config)")
     print("================================================================")
-    print("正在启动游戏……如果游戏没有成功启动，请手动启动RebornEvolve.exe!\nRunning game...If the game failed to run,please run "
-          "RebornEvolve.exe by yourself")
-    if(os.path.exists("RebornEvolve.exe")):
-        os.startfile("RebornEvolve.exe")
-    else:
-        print("启动失败，可能这个文件被误杀了。")
-        print("Failed to run the game, maybe the RebornEvolve.exe was deleted by anti-virus software.")
+    # print("正在启动游戏……如果游戏没有成功启动，请手动启动RebornEvolve.exe!\nRunning game...If the game failed to run,please run "
+    #       "RebornEvolve.exe by yourself")
+    # if(os.path.exists("RebornEvolve.exe")):
+    #     os.startfile("RebornEvolve.exe")
+    # else:
+    #     print("启动失败，可能这个文件被误杀了。")
+    #     print("Failed to run the game, maybe the RebornEvolve.exe was deleted by anti-virus software.")
     # run mitmproxy in background, especially integrated with other server
     loop = asyncio.get_event_loop()
     t = threading.Thread(target=loop_in_thread, args=(loop, m))

@@ -175,10 +175,10 @@ ESteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall )
 
 bool GetAPICallResult( SteamAPICall_t hSteamAPICall, void *pCallback, int cubCallback, int iCallbackExpected, bool *pbFailed )
 {
-    PRINT_DEBUG("GetAPICallResult %llu %i %i\n", hSteamAPICall, cubCallback, iCallbackExpected);
+    PRINT_DEBUG("GetAPICallResult %llu %i %i %p\n", hSteamAPICall, cubCallback, iCallbackExpected, pbFailed);
     std::lock_guard<std::recursive_mutex> lock(global_mutex);
     if (callback_results->callback_result(hSteamAPICall, pCallback, cubCallback)) {
-        *pbFailed = false;
+        if (pbFailed) *pbFailed = false;
         PRINT_DEBUG("GetAPICallResult Succeeded\n");
         return true;
     } else {
@@ -403,6 +403,33 @@ ESteamIPv6ConnectivityState GetIPv6ConnectivityState( ESteamIPv6ConnectivityProt
 {
     PRINT_DEBUG("GetIPv6ConnectivityState\n");
     return k_ESteamIPv6ConnectivityState_Unknown;
+}
+
+// returns true if currently running on the Steam Deck device
+bool IsSteamRunningOnSteamDeck()
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+    return false;
+}
+
+// Opens a floating keyboard over the game content and sends OS keyboard keys directly to the game.
+// The text field position is specified in pixels relative the origin of the game window and is used to position the floating keyboard in a way that doesn't cover the text field
+bool ShowFloatingGamepadTextInput( EFloatingGamepadTextInputMode eKeyboardMode, int nTextFieldXPosition, int nTextFieldYPosition, int nTextFieldWidth, int nTextFieldHeight )
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+    return false;
+}
+
+// In game launchers that don't have controller support you can call this to have Steam Input translate the controller input into mouse/kb to navigate the launcher
+void SetGameLauncherMode( bool bLauncherMode )
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+}
+
+bool DismissFloatingGamepadTextInput()
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+    return true;
 }
 
 };

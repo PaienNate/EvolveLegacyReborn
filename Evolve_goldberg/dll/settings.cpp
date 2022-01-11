@@ -23,11 +23,11 @@ std::string Settings::sanitize(std::string name)
     name.erase(std::remove(name.begin(), name.end(), '\n'), name.end());
     name.erase(std::remove(name.begin(), name.end(), '\r'), name.end());
 
-    for (auto& i : name)
-    {
-        if (!isprint(i))
-            i = ' ';
-    }
+    //for (auto& i : name)
+    //{
+    //    if (!isprint(i))
+    //        i = ' ';
+    //}
 
     return name;
 }

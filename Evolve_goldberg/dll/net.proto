@@ -40,6 +40,7 @@ message Lobby {
         uint64 id = 1;
         uint32 ip = 2;
         uint32 port = 3;
+        uint32 num_update = 4;
     }
 
     Gameserver gameserver = 5;
@@ -119,7 +120,8 @@ message Networking_Sockets {
     }
 
     Types type = 1;
-    uint32 port = 2;
+    int32 virtual_port = 2;
+    int32 real_port = 6;
     uint64 connection_id = 3;
     uint64 connection_id_from = 4;
     bytes data = 5;

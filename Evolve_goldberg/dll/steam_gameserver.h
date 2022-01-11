@@ -35,6 +35,7 @@ public ISteamGameServer009,
 public ISteamGameServer010,
 public ISteamGameServer011,
 public ISteamGameServer012,
+public ISteamGameServer013,
 public ISteamGameServer
 {
     class Settings *settings;
@@ -278,6 +279,7 @@ public:
 	// connect to
 	uint32 GetPublicIP_old();
 	SteamIPAddress_t GetPublicIP();
+	void GetPublicIP_fix(SteamIPAddress_t *out);
 
 // These are in GameSocketShare mode, where instead of ISteamGameServer creating its own
 // socket to talk to the master server on, it lets the game use its socket to forward messages
@@ -310,6 +312,16 @@ public:
 	// you want it to be active (default: off).
 	void EnableHeartbeats( bool bActive );
 
+	/// Indicate whether you wish to be listed on the master server list
+	/// and/or respond to server browser / LAN discovery packets.
+	/// The server starts with this value set to false.  You should set all
+	/// relevant server parameters before enabling advertisement on the server.
+	///
+	/// (This function used to be named EnableHeartbeats, so if you are wondering
+	/// where that function went, it's right here.  It does the same thing as before,
+	/// the old name was just confusing.)
+	void SetAdvertiseServerActive( bool bActive );
+
 	// You usually don't need to modify this.
 	// Pass -1 to use the default value for iHeartbeatInterval.
 	// Some mods change this.
@@ -317,6 +329,9 @@ public:
 
 	// Force a heartbeat to steam at the next opportunity
 	void ForceHeartbeat();
+
+	void SetMasterServerHeartbeatInterval_DEPRECATED( int iHeartbeatInterval );
+	void ForceMasterServerHeartbeat_DEPRECATED();
 
 	// associate this game server with this clan for the purposes of computing player compat
 	STEAM_CALL_RESULT( AssociateWithClanResult_t )

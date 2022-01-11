@@ -63,6 +63,19 @@ struct Controller_Action {
     }
 };
 
+
+struct Rumble_Thread_Data {
+    std::condition_variable rumble_thread_cv;
+    std::atomic_bool kill_rumble_thread;
+    std::mutex rumble_mutex;
+
+    struct Rumble_Data {
+        unsigned short left, right, last_left, last_right;
+        unsigned int rumble_length_ms;
+        bool new_data;
+    } data[GAMEPAD_COUNT];
+};
+
 enum EXTRA_GAMEPAD_BUTTONS {
     BUTTON_LTRIGGER = BUTTON_COUNT + 1,
     BUTTON_RTRIGGER = BUTTON_COUNT + 2,
@@ -77,6 +90,7 @@ enum EXTRA_GAMEPAD_BUTTONS {
 };
 
 #define JOY_ID_START 10
+#define STICK_DPAD 3
 
 class Steam_Controller :
 public ISteamController001,
@@ -87,6 +101,7 @@ public ISteamController006,
 public ISteamController007,
 public ISteamController,
 public ISteamInput001,
+public ISteamInput002,
 public ISteamInput
 {
     class Settings *settings;
@@ -126,6 +141,7 @@ public ISteamInput
         {"RTRIGGER", TRIGGER_RIGHT},
         {"LJOY", STICK_LEFT + JOY_ID_START},
         {"RJOY", STICK_RIGHT + JOY_ID_START},
+        {"DPAD", STICK_DPAD + JOY_ID_START},
     };
 
     std::map<std::string, enum EInputSourceMode> analog_input_modes = {
@@ -144,8 +160,12 @@ public ISteamInput
     std::map<EInputActionOrigin, std::string> steaminput_glyphs;
     std::map<EControllerActionOrigin, std::string> steamcontroller_glyphs;
 
+    std::thread background_rumble_thread;
+    Rumble_Thread_Data *rumble_thread_data;
+
     bool disabled;
     bool initialized;
+    bool explicitly_call_run_frame;
 
     void set_handles(std::map<std::string, std::map<std::string, std::pair<std::set<std::string>, std::string>>> action_sets) {
         uint64 handle_num = 1;
@@ -208,6 +228,66 @@ public ISteamInput
 
 public:
 
+static void background_rumble(Rumble_Thread_Data *data)
+{
+    std::mutex mtx;
+    std::unique_lock<std::mutex> lck(mtx);
+    bool rumbled = false;
+    while (true) {
+        bool new_data = false;
+        if (rumbled) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+            data->rumble_mutex.lock();
+            for (int i = 0; i < GAMEPAD_COUNT; ++i) {
+                if (data->data[i].new_data) {
+                    new_data = true;
+                    break;
+                }
+            }
+            data->rumble_mutex.unlock();
+
+            if (data->kill_rumble_thread) {
+                return;
+            }
+        }
+
+        bool x = new_data || data->rumble_thread_cv.wait_for(lck, std::chrono::milliseconds(100)) != std::cv_status::timeout;
+        if (data->kill_rumble_thread) {
+            return;
+        }
+
+        rumbled = false;
+        while (true) {
+            unsigned short left, right;
+            unsigned int rumble_length_ms;
+            int gamepad = -1;
+            data->rumble_mutex.lock();
+            for (int i = 0; i < GAMEPAD_COUNT; ++i) {
+                if (data->data[i].new_data) {
+                    left = data->data[i].left;
+                    right = data->data[i].right;
+                    rumble_length_ms = data->data[i].rumble_length_ms;
+                    data->data[i].new_data = false;
+                    if (data->data[i].last_left != left || data->data[i].last_right != right) {
+                        gamepad = i;
+                        data->data[i].last_left = left;
+                        data->data[i].last_right = right;
+                        break;
+                    }
+                }
+            }
+
+            data->rumble_mutex.unlock();
+            if (gamepad == -1) {
+                break;
+            }
+
+            GamepadSetRumble((GAMEPAD_DEVICE)gamepad, ((double)left) / 65535.0, ((double)right) / 65535.0, rumble_length_ms);
+            rumbled = true;
+        }
+    }
+}
+
 static void steam_run_every_runcb(void *object)
 {
     PRINT_DEBUG("steam_controller_run_every_runcb\n");
@@ -233,15 +313,16 @@ Steam_Controller(class Settings *settings, class SteamCallResults *callback_resu
 ~Steam_Controller()
 {
     //TODO rm network callbacks
+    //TODO rumble thread
     this->run_every_runcb->remove(&Steam_Controller::steam_run_every_runcb, this);
 }
 
 // Init and Shutdown must be called when starting/ending use of this interface
-bool Init()
+bool Init(bool bExplicitlyCallRunFrame)
 {
-    PRINT_DEBUG("Steam_Controller::Init()\n");
+    PRINT_DEBUG("Steam_Controller::Init() %u\n", bExplicitlyCallRunFrame);
     std::lock_guard<std::recursive_mutex> lock(global_mutex);
-    if (disabled) {
+    if (disabled || initialized) {
         return true;
     }
 
@@ -259,7 +340,11 @@ bool Init()
         controllers.insert(std::pair<ControllerHandle_t, struct Controller_Action>(i, cont_action));
     }
 
+    rumble_thread_data = new Rumble_Thread_Data();
+    background_rumble_thread = std::thread(background_rumble, rumble_thread_data);
+
     initialized = true;
+    explicitly_call_run_frame = bExplicitlyCallRunFrame;
     return true;
 }
 
@@ -269,15 +354,26 @@ bool Init( const char *pchAbsolutePathToControllerConfigVDF )
     return Init();
 }
 
+bool Init()
+{
+    return Init(true);
+}
+
 bool Shutdown()
 {
     PRINT_DEBUG("Steam_Controller::Shutdown()\n");
     std::lock_guard<std::recursive_mutex> lock(global_mutex);
-    if (disabled) {
+    if (disabled || !initialized) {
         return true;
     }
 
+    controllers = std::map<ControllerHandle_t, struct Controller_Action>();
+    rumble_thread_data->kill_rumble_thread = true;
+    rumble_thread_data->rumble_thread_cv.notify_one();
+    background_rumble_thread.join();
+    delete rumble_thread_data;
     GamepadShutdown();
+    initialized = false;
     return true;
 }
 
@@ -286,10 +382,57 @@ void SetOverrideMode( const char *pchMode )
     PRINT_DEBUG("Steam_Controller::SetOverrideMode\n");
 }
 
+// Set the absolute path to the Input Action Manifest file containing the in-game actions
+// and file paths to the official configurations. Used in games that bundle Steam Input
+// configurations inside of the game depot instead of using the Steam Workshop
+bool SetInputActionManifestFilePath( const char *pchInputActionManifestAbsolutePath )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return false;
+}
+
+bool BWaitForData( bool bWaitForever, uint32 unTimeout )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return false;
+}
+
+// Returns true if new data has been received since the last time action data was accessed
+// via GetDigitalActionData or GetAnalogActionData. The game will still need to call
+// SteamInput()->RunFrame() or SteamAPI_RunCallbacks() before this to update the data stream
+bool BNewDataAvailable()
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return false;
+}
+
+// Enable SteamInputDeviceConnected_t and SteamInputDeviceDisconnected_t callbacks.
+// Each controller that is already connected will generate a device connected
+// callback when you enable them
+void EnableDeviceCallbacks()
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return;
+}
+
+// Enable SteamInputActionEvent_t callbacks. Directly calls your callback function
+// for lower latency than standard Steam callbacks. Supports one callback at a time.
+// Note: this is called within either SteamInput()->RunFrame or by SteamAPI_RunCallbacks
+void EnableActionEventCallbacks( SteamInputActionEventCallbackPointer pCallback )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return;
+}
+
 // Synchronize API state with the latest Steam Controller inputs available. This
 // is performed automatically by SteamAPI_RunCallbacks, but for the absolute lowest
 // possible latency, you call this directly before reading controller state.
-void RunFrame()
+void RunFrame(bool bReservedValue)
 {
     PRINT_DEBUG("Steam_Controller::RunFrame()\n");
     if (disabled || !initialized) {
@@ -297,6 +440,11 @@ void RunFrame()
     }
 
     GamepadUpdate();
+}
+
+void RunFrame()
+{
+    RunFrame(true);
 }
 
 bool GetControllerState( uint32 unControllerIndex, SteamControllerState001_t *pState )
@@ -348,6 +496,7 @@ ControllerActionSetHandle_t GetActionSetHandle( const char *pszActionSetName )
     auto set_handle = action_handles.find(upper_action_name);
     if (set_handle == action_handles.end()) return 0;
 
+    PRINT_DEBUG("Steam_Controller::GetActionSetHandle %s ret %llu\n", pszActionSetName, set_handle->second);
     return set_handle->second;
 }
 
@@ -415,6 +564,7 @@ ControllerDigitalActionHandle_t GetDigitalActionHandle( const char *pszActionNam
     auto handle = digital_action_handles.find(upper_action_name);
     if (handle == digital_action_handles.end()) return 0;
 
+    PRINT_DEBUG("Steam_Controller::GetDigitalActionHandle %s ret %llu\n", pszActionName, handle->second);
     return handle->second;
 }
 
@@ -596,6 +746,14 @@ int GetDigitalActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t a
     return count;
 }
 
+// Returns a localized string (from Steam's language setting) for the user-facing action name corresponding to the specified handle
+const char *GetStringForDigitalActionName( InputDigitalActionHandle_t eActionHandle )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return "Button String";
+}
+
 // Lookup the handle for an analog action. Best to do this once on startup, and store the handles for all future API calls.
 ControllerAnalogActionHandle_t GetAnalogActionHandle( const char *pszActionName )
 {
@@ -615,6 +773,8 @@ ControllerAnalogActionHandle_t GetAnalogActionHandle( const char *pszActionName 
 ControllerAnalogActionData_t GetAnalogActionData( ControllerHandle_t controllerHandle, ControllerAnalogActionHandle_t analogActionHandle )
 {
     PRINT_DEBUG("Steam_Controller::GetAnalogActionData %llu %llu\n", controllerHandle, analogActionHandle);
+    GAMEPAD_DEVICE device = (GAMEPAD_DEVICE)(controllerHandle - 1);
+
     ControllerAnalogActionData_t data;
     data.eMode = k_EInputSourceMode_None;
     data.x = data.y = 0;
@@ -632,12 +792,24 @@ ControllerAnalogActionData_t GetAnalogActionData( ControllerHandle_t controllerH
     for (auto a : analog.first) {
         if (a >= JOY_ID_START) {
             int joystick_id = a - JOY_ID_START;
-            GamepadStickNormXY((GAMEPAD_DEVICE)(controllerHandle - 1), (GAMEPAD_STICK) joystick_id, &data.x, &data.y);
-            float length = GamepadStickLength((GAMEPAD_DEVICE)(controllerHandle - 1), (GAMEPAD_STICK) joystick_id);
-            data.x = data.x * length;
-            data.y = data.y * length;
+            if (joystick_id == STICK_DPAD) {
+                int mov_y = (int)GamepadButtonDown(device, BUTTON_DPAD_UP) - (int)GamepadButtonDown(device, BUTTON_DPAD_DOWN);
+                int mov_x = (int)GamepadButtonDown(device, BUTTON_DPAD_RIGHT) - (int)GamepadButtonDown(device, BUTTON_DPAD_LEFT);
+                if (mov_y || mov_x) {
+                    data.x = mov_x;
+                    data.y = mov_y;
+                    double length = 1.0 / std::sqrt(data.x * data.x + data.y * data.y);
+                    data.x = data.x * length;
+                    data.y = data.y * length;
+                }
+            } else {
+                GamepadStickNormXY(device, (GAMEPAD_STICK) joystick_id, &data.x, &data.y);
+                float length = GamepadStickLength(device, (GAMEPAD_STICK) joystick_id);
+                data.x = data.x * length;
+                data.y = data.y * length;
+            }
         } else {
-            data.x = GamepadTriggerLength((GAMEPAD_DEVICE)(controllerHandle - 1), (GAMEPAD_TRIGGER) a);
+            data.x = GamepadTriggerLength(device, (GAMEPAD_TRIGGER) a);
         }
 
         if (data.x || data.y) {
@@ -690,6 +862,9 @@ int GetAnalogActionOrigins( InputHandle_t inputHandle, InputActionSetHandle_t ac
             case STICK_RIGHT + JOY_ID_START:
                 originsOut[count] = k_EInputActionOrigin_XBox360_RightStick_Move;
                 break;
+            case STICK_DPAD + JOY_ID_START:
+                originsOut[count] = k_EInputActionOrigin_XBox360_DPad_Move;
+                break;
             default:
                 originsOut[count] = k_EInputActionOrigin_None;
                 break;
@@ -717,6 +892,13 @@ void TriggerHapticPulse( ControllerHandle_t controllerHandle, ESteamControllerPa
     PRINT_DEBUG("Steam_Controller::TriggerHapticPulse\n");
 }
 
+// Trigger a haptic pulse on a controller
+void Legacy_TriggerHapticPulse( InputHandle_t inputHandle, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec )
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+    TriggerHapticPulse(inputHandle, eTargetPad, usDurationMicroSec );
+}
+
 void TriggerHapticPulse( uint32 unControllerIndex, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec )
 {
     PRINT_DEBUG("Steam_Controller::TriggerHapticPulse old\n");
@@ -730,6 +912,18 @@ void TriggerRepeatedHapticPulse( ControllerHandle_t controllerHandle, ESteamCont
     PRINT_DEBUG("Steam_Controller::TriggerRepeatedHapticPulse\n");
 }
 
+void Legacy_TriggerRepeatedHapticPulse( InputHandle_t inputHandle, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec, unsigned short usOffMicroSec, unsigned short unRepeat, unsigned int nFlags )
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+    TriggerRepeatedHapticPulse(inputHandle, eTargetPad, usDurationMicroSec, usOffMicroSec, unRepeat, nFlags);
+}
+
+
+// Send a haptic pulse, works on Steam Deck and Steam Controller devices
+void TriggerSimpleHapticEvent( InputHandle_t inputHandle, EControllerHapticLocation eHapticLocation, uint8 nIntensity, char nGainDB, uint8 nOtherIntensity, char nOtherGainDB )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+}
 
 // Tigger a vibration event on supported controllers.  
 void TriggerVibration( ControllerHandle_t controllerHandle, unsigned short usLeftSpeed, unsigned short usRightSpeed )
@@ -743,9 +937,25 @@ void TriggerVibration( ControllerHandle_t controllerHandle, unsigned short usLef
     //FIXME: shadow of the tomb raider on linux doesn't seem to turn off the rumble so I made it expire after 100ms. Need to check if this is how linux steam actually behaves.
     rumble_length_ms = 100;
 #endif
-    GamepadSetRumble((GAMEPAD_DEVICE)(controllerHandle - 1), ((double)usLeftSpeed) / 65535.0, ((double)usRightSpeed) / 65535.0, rumble_length_ms);
+
+    unsigned gamepad_device = (controllerHandle - 1);
+    if (gamepad_device > GAMEPAD_COUNT) return;
+    rumble_thread_data->rumble_mutex.lock();
+    rumble_thread_data->data[gamepad_device].new_data = true;
+    rumble_thread_data->data[gamepad_device].left = usLeftSpeed;
+    rumble_thread_data->data[gamepad_device].right = usRightSpeed;
+    rumble_thread_data->data[gamepad_device].rumble_length_ms = rumble_length_ms;
+    rumble_thread_data->rumble_mutex.unlock();
+    rumble_thread_data->rumble_thread_cv.notify_one();
 }
 
+// Trigger a vibration event on supported controllers including Xbox trigger impulse rumble - Steam will translate these commands into haptic pulses for Steam Controllers
+void TriggerVibrationExtended( InputHandle_t inputHandle, unsigned short usLeftSpeed, unsigned short usRightSpeed, unsigned short usLeftTriggerSpeed, unsigned short usRightTriggerSpeed )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    TriggerVibration(inputHandle, usLeftSpeed, usRightSpeed);
+    //TODO trigger impulse rumbles
+}
 
 // Set the controller LED color on supported controllers.  
 void SetLEDColor( ControllerHandle_t controllerHandle, uint8 nColorR, uint8 nColorG, uint8 nColorB, unsigned int nFlags )
@@ -813,6 +1023,13 @@ const char *GetStringForActionOrigin( EInputActionOrigin eOrigin )
     return "Button String";
 }
 
+// Returns a localized string (from Steam's language setting) for the user-facing action name corresponding to the specified handle
+const char *GetStringForAnalogActionName( InputAnalogActionHandle_t eActionHandle )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return "Button String";
+}
 
 // Get a local path to art for on-screen glyph for a particular origin 
 const char *GetGlyphForActionOrigin( EControllerActionOrigin eOrigin )
@@ -899,6 +1116,29 @@ const char *GetGlyphForActionOrigin( EInputActionOrigin eOrigin )
     return glyph->second.c_str();
 }
 
+// Get a local path to a PNG file for the provided origin's glyph. 
+const char *GetGlyphPNGForActionOrigin( EInputActionOrigin eOrigin, ESteamInputGlyphSize eSize, uint32 unFlags )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return "";
+}
+
+// Get a local path to a SVG file for the provided origin's glyph. 
+const char *GetGlyphSVGForActionOrigin( EInputActionOrigin eOrigin, uint32 unFlags )
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    //TODO SteamInput005
+    return "";
+}
+
+// Get a local path to an older, Big Picture Mode-style PNG file for a particular origin
+const char *GetGlyphForActionOrigin_Legacy( EInputActionOrigin eOrigin )
+{
+    PRINT_DEBUG("%s\n", __FUNCTION__);
+    return GetGlyphForActionOrigin(eOrigin);
+}
+
 // Returns the input type for a particular handle
 ESteamInputType GetInputTypeForHandle( ControllerHandle_t controllerHandle )
 {
@@ -962,9 +1202,19 @@ uint32 GetRemotePlaySessionID( InputHandle_t inputHandle )
     return 0;
 }
 
+// Get a bitmask of the Steam Input Configuration types opted in for the current session. Returns ESteamInputConfigurationEnableType values.?	
+// Note: user can override the settings from the Steamworks Partner site so the returned values may not exactly match your default configuration
+uint16 GetSessionInputConfigurationSettings()
+{
+    PRINT_DEBUG("TODO %s\n", __FUNCTION__);
+    return 0;
+}
+
 void RunCallbacks()
 {
-    RunFrame();
+    if (explicitly_call_run_frame) {
+        RunFrame();
+    }
 }
 
 };

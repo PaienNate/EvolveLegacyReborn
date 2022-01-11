@@ -74,7 +74,7 @@
 
     #ifdef EMU_EXPERIMENTAL_BUILD
         #include <winhttp.h>
-        #include <WinTrust.h>
+
         #include "../detours/detours.h"
 
         #ifdef DETOURS_64BIT
@@ -83,6 +83,27 @@
             #define DLL_NAME "steam_api.dll"
         #endif
     #endif
+
+#include <string>
+// Convert a wide Unicode string to an UTF8 string
+inline std::string utf8_encode(const std::wstring &wstr)
+{
+    if( wstr.empty() ) return std::string();
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
+    std::string strTo( size_needed, 0 );
+    WideCharToMultiByte                  (CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    return strTo;
+}
+
+// Convert an UTF8 string to a wide Unicode String
+inline std::wstring utf8_decode(const std::string &str)
+{
+    if( str.empty() ) return std::wstring();
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+    std::wstring wstrTo( size_needed, 0 );
+    MultiByteToWideChar                  (CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+    return wstrTo;
+}
 
 #elif defined(__LINUX__)
     #include <arpa/inet.h>
@@ -112,6 +133,8 @@
         #define PRINT_DEBUG(...) {FILE *t = fopen("STEAM_LOG.txt", "a"); fprintf(t, __VA_ARGS__); fclose(t);}
     #endif
     #define PATH_SEPARATOR "/" 
+
+    #define utf8_decode(a) a
 #endif
 //#define PRINT_DEBUG(...) fprintf(stdout, __VA_ARGS__)
 #ifdef EMU_RELEASE_BUILD
@@ -161,8 +184,16 @@
 #define CLIENT_HSTEAMUSER 1
 #define SERVER_HSTEAMUSER 1
 
-#define DEFAULT_NAME "Goldberg"
-#define PROGRAM_NAME "Goldberg SteamEmu"
+#define DEFAULT_NAME "Noob"
+#define PROGRAM_NAME_1 "Go"
+#define PROGRAM_NAME_2 "ld"
+#define PROGRAM_NAME_3 "be"
+#define PROGRAM_NAME_4 "rg "
+#define PROGRAM_NAME_5 "St"
+#define PROGRAM_NAME_6 "ea"
+#define PROGRAM_NAME_7 "mE"
+#define PROGRAM_NAME_8 "mu"
+
 #define DEFAULT_LANGUAGE "english"
 
 #define LOBBY_CONNECT_APPID ((uint32)-2)
