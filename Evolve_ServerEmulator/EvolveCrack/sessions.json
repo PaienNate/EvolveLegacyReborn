@@ -1,7 +1,7 @@
 {
 	"result": {
 		"successful": true,
-		"expiresIn": 30,
+		"expiresIn": 50,
 		"serverTime": 0,
 		"maxFailures": 3
 	},

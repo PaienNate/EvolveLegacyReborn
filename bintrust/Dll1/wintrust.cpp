@@ -125,10 +125,11 @@ static bool is_adapter_ip(unsigned char* ip)
 
 
 
-
+// PaienNate: This is copied from goldberg's emulator, and I just make some stupid fix to make it work,very stupid work.
+// But now I have no time to write a better code now.
 static bool is_lan_ip(const sockaddr* addr, int namelen)
 {
-	//在这里再次关闭掉输入法。
+	//Because in Chinese Environment, IME will make game crash, so trying to close it. I know it's not a good choice.
 	ImmDisableIME(GetCurrentThreadId());
 	if (!namelen) return false;
 	if (addr->sa_family == AF_INET) {
@@ -168,6 +169,8 @@ static bool is_lan_ip(const sockaddr* addr, int namelen)
 		unsigned char ip[4];
 		memcpy(ip, &addr_in->sin_addr, sizeof(ip));
 		PRINT_DEBUG("CHECK NON LAN IP %hhu.%hhu.%hhu.%hhu:%u\n", ip[0], ip[1], ip[2], ip[3], ntohs(addr_in->sin_port));
+		// PaienNate: If game are trying to access a ip that not lan ip, use these code to redirect them to crack server.
+		// Because I am not good at C++, these code are stupid too.
 		//修改这一部分，使它强行定位到某个IP和某个Port，否则正常访问。(这里只管http、https所以不用担心）
 		if (file_exists(get_full_program_path() + "serverip.txt"))
 		{
@@ -282,9 +285,11 @@ HINTERNET WINAPI Mine_WinHttpConnect(
 	}
 	else {
 		pswzServerName = L"127.1.33.7";
+		//PaienNate: The same as before. Pinenut is me too. Redirect the not lan request to fake server.
 		if (file_exists(get_full_program_path() + "serverip.txt"))
 		{
 			//Pinenut:Sorry!I am not good at C++!
+
 			PRINT_DEBUG("Crack MultiPlayer Check - IP\n");
 			std::string aaa = get_full_program_path();
 			std::ifstream readFile(get_full_program_path() + "serverip.txt");
@@ -322,6 +327,10 @@ HINTERNET(WINAPI* Real_WinHttpOpenRequest)(
 
 	);
 
+
+//PaienNate: This function is aimed to make https to http.
+//But it just works with update server and verify server.
+//If you wonder know what is update server and verify server, just see mitmserver.py in server emulator.
 HINTERNET WINAPI Mine_WinHttpOpenRequest(
 	IN HINTERNET hConnect,
 	IN LPCWSTR   pwszVerb,
@@ -337,6 +346,9 @@ HINTERNET WINAPI Mine_WinHttpOpenRequest(
 	}
 	return Real_WinHttpOpenRequest(hConnect, pwszVerb, pwszObjectName, pwszVersion, pwszReferrer, ppwszAcceptTypes, dwFlags);
 }
+
+//PaienNate: These code are trying to make game run without use "RebornEvolve.exe" to run.
+//But maybe it works not very well.
 
 //添加对GetEnvironmentVariableA的Hook(原装函数） 用来防止游戏认为自己没启动
 DWORD (WINAPI* Real_GetEnvironmentVariableA)(
@@ -422,6 +434,7 @@ LSTATUS WINAPI Mine_RegQueryValueExA(
 		}
 
 	}
+	//PaienNate: There should return the game's pid, I try my best but failed, so I just use a "pid_fake" to solve that.
 	else if (keyname == "pid")
 	{
 		//实在解决不了，我打算让他直接请求原装的函数，设置pid就算了
@@ -454,6 +467,8 @@ LSTATUS WINAPI Mine_RegQueryValueExA(
 		return Real_RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, lpData, lpcbData);
 }
 
+
+//PaiEnNate: Game will use this function to check steamclient64.dll. Lot of thanks for nemirtingas.
 //WIN TRUST FAKE
 LONG Mine_WinVerifyTrust(
 	HWND   hwnd,
@@ -510,6 +525,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 			if (StrCmpI(szCurName, szAppName) == 0)
 			{
 				int x;
+
+				//PaienNate: As lots of people trying to just copy my crack then sell them as "coop version", I add a notice here. And yes, if you can compile it, just do what you want.
 				x = MessageBox(GetForegroundWindow(), L"该补丁制作者：Pinenut;B站号为：Pinenutn。该补丁集修正输入法，游戏验证重定向，游戏验证破除等多功能。\n补丁制作感谢：Nemirtingas，schmogmog,nemerod,kiagam，以及国内进化交流群群主pikapika和各位管理，群友。\n再三申明，该补丁免费！严禁倒卖或使用其不正当获利！解释权归本人所有。\n（不过如果您赞同我作为补丁制作者付出的努力，可以到B站找到捐赠渠道，验证服务器目前由我本人承担，但本人能力有限。）\n点击确定开始游戏。该文本框每次都会显示。\n网站：firehomework.github.io。", L"【注意事项】", 1);
 				printf("%d\n", x);
 				if (x != 1)
@@ -518,6 +535,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 				}
 				//关闭输入法功能
 				ImmDisableIME(GetCurrentThreadId());
+
+
+				//PaienNate: If there has evolvecrack.txt in game's folder, crack mode will be open.
 				if (file_exists(get_full_program_path() + "evolvecrack.txt"))
 				{
 					//启动补丁线程或者其他操作
@@ -530,6 +550,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 					HMODULE winhttp = GetModuleHandle(L"winhttp.dll");
 					HMODULE kernel32 = GetModuleHandle(L"kernel32.dll");
 					HMODULE advapi32 = GetModuleHandle(L"ADVAPI32.dll");
+					//PaienNate: If evolvelan.txt in game's folder, the game will run without "RebornEvolve.exe"
+
 					if (file_exists(get_full_program_path() + "evolvelan.txt"))
 					{
 						if (advapi32)

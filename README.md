@@ -17,8 +17,13 @@ https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-%E7%9A%84%E9%87%8D
 
 #### 软件架构
 
-软件架构说明:   
-该项目目前基于Goldberg_emulator和mitmproxy发挥作用；   
+~~软件架构说明:~~   
+
+~~该项目目前基于Goldberg_emulator和mitmproxy发挥作用；~~  
+
+该项目目前使用Goldberg部分代码和mitmproxy发挥作用
+
+Now it use some goldberg's code and mitmproxy to work.
 
 #### 安装教程
 
@@ -26,7 +31,9 @@ https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-%E7%9A%84%E9%87%8D
 
 #### 编译说明
 
-goldberg部分请自行参照goldberg补丁（goldberg在gitlab上）编译；
+~~goldberg部分请自行参照goldberg补丁（goldberg在gitlab上）编译；~~
+
+Please see Evolve_ServerEmulator and then see bintrust's readme to know how to compile.
 
 Server模拟部分，需要python mitmproxy==6.0.1
 
