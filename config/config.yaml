@@ -1,0 +1,8 @@
+server:
+    mode: debug
+    port: 8100
+    cacert: ca.pem
+    cakey: ca.key
+boltdb:
+    filepath: test.db
+    timeout: 10
