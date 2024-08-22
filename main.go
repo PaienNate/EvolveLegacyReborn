@@ -3,6 +3,7 @@ package main
 import "C"
 import (
 	"awesomeProject5/config"
+	"awesomeProject5/service"
 	"awesomeProject5/strstr"
 	"awesomeProject5/utils"
 	ezap "awesomeProject5/zap"
@@ -48,20 +49,26 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	result, ok := utils.FindFirstMatch(path, strstr.TwoKList)
 	if ok {
 		// 使用2K处理器进行处理
+		service.HandleTwoKService(result, w, r)
+		return
 	}
 	result, ok = utils.FindFirstMatch(path, strstr.MultiPlayerList)
 	if ok {
 		// 使用多人游戏处理器进行处理
+		service.HandleMultiService(result, w, r)
+		return
 	}
 	result, ok = utils.FindFirstMatch(path, strstr.HotFixList)
 	if ok {
 		// 使用热补丁处理进行处理
+		service.HandleHotFixService(result, w, r)
+		return
 	}
 	fmt.Println(result)
 	// 否则，写默认的处理
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message": "TEST"}`))
+	w.Write([]byte(`{"message": "OK"}`))
 }
 
 func newTLSMitmServer(g *chi.Mux) {

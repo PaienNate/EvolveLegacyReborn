@@ -109,8 +109,8 @@ func GenerateCertificate(caCertTLS tls.Certificate, hostname, ip string) (tls.Ce
 	return tls.X509KeyPair(certPEM, keyPEM)
 }
 
-// 检查路径是否包含指定的字符串，并返回第一个匹配的字符串
-func findFirstMatch(path string, substrings []string) (string, bool) {
+// FindFirstMatch 检查路径是否包含指定的字符串，并返回第一个匹配的字符串
+func FindFirstMatch(path string, substrings []string) (string, bool) {
 	for _, substring := range substrings {
 		if strings.Contains(path, substring) {
 			return substring, true

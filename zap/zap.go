@@ -65,6 +65,6 @@ func init() {
 	core := zapcore.NewTee(consoleCore, fileCore)
 
 	// 初始化日志记录器
-	ORIGINLOGGER = zap.New(core, zap.AddCaller(), zap.AddCallerSkip(2))
+	ORIGINLOGGER = zap.New(core, zap.AddCaller(), zap.AddCallerSkip(0))
 	LOGGER = ORIGINLOGGER.Sugar()
 }
