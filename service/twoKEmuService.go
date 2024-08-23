@@ -7,6 +7,7 @@ import (
 	"awesomeProject5/strstr"
 	ezap "awesomeProject5/zap"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/tidwall/gjson"
 	"io"
@@ -33,7 +34,31 @@ func HandleTwoKService(pattern string, w http.ResponseWriter, r *http.Request) {
 		fallthrough
 	case "stats/1":
 		ExecJustTimeOrContext(pattern, w, r)
+	case "entitlements/1":
+
 	}
+}
+
+func ExecEntitlements(pattern string, w http.ResponseWriter, r *http.Request) {
+	// 此种情况下，应该解析r的body,并读取它的参数，将参数作为分析。
+	requestBody, err := parseRequestBodyToGJson(r)
+	if err != nil {
+		ezap.LOGGER.Error("ERROR WHEN READING REQUEST")
+		response.GetDefaultResponse(w)
+		return
+	}
+	// 获取它的执行信息
+	if !requestBody.Get("header.action").Exists() {
+		ezap.LOGGER.Error("NO ACTION,ILLEGAL")
+		response.GetDefaultResponse(w)
+		return
+	}
+	action := requestBody.Get("header.action").String()
+	switch action {
+		// EVOLVE1
+		case ""
+	}
+
 }
 
 // 针对不需要处理的进行简单的封装
@@ -84,9 +109,10 @@ func ExecEngine(pattern string, w http.ResponseWriter, r *http.Request) {
 	appContext = gjson.ParseBytes(all).Get("header.appContext").Int()
 	// 读取请求体，获取appContext参数 END
 
-	// TODO：是否有更好的解决策略？强制时间替换
+	// TODO：是否有更好的解决策略？强制时间替换 serverTime createdOn
 	responseStr := responseRaw.String()
 	responseStr = strings.Replace(responseStr, "\"serverTime\": 0", fmt.Sprintf("\"serverTime\": %d", nowTime), -1)
+	responseStr = strings.Replace(responseStr, "\"createdOn\": 0", fmt.Sprintf("\"createdOn\": %d", nowTime), -1)
 	// 强制时间替换 END
 
 	// 转换为Go结构体，并进行对应的赋值
@@ -109,4 +135,21 @@ func ExecEngine(pattern string, w http.ResponseWriter, r *http.Request) {
 	response.SetCustomHeaders(w, strstr.TwoKHeader)
 	response.SendFakeResponse(w, jsonData)
 	// 序列化并发送 END
+}
+
+// utils
+// 转换为gjson对象
+func parseByteDataToGJson(data []byte) (gjson.Result, error) {
+	if !gjson.ValidBytes(data) {
+		return gjson.Result{}, errors.New("invalid JSON data")
+	}
+	return gjson.ParseBytes(data), nil
+}
+
+func parseRequestBodyToGJson(r *http.Request) (gjson.Result, error) {
+	all, err := io.ReadAll(r.Body)
+	if err != nil {
+		return gjson.Result{}, errors.New("failed to get response body")
+	}
+	return parseByteDataToGJson(all)
 }

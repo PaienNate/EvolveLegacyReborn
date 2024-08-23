@@ -23,7 +23,7 @@ func _SQLiteDBInit(path string) (*gorm.DB, error) {
 	)
 
 	// 连接到 SQLite 数据库并配置 Logger
-	db, err := gorm.Open(sqlite.Open("files.db"), &gorm.Config{
+	db, err := gorm.Open(sqlite.Open(path), &gorm.Config{
 		Logger: customLogger,
 	})
 	if err != nil {
