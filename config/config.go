@@ -9,7 +9,8 @@ import (
 var CONFIG *Config
 
 type Config struct {
-	Server ServerConfig `json:"server" yaml:"server"`
+	Server  ServerConfig  `json:"server" yaml:"server"`
+	General GeneralConfig `json:"general" yaml:"general"`
 }
 
 type ServerConfig struct {
@@ -17,6 +18,15 @@ type ServerConfig struct {
 	Port   int    `json:"port" yaml:"port"`
 	CACert string `json:"cacert" yaml:"cacert"`
 	CAKey  string `json:"cakey" yaml:"cakey"`
+}
+
+type GeneralConfig struct {
+	HookMode   string `json:"hookmode" yaml:"hookmode"`
+	RandomPort bool   `json:"randomport" yaml:"randomport"`
+	// Unused
+	RecordMode string `json:"recordmode" yaml:"recordmode"`
+	SteamID    string `json:"steamid" yaml:"steamid"`
+	FromSteam  string `json:"fromsteam" yaml:"fromsteam"`
 }
 
 func init() {

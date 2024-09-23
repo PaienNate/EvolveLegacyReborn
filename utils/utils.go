@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"awesomeProject5/zap"
+	ezap "EvolveLegacyReborn/zap"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/tls"
@@ -45,14 +45,14 @@ func GetTLSHostNameAndIP(hello *tls.ClientHelloInfo) (name, ip string, err error
 	// 如果用户根据域名访问
 	if domainHostName != "" {
 		domainHostName = GenerateWildcardDomainIfNeeded(domainHostName)
-		ezap.LOGGER.Info("发现域名和IP的组合，域名为：%s,IP为:%s\n", domainHostName, addr)
+		ezap.LOGGER.Infof("发现域名和IP的组合，域名为：%s,IP为:%s\n", domainHostName, addr)
 		return domainHostName, host, nil
 	} else {
 		if err != nil {
 			fmt.Println("Failed to split host and port:", err)
 			return "", "", err
 		}
-		fmt.Println("仅发现IP，目标IP为：" + host)
+		ezap.LOGGER.Infof("仅发现IP，目标IP为：%s", host)
 		return "", host, nil
 	}
 }
@@ -73,6 +73,7 @@ func GenerateCertificate(caCertTLS tls.Certificate, hostname, ip string) (tls.Ce
 	cacheKey := hostname + "|" + ip
 	// 检查缓存中是否已有该证书，有则直接返回。由于游玩者不可能一次开100年，所以证书必不会过期。
 	if cert, ok := certCache.Load(cacheKey); ok {
+		fmt.Println("发现已经签发的证书!")
 		return cert.(tls.Certificate), nil
 	}
 	// 创建证书模板
@@ -86,7 +87,7 @@ func GenerateCertificate(caCertTLS tls.Certificate, hostname, ip string) (tls.Ce
 		DNSNames:              []string{hostname},
 		IPAddresses:           []net.IP{net.ParseIP(ip)},
 		NotBefore:             time.Now(),
-		NotAfter:              time.Now().Add(36500 * 24 * time.Hour), // 有效期一百年
+		NotAfter:              time.Now().Add(365 * 24 * time.Hour), // 有效期一百年
 		KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
 		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		BasicConstraintsValid: true,
@@ -106,7 +107,12 @@ func GenerateCertificate(caCertTLS tls.Certificate, hostname, ip string) (tls.Ce
 	// 将证书用于服务器
 	certPEM := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: certificateDER})
 	keyPEM := pem.EncodeToMemory(&pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(privateKey)})
-	return tls.X509KeyPair(certPEM, keyPEM)
+	pair, err := tls.X509KeyPair(certPEM, keyPEM)
+	if err != nil {
+		return tls.Certificate{}, err
+	}
+	certCache.Store(cacheKey, pair)
+	return pair, err
 }
 
 // FindFirstMatch 检查路径是否包含指定的字符串，并返回第一个匹配的字符串

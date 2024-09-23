@@ -1,11 +1,11 @@
 package database
 
 import (
-	"awesomeProject5/model"
+	"EvolveLegacyReborn/model"
+	ezap "EvolveLegacyReborn/zap"
 	"gorm.io/gorm/logger"
 	"log"
 
-	"awesomeProject5/zap"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

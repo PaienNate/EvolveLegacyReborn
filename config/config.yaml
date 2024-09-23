@@ -2,23 +2,14 @@ server:
     # running mode.
     mode: debug
     # running port.
-    port: 8100
-    # ca for making certs. DONT TRUST THIS CERT OR YOU MAYBE DATA LOST!
+    port: 8101
+    # ca for making certs. DON'T TRUST THIS CERT OR YOU MAYBE DATA LOST!
     cacert: ca.pem
-    # key for making certs. DONT TRUST THIS CERT OR YOU MAYBE DATA LOST!
+    # key for making certs. DON'T TRUST THIS CERT OR YOU MAYBE DATA LOST!
     cakey: ca.key
 general:
     # steam mode. If open this, patch will open game with REGISTER KEY CHANGED.
     # If not work, just try Administrator mode.
-    hookMode: true
-    # If run this, game will find a random port to open crack server.
-    randomPort: false
-    # If open this, your HTTP/HTTPS request will be recorded in a file.It maybe useful for getting some new request.
-    recordMode: false
-    # if write this steamid, emu will use this to unlock evolve2 or some dlc if buggy.
-    # I suggest you to write it by yourself.
-    # If not, emu will try it best to get steamid from request.
-    # It should like: 7656xxxxxxxxxx.
-    steamId: 0
-    # use built-in steam module to get steamid. experimental.
-    fromSteam: false
+    hookmode: true
+    # steamid, you should fill this to unlock evolve2 with your legal game. default is 76561101839859666.
+    steamid: 76561101839859666

@@ -1,6 +1,7 @@
 package response
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -15,7 +16,8 @@ func GetDefaultResponse(w http.ResponseWriter) {
 }
 
 func SendFakeResponse(w http.ResponseWriter, byteList []byte) {
-	w.Header().Set("Content-Type", "application/json")
+	// 关闭Transfer-Encoding: chunked，否则会崩溃的
+	w.Header().Set("Content-Length", fmt.Sprintf("%d", len(byteList)))
 	w.WriteHeader(http.StatusOK)
 	_, err := w.Write(byteList)
 	if err != nil {

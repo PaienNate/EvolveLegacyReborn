@@ -1,11 +1,11 @@
 package service
 
 import (
-	"awesomeProject5/database"
-	"awesomeProject5/model"
-	"awesomeProject5/response"
-	"awesomeProject5/strstr"
-	ezap "awesomeProject5/zap"
+	"EvolveLegacyReborn/database"
+	"EvolveLegacyReborn/model"
+	"EvolveLegacyReborn/response"
+	"EvolveLegacyReborn/strstr"
+	ezap "EvolveLegacyReborn/zap"
 	"net/http"
 )
 
@@ -20,6 +20,6 @@ func HandleHotFixService(pattern string, w http.ResponseWriter, r *http.Request)
 		return
 	}
 	// 否则直接写对应的byte即可
-	response.SetCustomHeaders(w, strstr.MultiHeader)
+	response.SetCustomHeaders(w, strstr.HotfixHeader)
 	response.SendFakeResponse(w, data[0])
 }

@@ -1,11 +1,11 @@
 package service
 
 import (
-	"awesomeProject5/database"
-	"awesomeProject5/model"
-	"awesomeProject5/response"
-	"awesomeProject5/strstr"
-	ezap "awesomeProject5/zap"
+	"EvolveLegacyReborn/database"
+	"EvolveLegacyReborn/model"
+	"EvolveLegacyReborn/response"
+	"EvolveLegacyReborn/strstr"
+	ezap "EvolveLegacyReborn/zap"
 	"net/http"
 )
 
@@ -18,6 +18,6 @@ func HandleMultiService(pattern string, w http.ResponseWriter, r *http.Request) 
 		response.GetDefaultResponse(w)
 		return
 	}
-	response.SetCustomHeaders(w, strstr.HotfixHeader)
+	response.SetCustomHeaders(w, strstr.MultiHeader)
 	response.SendFakeResponse(w, data[0])
 }
