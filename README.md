@@ -1,73 +1,109 @@
-# Evolve Legacy Reborn
-国内联机群号：366237012
+# Evolve Legacy Reborn  
 
-#### 介绍/Instruction
+**国内联机群号**：366237012  
 
-该项目旨在对《遗产进化》进行修改，使其能够在局域网环境下，免Steam进行游玩。 
+## 介绍 / Instructions  
 
-This project will make Evolve legacy coop in LAN/Virtual LAN.  
+### **项目简介 / Project Overview**  
+该项目旨在对《遗产进化》进行修改，使其能够在局域网环境下运行，无需通过 Steam 进行联机。  
+This project modifies *Evolve Legacy* to enable co-op gameplay over LAN/Virtual LAN without requiring Steam.  
 
-**该项目禁止用于商业活动！严禁倒卖！如果用于直播联机，必须注明这点！**
+### **注意事项 / Important Notices**  
 
-进化(已停服） 游戏地址：https://store.steampowered.com/app/273350/   
+- **严禁倒卖，以及用于引流广告等活动**  
+  **Reselling or using this project for promotional advertisements is strictly prohibited.**  
+- **若用于直播联机，必须明确注明本项目的使用！**  
+  **If used for live streaming, you must clearly credit this project.**  
 
-进化停服说明，及遗产进化是什么（L）公告地址（中文）：   
+游戏链接：[Evolve (已停服)](https://store.steampowered.com/app/273350/)  
+了解更多关于停服详情与“遗产进化”的公告：  
+[中文公告链接](https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-的重要公告)  
+Learn more about the server closure and "Evolve Legacy" here: [Official Announcement](https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-的重要公告)  
 
-https://support.2k.com/hc/zh-tw/articles/360004104913--Evolve-%E7%9A%84%E9%87%8D%E8%A6%81%E5%85%AC%E5%91%8A   
+---
 
-#### 软件架构
+## 软件架构 / Software Architecture  
 
-~~软件架构说明:~~   
+### **架构说明 / Architecture Overview**  
+本项目基于 Detours 重定向 和 mitmproxy 实现功能。  
+This project is based on **Detours redirection** and **mitmproxy** for functionality.  
 
-~~该项目目前基于Goldberg_emulator和mitmproxy发挥作用；~~  
+---
 
-该项目目前使用Goldberg部分代码和mitmproxy发挥作用
+## 安装教程 / Installation Guide  
 
-Now it use some goldberg's code and mitmproxy to work.
+1. 解压补丁包，将内容直接放入游戏目录，替换原文件。  
+   Unpack the patch files and place them directly in the game directory, replacing the original files.  
+2. 使用 **Bin64_SteamRetail** 文件夹内的 `Evolve.exe` 启动游戏即可。  
+   Launch the game using `Evolve.exe` from the **Bin64_SteamRetail** folder.  
 
-#### 安装教程
+---
 
-1. 将补丁解压后直接放入游戏目录替换原文件即可。之后使用Bin64_SteamRetail内的Evolve.exe启动游戏。
+## 编译说明 / Compilation Notes  
 
-#### 编译说明
+1. 服务器模拟部分需要安装 **Python 及 mitmproxy==6.0.1**。  
+   Install **Python** and `mitmproxy==6.0.1` for server emulation.  
+2. EvolveHooker(Bintrust)模块可根据README的教程自行编译。  
+   The **Bintrust module** can be compiled directly by its instruction.  
 
-~~goldberg部分请自行参照goldberg补丁（goldberg在gitlab上）编译；~~
+> **注 / Note:**  
+> 由于代码注释包含大量中文，可能对非中文用户带来一定困扰。  
+> Code comments are in Chinese, which may cause difficulty for non-Chinese users.  
 
-Please see Evolve_ServerEmulator and then see bintrust's readme to know how to compile.
+---
 
-Server模拟部分，需要python mitmproxy==6.0.1
+## 项目说明 / Project Details  
 
-bintrust直接编译即可。
+1. 当前使用 bintrust（替代 wintrust）实现重定向，并结合 mitmproxy 进行模拟。  
+   Currently, **bintrust** (as a replacement for wintrust) is used for redirection, along with **mitmproxy** for simulation.  
+2. 您可以查看 EvolveHooker 来查看 BINTRUST 模块的代码。  
+   You can check **EvolveHooker** for the source code of the BINTRUST module.  
 
-很抱歉我写的注释全部是中文，可能会给国外的用户带来很大的困扰。
+---
 
-#### 说明
+## 贡献人员 / Contributors  
 
- 1. 内部代码经过多次迭代之后，现在使用bintrust（替代wintrust)实现重定向；使用mitmproxy来进行模拟。
- 2. 目前打包的release内使用的是群友的服务器。
-  3. 项目若无必要将不会有后续更新。该项目仅做引流用。
+- **@Nemirtingas** (GitLab): 协助解决黑屏验证检查问题。  
+  Assisted in solving the screen freeze verification issue.  
+- **@schmogmog**: 进行测试协作。  
+  Supported with testing.  
+- **@nemerod**: 初期分析游戏代码，提供服务器列表。  
+  Conducted early-stage game code analysis and provided the server list.  
+- **@kiagam**: 使用 Python 工具抓包，为 mitmproxy 提供思路。  
+  Used Python tools for packet capture, inspiring the use of mitmproxy.  
+- **@1101839859 (Pinenut)**: 整合脚本，模拟服务器验证流程。  
+  Integrated scripts and simulated server verification processes.  
+- **@pikapika**: 提供测试支持及成品打包。  
+  Provided testing support and final build packaging.  
+- **@DeinAlbtraum:** 协助测试  
+  Assisted with testing.  
 
-#### 参与贡献
+---
 
-参与贡献的人员：   
-@Nemirtingas(Gitlab) 协助解决游戏黑屏的验证检查（十分感谢！没有这位大佬的帮助，真的就卡住了）   
-@schmogmog 协助进行测试   
-@nemerod 初期对游戏代码进行了分析，并给出了游戏连接的服务器列表   
-@kiagam 初期使用Python等工具抓取，为后来使用mitmproxy提供思路。   
-@1101839859（Pinenut） 按照思路整合脚本，模拟服务器验证。   
-@pikapika 提供测试及某些成品打包
+## 需要帮助？ / How You Can Help  
 
-#### 帮助我们？
+### **当前问题 / Current Issues**  
 
-当前有的两个问题：
+1. **性能优化 / Performance Optimization**  
+   mitmproxy 作为反代验证服务器的性能存在潜在问题。（正在着手开发，请查看 develop 分支）  
+   The performance of mitmproxy as a reverse proxy validation server remains a concern. (Under development; see the `develop` branch.)  
 
-1. mitmproxy作为反代验证服务器，对其性能的担忧
-2. ws2_32.dll(也就是使用ca-bundle.crt的验证)目前还不知道如何脱掉https头，或者去掉这个验证。
+2. **HTTPS 验证 / HTTPS Validation**  
+   ~~ws2_32.dll 中使用 `ca-bundle.crt` 进行验证，尚未找到方法移除 HTTPS 头或绕过验证。~~  
+   ~~HTTPS headers or validation removal for ws2_32.dll remains unresolved.~~  
+   当前全部使用 HTTPS。  
+   All communications now use HTTPS.  
 
-#### 支持？
+---
 
-如果乐意请作者一杯咖啡，或者希望帮助作者维持服务器费用，可以使用XMR钱包：
+## 支持作者 / Support  
 
-46QCd5fqNQTG3xgpmnwbsS8X1DBvbd23EaLtYgYTrdRtaKY3knX5gFCKCZQDcirMzTPexqTZRyt14JgsBbkZL79GGSghPsS
+若愿意支持作者的工作或帮助维持服务器运行，可使用以下 XMR 钱包捐赠：  
+If you'd like to support the developer's work or help maintain the servers, you can donate via the following XMR wallet:  
 
-**由于项目的特殊性，本人目前不接受其他任何捐赠方式。**
+**钱包地址 / Wallet Address**：  
+`46QCd5fqNQTG3xgpmnwbsS8X1DBvbd23EaLtYgYTrdRtaKY3knX5gFCKCZQDcirMzTPexqTZRyt14JgsBbkZL79GGSghPsS`  
+
+> **特别说明 / Special Note:**  
+> 由于项目的特殊性，目前作者仅接受上述方式捐赠。  
+> Due to the nature of the project, the developer only accepts donations through the above method.
