@@ -319,17 +319,8 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 // =====================
 //       IMM HOOK
 // =====================
+// TODO: FIND HOW THIS GAME USE IMM
 
-HIMC(WINAPI* Real_ImmAssociateContext)(
-	HWND unnamedParam1,
-	HIMC unnamedParam2
-) = ImmAssociateContext;
-
-HIMC WINAPI Evolve_ImmAssociateContext(HWND hWnd, HIMC hIMC)
-{
-	LOG(INFO) << "Close IMM SUCCESSFULLY\n";
-	return nullptr;
-}
 
 // =====================
 //       WINTRUST
@@ -401,11 +392,8 @@ void InitHooker() {
 			LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook failed\n";
 		}
 		LOG(DEBUG) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook success\n";
-		// Close Imm to avoid crash
-		hr = SlimDetoursInlineHook(TRUE, &(PVOID&)Real_ImmAssociateContext, Evolve_ImmAssociateContext);
-		if (FAILED(hr)) {
-			LOG(ERROR) << "[IMM_PATH] Evolve_ImmAssociateContext hook failed\n";
-		}
+		
+
 		// EMU MODE PATCH
 		if (ini.GetBoolValue("steam", "emu_steam", "false")) {
 			// emu hook start
@@ -451,10 +439,6 @@ void UninstallHooker() {
 	if (FAILED(hr)) {
 		LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook uninstall failed\n";
 	}
-	hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_ImmAssociateContext, Evolve_ImmAssociateContext);
-	if (FAILED(hr)) {
-		LOG(ERROR) << "[IMM_PATH] Evolve_ImmAssociateContext hook uninstall failed\n";
-	}
 	if (emu_func) {
 		hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_GetEnvironmentVariableA, Evolve_GetEnvironmentVariableA);
 		if (FAILED(hr)) {
@@ -475,6 +459,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
 		DisableThreadLibraryCalls(hModule);
+		// Turn off IME
+		ImmDisableIME(0);
 		InitLogging();
 		InitConfiguration();
 		InitHooker();
