@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #include <winsock2.h>
@@ -45,12 +45,12 @@ bool emu_func = false;
 std::string dll_path;
 bool enable_console = false;
 
-LPWSTR message =
-L"²¹¶¡ÖÆ×÷Õß / Patch Creator: Pinenut\n"
-L"BÕ¾ÕËºÅ / Bilibili ID: Pinenutn\n\n"
-L"±¾²¹¶¡ÓÃÓÚÊµÏÖÓÎÏ·ÑéÖ¤ÖØ¶¨Ïò¹¦ÄÜ¡£\n"
+LPCWSTR message =
+L"è¡¥ä¸åˆ¶ä½œè€… / Patch Creator: Pinenut\n"
+L"Bç«™è´¦å· / Bilibili ID: Pinenutn\n\n"
+L"æœ¬è¡¥ä¸ç”¨äºå®ç°æ¸¸æˆéªŒè¯é‡å®šå‘åŠŸèƒ½ã€‚\n"
 L"This patch enables game verification redirection.\n\n"
-L"ÌØ±ğ¸ĞĞ» / Special Thanks To:\n"
+L"ç‰¹åˆ«æ„Ÿè°¢ / Special Thanks To:\n"
 L"- Nemirtingas (cs.rin.ru)\n"
 L"- Schmogmog (Discord)\n"
 L"- Nemerod (Discord)\n"
@@ -58,14 +58,14 @@ L"- Kiagam (Discord)\n"
 L"- DeinAlbtraum (Discord)\n"
 L"- bluem (Discord)\n"
 L"- Archetype_4 (Discord)\n"
-L"- Pikapika ºÍ¹úÄÚ½ø»¯QQÈº(366237012)¹ÜÀí¡¢ÈºÓÑ\n"
+L"- Pikapika å’Œå›½å†…è¿›åŒ–QQç¾¤(366237012)ç®¡ç†ã€ç¾¤å‹\n"
 L"[Pikapika (group owner of Evolution QQ group) and the group admins and members]\n\n"
-L"ÖØÒªÉùÃ÷ / Important Notice:\n"
-L"±¾²¹¶¡ÎªÃâ·ÑÌá¹©£¬ÑÏ½ûµ¹Âô»òÓÃÓÚ²»Õıµ±»ñÀû£¡\n"
+L"é‡è¦å£°æ˜ / Important Notice:\n"
+L"æœ¬è¡¥ä¸ä¸ºå…è´¹æä¾›ï¼Œä¸¥ç¦å€’å–æˆ–ç”¨äºä¸æ­£å½“è·åˆ©ï¼\n"
 L"This patch is provided for free. Reselling or using it for improper profit is strictly prohibited!\n"
-L"µã»÷¡°È·¶¨¡±¿ªÊ¼ÓÎÏ·¡£\n"
+L"ç‚¹å‡»â€œç¡®å®šâ€å¼€å§‹æ¸¸æˆã€‚\n"
 L"Click \"OK\" to start the game.\n\n"
-L"¹Ù·½ÍøÕ¾ / Official Website: firehomework.top\n\n";
+L"å®˜æ–¹ç½‘ç«™ / Official Website: firehomework.top\n\n";
 
 // ===============
 // BETTER LOGGING
@@ -95,7 +95,7 @@ void InitLogging() {
 	conf.setToDefault();
 	conf.set(el::Level::Debug, el::ConfigurationType::Filename, "EVOLVE_LOG.txt");
 	conf.set(el::Level::Debug, el::ConfigurationType::ToFile, "true");
-	conf.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "false"); 
+	conf.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "false");
 	conf.set(el::Level::Debug, el::ConfigurationType::Format, "%thread %datetime %msg");
 	el::Loggers::reconfigureLogger("default", conf);
 }
@@ -107,7 +107,7 @@ std::string get_full_program_path() {
 	DWORD length = GetModuleFileNameW(nullptr, buffer.data(), bufferSize);
 
 	if (length == bufferSize && GetLastError() == ERROR_INSUFFICIENT_BUFFER) {
-		bufferSize = 32768; 
+		bufferSize = 32768;
 		buffer.resize(bufferSize);
 		length = GetModuleFileNameW(nullptr, buffer.data(), bufferSize);
 	}
@@ -135,7 +135,7 @@ std::string get_full_program_path() {
 
 	size_t last_slash = result.find_last_of("\\");
 	if (last_slash == std::string::npos) {
-		return result; 
+		return result;
 	}
 
 	return result.substr(0, last_slash + 1);
@@ -155,7 +155,7 @@ int WSAAPI Evolve_getaddrinfo(PCSTR pNodeName, PCSTR pServiceName,
 			return EAI_MEMORY;
 		}
 		addr->sin_family = AF_INET;
-        addr->sin_port = htons(static_cast<uint16_t>(server_port));
+		addr->sin_port = htons(static_cast<uint16_t>(server_port));
 		addr->sin_addr.s_addr = inet_addr(server_ip.c_str());
 		*ppResult = (PADDRINFOA)malloc(sizeof(ADDRINFOA));
 		if (*ppResult == NULL) {
@@ -174,7 +174,7 @@ int WSAAPI Evolve_getaddrinfo(PCSTR pNodeName, PCSTR pServiceName,
 }
 
 HINTERNET(WINAPI* Real_WinHttpConnect)(HINTERNET hSession, LPCWSTR pswzServerName, INTERNET_PORT nServerPort, DWORD dwReserved) = WinHttpConnect;
-	
+
 HINTERNET WINAPI Evolve_WinHttpConnect(HINTERNET hSession, LPCWSTR pswzServerName,
 	INTERNET_PORT nServerPort, DWORD dwReserved) {
 	pswzServerName = wServerIP.c_str();
@@ -219,17 +219,17 @@ HINTERNET WINAPI Evolve_WinHttpOpenRequest(
 //    Steam EMU HOOK
 // =====================
 DWORD(WINAPI* Real_GetEnvironmentVariableA)(
-	IN LPCSTR lpName,        // »·¾³±äÁ¿µÄÃû³Æ / Name of the environment variable
-	OUT LPSTR lpBuffer,      // ´æ·Å»·¾³±äÁ¿ÖµµÄ»º³åÇø / Buffer to store the environment variable value
-	IN DWORD nSize           // »º³åÇø´óĞ¡ / Size of the buffer
+	IN LPCSTR lpName,        // ç¯å¢ƒå˜é‡çš„åç§° / Name of the environment variable
+	OUT LPSTR lpBuffer,      // å­˜æ”¾ç¯å¢ƒå˜é‡å€¼çš„ç¼“å†²åŒº / Buffer to store the environment variable value
+	IN DWORD nSize           // ç¼“å†²åŒºå¤§å° / Size of the buffer
 	) = GetEnvironmentVariableA;
 LSTATUS(WINAPI* Real_RegQueryValueExA)(
-	IN HKEY hKey,                // ×¢²á±íµÄ¾ä±ú / Handle to the registry key
-	IN LPCSTR lpValueName,       // ×¢²á±íÖµµÄÃû³Æ / Name of the registry value
-	IN LPDWORD lpReserved,       // ±£Áô²ÎÊı / Reserved parameter
-	OUT LPDWORD lpType,          // ÖµµÄÊı¾İÀàĞÍ / Type of data stored in the value
-	OUT LPBYTE lpData,           // ´æ·Å×¢²á±íÖµÊı¾İµÄ»º³åÇø / Buffer to store the registry value data
-	IN LPDWORD lpcbData          // »º³åÇøµÄ´óĞ¡ / Size of the buffer
+	IN HKEY hKey,                // æ³¨å†Œè¡¨çš„å¥æŸ„ / Handle to the registry key
+	IN LPCSTR lpValueName,       // æ³¨å†Œè¡¨å€¼çš„åç§° / Name of the registry value
+	IN LPDWORD lpReserved,       // ä¿ç•™å‚æ•° / Reserved parameter
+	OUT LPDWORD lpType,          // å€¼çš„æ•°æ®ç±»å‹ / Type of data stored in the value
+	OUT LPBYTE lpData,           // å­˜æ”¾æ³¨å†Œè¡¨å€¼æ•°æ®çš„ç¼“å†²åŒº / Buffer to store the registry value data
+	IN LPDWORD lpcbData          // ç¼“å†²åŒºçš„å¤§å° / Size of the buffer
 	) = RegQueryValueExA;
 
 DWORD WINAPI Evolve_GetEnvironmentVariableA(
@@ -237,19 +237,19 @@ DWORD WINAPI Evolve_GetEnvironmentVariableA(
 	OUT LPSTR  lpBuffer,
 	IN  DWORD  nSize
 ) {
-	// Ô¤¶¨ÒåµÄ AppId ×Ö·û´®
+	// é¢„å®šä¹‰çš„ AppId å­—ç¬¦ä¸²
 	const char* predefinedAppId = "273350";
 	const DWORD predefinedAppIdLength = 6;
 
-	// ÅĞ¶ÏÊÇ·ñÊÇ "SteamAppId" »ò "SteamGameId"
+	// åˆ¤æ–­æ˜¯å¦æ˜¯ "SteamAppId" æˆ– "SteamGameId"
 	if (strcmp(lpName, "SteamAppId") == 0 || strcmp(lpName, "SteamGameId") == 0) {
 		if (lpBuffer != NULL) {
-			if (nSize >= predefinedAppIdLength + 1) {  // +1 ÊÇÎªÁËÈİÄÉ '\0'
+			if (nSize >= predefinedAppIdLength + 1) {  // +1 æ˜¯ä¸ºäº†å®¹çº³ '\0'
 				strcpy_s(lpBuffer, nSize, predefinedAppId);
 				return predefinedAppIdLength;
 			}
 			else {
-				return predefinedAppIdLength + 1;  // ·µ»ØËùĞèµÄ»º³åÇø´óĞ¡
+				return predefinedAppIdLength + 1;  // è¿”å›æ‰€éœ€çš„ç¼“å†²åŒºå¤§å°
 			}
 		}
 	}
@@ -268,12 +268,12 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 
 	if (keyname == "SteamClientDll64") {
 		if (lpData != NULL && lpcbData != NULL) {
-			// Æ´½Ódll_path
+			// æ‹¼æ¥dll_path
 			std::string steamClientPath = get_full_program_path() + dll_path;
 			size_t dataSize = steamClientPath.size();
 
 			if (*lpcbData >= dataSize + 1) {
-				memcpy(lpData, steamClientPath.c_str(), dataSize + 1); // ¸´ÖÆÂ·¾¶¼°Ä©Î²µÄ '\0'
+				memcpy(lpData, steamClientPath.c_str(), dataSize + 1); // å¤åˆ¶è·¯å¾„åŠæœ«å°¾çš„ '\0'
 				*lpcbData = static_cast<DWORD>(dataSize + 1);
 				return ERROR_SUCCESS;
 			}
@@ -285,11 +285,11 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 	}
 	else if (keyname == "pid") {
 		if (lpData != NULL && lpcbData != NULL) {
-			DWORD processId = GetCurrentProcessId(); // »ñÈ¡µ±Ç°½ø³ÌµÄ PID
+			DWORD processId = GetCurrentProcessId(); // è·å–å½“å‰è¿›ç¨‹çš„ PID
 
 			if (*lpcbData >= sizeof(DWORD)) {
-				memcpy(lpData, &processId, sizeof(processId)); // ½« PID ¸´ÖÆµ½ lpData
-				*lpcbData = sizeof(DWORD); // ÉèÖÃ·µ»ØÊı¾İµÄ´óĞ¡
+				memcpy(lpData, &processId, sizeof(processId)); // å°† PID å¤åˆ¶åˆ° lpData
+				*lpcbData = sizeof(DWORD); // è®¾ç½®è¿”å›æ•°æ®çš„å¤§å°
 				return ERROR_SUCCESS;
 			}
 			else {
@@ -313,7 +313,7 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 			}
 		}
 	}
-	// ÆäËûÇé¿öµ÷ÓÃÔ­Ê¼º¯Êı
+	// å…¶ä»–æƒ…å†µè°ƒç”¨åŸå§‹å‡½æ•°
 	return Real_RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, lpData, lpcbData);
 }
 // =====================
@@ -342,9 +342,9 @@ void InitConfiguration() {
 	if (rc < 0) {
 		MessageBox(
 			NULL,
-			L"ÅäÖÃÎÄ¼ş²»´æÔÚ¡£\nÇë¼ì²éBin64_SteamRetailÄ¿Â¼ÊÇ·ñ´æÔÚEvolveLogging.ini¡£\n\n"
+			L"é…ç½®æ–‡ä»¶ä¸å­˜åœ¨ã€‚\nè¯·æ£€æŸ¥Bin64_SteamRetailç›®å½•æ˜¯å¦å­˜åœ¨EvolveLogging.iniã€‚\n\n"
 			L"The configuration file does not exist.\nPlease check if the EvolveLogging.ini file exists in the Bin64_SteamRetail directory.",
-			L"´íÎó / Error",
+			L"é”™è¯¯ / Error",
 			MB_ICONERROR | MB_OK
 		);
 		exit(0);
@@ -371,7 +371,7 @@ void InitHooker() {
 	if (StrCmpI(szCurName, szAppName) == 0)
 	{
 		int x;
-		x = MessageBox(GetForegroundWindow(), message, L"¡¾×¢ÒâÊÂÏî/NOTICE¡¿", 1);
+		x = MessageBox(GetForegroundWindow(), message, L"ã€æ³¨æ„äº‹é¡¹/NOTICEã€‘", 1);
 		if (x != 1)
 		{
 			exit(0);
@@ -392,7 +392,7 @@ void InitHooker() {
 			LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook failed\n";
 		}
 		LOG(DEBUG) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook success\n";
-		
+
 
 		// EMU MODE PATCH
 		if (ini.GetBoolValue("steam", "emu_steam", "false")) {
@@ -414,9 +414,9 @@ void InitHooker() {
 			else {
 				MessageBox(
 					NULL,
-					L"²»´æÔÚEMU DLL PATH£¬Çë¼ì²éÅäÖÃÎÄ¼ş¡£\n\n"
+					L"ä¸å­˜åœ¨EMU DLL PATHï¼Œè¯·æ£€æŸ¥é…ç½®æ–‡ä»¶ã€‚\n\n"
 					L"EMU DLL PATH does not exist. Please check the configuration file.",
-					L"´íÎó / Error",
+					L"é”™è¯¯ / Error",
 					MB_ICONERROR | MB_OK
 				);
 				exit(0);
@@ -459,6 +459,64 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
 		DisableThreadLibraryCalls(hModule);
+		// Intercept the game launch and redirect to launcher if --no-launcher is not present in argv
+		std::wstring cmdLine = GetCommandLineW();
+
+		if (cmdLine.find(L"--no-launcher") == std::string::npos) {
+			if (cmdLine[0] == L'"') {
+				cmdLine.erase(0, 1);
+				size_t pos = cmdLine.find(L'"');
+				cmdLine.erase(0, pos + 1);
+			}
+			else {
+				size_t pos = cmdLine.find(L' ');
+				cmdLine.erase(0, pos);
+			}
+
+			STARTUPINFO si;
+			PROCESS_INFORMATION pi;
+
+			ZeroMemory(&si, sizeof(si));
+			si.cb = sizeof(si);
+			ZeroMemory(&pi, sizeof(pi));
+
+			LPCWSTR launcherFilename = L"EvolveLauncher.exe";
+			WCHAR launcherPath[MAX_PATH];
+
+			GetFullPathName(launcherFilename, MAX_PATH, launcherPath, nullptr);
+
+			std::wstring launcherCmd = launcherPath + cmdLine;
+
+			size_t length = wcslen(launcherCmd.c_str()) + 1;
+			LPWSTR launcherCmdLine = new WCHAR[length];
+			wcscpy_s(launcherCmdLine, length, launcherCmd.c_str());
+
+			// Check if launcher is present, else we just run normally
+			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(L"EvolveLauncher.exe")) {
+				CreateProcess(
+					nullptr,
+					launcherCmdLine,
+					nullptr,
+					nullptr,
+					FALSE,
+					DETACHED_PROCESS,
+					nullptr,
+					nullptr,
+					&si,
+					&pi
+				);
+
+
+				//WaitForSingleObject(pi.hProcess, INFINITE);
+
+				CloseHandle(pi.hProcess);
+				CloseHandle(pi.hThread);
+				delete[] launcherCmdLine;
+
+				exit(0);
+			}
+		}
+
 		// Turn off IME
 		ImmDisableIME(0);
 		InitLogging();
