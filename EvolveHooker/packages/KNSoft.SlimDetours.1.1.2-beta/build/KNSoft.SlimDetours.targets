@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Project InitialTargets="SlimDetoursCheckPlatform" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IncludePath>$(MSBuildThisFileDirectory)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MSBuildThisFileDirectory)Lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <Target Name="SlimDetoursCheckPlatform">
+    <Error Text="KNSoft.SlimDetours supports x86, x64 and ARM64, but current configured platform target is $(PlatformTarget)." Condition="'$(PlatformTarget)'!='x86' and '$(PlatformTarget)'!='x64' and '$(PlatformTarget)'!='ARM64'" />
+  </Target>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='Debug'">
+    <Link>
+      <AdditionalDependencies>ntdll.lib;$(MSBuildThisFileDirectory)Lib\$(PlatformTarget)\$(Configuration)\KNSoft.SlimDetours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

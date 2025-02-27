@@ -52,6 +52,7 @@
     <ProjectGuid>{7f295af5-388a-4c02-bd05-ea6bbc3d3c8f}</ProjectGuid>
     <RootNamespace>Dll1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>EvolveHooker</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -173,6 +174,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -184,12 +186,12 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\KNSoft.SlimDetours.1.1.0-beta\build\KNSoft.SlimDetours.targets" Condition="Exists('..\packages\KNSoft.SlimDetours.1.1.0-beta\build\KNSoft.SlimDetours.targets')" />
+    <Import Project="..\packages\KNSoft.SlimDetours.1.1.2-beta\build\KNSoft.SlimDetours.targets" Condition="Exists('..\packages\KNSoft.SlimDetours.1.1.2-beta\build\KNSoft.SlimDetours.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\KNSoft.SlimDetours.1.1.0-beta\build\KNSoft.SlimDetours.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KNSoft.SlimDetours.1.1.0-beta\build\KNSoft.SlimDetours.targets'))" />
+    <Error Condition="!Exists('..\packages\KNSoft.SlimDetours.1.1.2-beta\build\KNSoft.SlimDetours.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KNSoft.SlimDetours.1.1.2-beta\build\KNSoft.SlimDetours.targets'))" />
   </Target>
 </Project>
