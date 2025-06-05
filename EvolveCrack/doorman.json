@@ -1,0 +1,222 @@
+{
+	"result": {
+		"isOnline": true,
+		"userCapacity": 108000,
+		"userCount": 41,
+		"authorization": {
+			"accessToken": "32103cc69656cb772b1d5cbeb6468e64",
+			"expiresIn": 86400,
+			"refreshToken": "13782eba4c1ecea1c00c71ef21ffa15f",
+			"refreshExpiresIn": 7200,
+			"tokenType": "bearer",
+			"playerId": null,
+			"sessionId": "3b99cccd8736262091501acdc91462c5"
+		},
+		"services": [
+			{
+				"serviceName": "apps",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "88617557f1789a427b307e225b111db9.my.2k.com/",
+						"port": 443,
+						"baseUri": "apps/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "content",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "content/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "doorman",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "doorman/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "entitlements",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "entitlements/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "players",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "88617557f1789a427b307e225b111db9.my.2k.com/",
+						"port": 443,
+						"baseUri": "players/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "singlesignon",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "sso/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "storage",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "storage/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "storefront",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "97a4baee4e74619c4d6d51d27a6d061c.my.2k.com/",
+						"port": 443,
+						"baseUri": "storefront/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "telemetry",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "telemetry/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "sessions",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "sessions/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "news",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "news/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			},
+			{
+				"serviceName": "stats",
+				"serviceInstances": [
+					{
+						"protocol": "https",
+						"host": "508223012e5a5ff19f30a391b2bdadc0.my.2k.com/",
+						"port": 443,
+						"baseUri": "stats/1",
+						"actions": [],
+						"isProduction": false
+					}
+				]
+			}
+		],
+		"clientConfigSettings": {
+			"doormanConnectTimeout": 10,
+			"doormanRequestTimeout": 15,
+			"logLevelMin": 0,
+			"logLevelMax": 4,
+			"logLevel": 4,
+			"debugModeMin": false,
+			"debugModeMax": true,
+			"debugMode": true,
+			"restLogToFileModeMin": false,
+			"restLogToFileModeMax": true,
+			"restLogToFileMode": true,
+			"autoCacheLogin": true,
+			"storefrontLanguagesNotSupported": "ar",
+			"steamStorefrontPriceInfoCountry": "on",
+			"minRequestTimeout": 90,
+			"defaultRequestTimeout": 90,
+			"assertTelemetry": false,
+			"storefrontTrackFirstPartyPurchase": false,
+			"appHasStorefront": true,
+			"storefrontHasConsumables": true
+		},
+		"platformType": 3,
+		"onlineServicePlatform": 3
+	},
+	"header": {
+		"appContext": 0,
+		"appVersion": "1.8.1.3",
+		"code": 0,
+		"cache": {
+			"onlineTtl": 0,
+			"offlineTtl": -1,
+			"ignoreFields": {
+				"header": "appContext,appVersion,productVersion,accessToken,doormanSecret,appPublicId,appSecret,gameVersion",
+				"params": "doormanInfo,locale"
+			},
+			"protect": "1=2",
+			"onlyPreCacheFields": {
+				"result": "clientConfigSettings"
+			},
+			"onlyContent": {
+				"result": "clientConfigSettings"
+			},
+			"onlyPrecacheContent": {
+				"result": "clientConfigSettings"
+			},
+			"cacheId": "542d0f036199f79093d4dc61dfb7beea"
+		}
+	}
+}

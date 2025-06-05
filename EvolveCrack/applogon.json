@@ -1,0 +1,35 @@
+{
+	"result": {
+		"platformType": 3,
+		"onlineStoreType": 5,
+		"onlineServicePlatform": 3,
+		"accountType": 2,
+		"isNewPlayer": false,
+		"hasPlayedApp": true,
+		"accessToken": "210038cafc12254affdf286ed4b51692",
+		"expiresIn": 86400,
+		"tokenType": "bearer",
+		"playerId": "2357d522a223d8d57b05071505274b6b",
+		"sessionId": "ab9d14fdb5da1e584784ee023557b800",
+		"refreshToken": "0066ea95224cbb18178e5882280cac66",
+		"refreshExpiresIn": 7200,
+		"dobNeeded": false
+	},
+	"header": {
+		"appContext": 0,
+		"appVersion": "1.8.1.3",
+		"code": 0,
+		"cache": {
+			"onlineTtl": 0,
+			"offlineTtl": -1,
+			"ignoreFields": {
+				"header": "appContext,appVersion,productVersion,accessToken,gameVersion"
+			},
+			"protect": "1=3",
+			"onlyFields": {
+				"params": "firstPartyPlayerId,email,password"
+			},
+			"cacheId": "d91fe59bafa610b7a15cc3c677e8c717"
+		}
+	}
+}

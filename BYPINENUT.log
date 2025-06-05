@@ -1,0 +1,1272 @@
+2025-04-26T18:01:23.256+0800	info	junk/main.go:406	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T18:01:23.268+0800	info	junk/main.go:407	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T18:01:23.268+0800	info	junk/main.go:440	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T18:01:23.268+0800	info	junk/main.go:441	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T18:01:23.268+0800	info	junk/main.go:442	================================================================
+2025-04-26T18:01:23.268+0800	info	junk/main.go:443	正在启动游戏……如果游戏没有成功启动，请手动启动RebornEvolve.exe!
+Running game...If the game failed to run,please run RebornEvolve.exe by yourself
+2025-04-26T18:01:39.874+0800	warn	junk/main.go:389	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:389
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T18:01:39.874+0800	warn	junk/main.go:390	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:390
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T18:01:39.875+0800	info	junk/main.go:161	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T18:01:40.192+0800	warn	junk/main.go:389	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:389
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T18:01:40.193+0800	warn	junk/main.go:390	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:390
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T18:01:40.193+0800	info	junk/main.go:161	[松子日志]	{"message": "/favicon.ico Something I forgot to emulate but seems okay"}
+2025-04-26T18:02:52.566+0800	info	junk/main.go:161	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T18:02:52.880+0800	warn	junk/main.go:389	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:389
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T18:02:52.880+0800	warn	junk/main.go:390	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:390
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.CustomRecoveryWithWriter.func1
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/recovery.go:102
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T18:02:52.880+0800	info	junk/main.go:161	[松子日志]	{"message": "/favicon.ico Something I forgot to emulate but seems okay"}
+2025-04-26T20:24:36.929+0800	info	junk/main.go:406	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T20:24:36.947+0800	info	junk/main.go:407	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T20:24:36.947+0800	info	junk/main.go:440	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T20:24:36.947+0800	info	junk/main.go:441	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T20:24:36.947+0800	info	junk/main.go:442	================================================================
+2025-04-26T20:24:36.947+0800	info	junk/main.go:443	正在启动游戏……如果游戏没有成功启动，请手动启动RebornEvolve.exe!
+Running game...If the game failed to run,please run RebornEvolve.exe by yourself
+2025-04-26T20:24:46.848+0800	warn	junk/main.go:389	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:389
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T20:24:46.848+0800	warn	junk/main.go:390	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:390
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T20:24:46.848+0800	info	junk/main.go:161	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:24:47.086+0800	warn	junk/main.go:389	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:389
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T20:24:47.087+0800	warn	junk/main.go:390	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+main.handleRequest
+	C:/Users/Administrator/GolandProjects/junk/main.go:390
+github.com/gin-gonic/gin.(*Context).Next
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/context.go:185
+github.com/gin-gonic/gin.serveError
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:677
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:670
+github.com/gin-gonic/gin.(*Engine).ServeHTTP
+	D:/yingyong/GoData/GoPath/pkg/mod/github.com/gin-gonic/gin@v1.10.0/gin.go:589
+net/http.serverHandler.ServeHTTP
+	D:/yingyong/GoData/GO122/src/net/http/server.go:3142
+net/http.(*conn).serve
+	D:/yingyong/GoData/GO122/src/net/http/server.go:2044
+2025-04-26T20:24:47.087+0800	info	junk/main.go:161	[松子日志]	{"message": "/favicon.ico Something I forgot to emulate but seems okay"}
+2025-04-26T20:54:31.098+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T20:54:31.113+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T20:54:31.113+0800	INFO	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T20:54:31.113+0800	INFO	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T20:54:31.113+0800	INFO	================================================================
+2025-04-26T20:54:31.113+0800	INFO	正在启动游戏……如果游戏没有成功启动，请手动启动RebornEvolve.exe!
+Running game...If the game failed to run,please run RebornEvolve.exe by yourself
+2025-04-26T20:54:58.486+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:54:58.486+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:54:58.486+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:54:58.768+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:54:58.768+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:54:58.768+0800	INFO	[松子日志]	{"message": "/favicon.ico Something I forgot to emulate but seems okay"}
+2025-04-26T20:55:02.823+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:55:02.824+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:55:02.824+0800	INFO	[松子日志]	{"message": "/index.html Something I forgot to emulate but seems okay"}
+2025-04-26T20:55:03.099+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:55:03.099+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:55:03.099+0800	INFO	[松子日志]	{"message": "/favicon.ico Something I forgot to emulate but seems okay"}
+2025-04-26T20:57:27.487+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T20:57:27.503+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T20:57:27.504+0800	INFO	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T20:57:27.504+0800	INFO	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T20:57:31.413+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:57:31.413+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:57:31.413+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:57:31.642+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:57:31.643+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:57:31.643+0800	INFO	[松子日志]	{"message": "/favicon.ico Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:38.168+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T20:58:38.180+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T20:58:38.180+0800	INFO	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T20:58:38.180+0800	INFO	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T20:58:40.470+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:40.470+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:40.470+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:41.257+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:41.257+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:41.257+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:41.971+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:41.971+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:41.971+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:42.540+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:42.541+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:42.541+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:43.092+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:43.092+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:43.092+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:43.623+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:43.623+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:43.623+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:44.151+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:44.152+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:44.152+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:44.633+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:44.634+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:44.634+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:45.136+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:45.137+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:45.137+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:45.622+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:45.622+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:45.622+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:46.124+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:46.125+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:46.125+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:46.605+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:46.605+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:46.605+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:47.104+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:47.104+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:47.104+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:47.571+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:47.571+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:47.571+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:48.076+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:48.077+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:48.077+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T20:58:48.553+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T20:58:48.553+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T20:58:48.553+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:12.959+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:12.959+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:12.959+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:13.294+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:13.294+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:13.294+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:13.474+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:13.474+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:13.474+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:13.650+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:13.651+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:13.651+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:13.814+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:13.815+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:13.815+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:13.981+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:13.982+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:13.982+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:14.174+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:14.174+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:14.174+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:14.333+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:14.333+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:14.333+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:14.508+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:14.508+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:14.508+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:14.689+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:14.689+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:14.689+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:14.850+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:14.851+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:14.851+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:15.042+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:15.043+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:15.043+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:15.210+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:15.211+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:15.211+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:15.378+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:15.378+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:15.378+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:15.563+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:15.564+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:15.564+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:15.724+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:15.724+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:15.724+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:15.889+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:15.890+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:15.890+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:16.060+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:16.060+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:16.060+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:16.223+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:16.224+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:16.224+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:16.378+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:16.379+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:16.379+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:01:16.550+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:01:16.550+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:01:16.550+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:02:10.886+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:02:10.898+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:02:10.898+0800	INFO	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T21:02:10.898+0800	INFO	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T21:02:13.975+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:02:13.975+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:02:13.975+0800	INFO	[松子日志]	{"message": "/index.html Something I forgot to emulate but seems okay"}
+2025-04-26T21:02:15.908+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:02:15.908+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:02:15.908+0800	INFO	[松子日志]	{"message": "/index.html Something I forgot to emulate but seems okay"}
+2025-04-26T21:02:16.800+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:02:16.801+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:02:16.801+0800	INFO	[松子日志]	{"message": "/index.html Something I forgot to emulate but seems okay"}
+2025-04-26T21:02:17.359+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate."}
+2025-04-26T21:02:17.359+0800	WARN	[松子日志]	{"message": "It's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:02:17.359+0800	INFO	[松子日志]	{"message": "/index.html Something I forgot to emulate but seems okay"}
+2025-04-26T21:03:30.968+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:03:30.983+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:03:30.983+0800	INFO	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T21:03:30.983+0800	INFO	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T21:05:14.471+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:05:14.484+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:05:14.484+0800	INFO	服务器已经运行！请配置您的serverip为127.0.0.1(默认即配置）
+2025-04-26T21:05:14.484+0800	INFO	Server is running, Port = 2000, Please configure your serverip to 127.0.0.1（A default config)
+2025-04-26T21:05:37.742+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:05:37.753+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:05:37.753+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:16:05.411+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:16:05.424+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:16:05.424+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:16:18.739+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:16:21.264+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:16:21.266+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:16:21.268+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:16:21.268+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:18:19.674+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:18:19.686+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:18:19.686+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:19:39.047+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:19:40.786+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:19:40.789+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:19:40.790+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:19:40.790+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:20:21.104+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:20:21.120+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:20:21.120+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:21:32.610+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:21:32.625+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:21:32.625+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:23:57.540+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:23:57.556+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:23:57.556+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:42:31.801+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:42:31.815+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:42:31.817+0800	INFO	服务器正在运行，端口 = 2000，同时支持 HTTP 和 HTTPS
+2025-04-26T21:42:43.946+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:42:46.158+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:42:46.166+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:42:48.491+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:42:48.491+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:46:46.356+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:46:46.371+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:46:46.372+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:47:07.962+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:47:09.750+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:47:09.757+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:47:09.762+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:47:09.762+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:12.478+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:13.553+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:14.571+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:15.589+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:16.607+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:17.618+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:18.637+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:19.649+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:20.666+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:21.684+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:23.966+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:41.605+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:48:41.771+0800	INFO	[松子日志]	{"message": "Game is Trying to request mbclusions from updateserver."}
+2025-04-26T21:48:41.771+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:41.771+0800	INFO	[松子日志]	{"message": "/PC/Production/252019.252019.0/build_config_signed.json Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:43.483+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:48:43.487+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:43.487+0800	INFO	[松子日志]	{"message": "/8112690398592087182/auth/two_k Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:43.714+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:43.714+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:47.563+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T21:48:47.563+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:47.563+0800	INFO	[松子日志]	{"message": "/PC/Production/252019.252019/micro_patch_version_signed.json Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:47.901+0800	INFO	[松子日志]	{"message": "Game is Trying to request the micro pak from updateserver."}
+2025-04-26T21:48:47.902+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:47.902+0800	INFO	[松子日志]	{"message": "/PC/Production/252019.252019/micro_patch_252019.252019_31.pak Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:54.888+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:48:58.432+0800	INFO	[松子日志]	{"message": "Game is Trying to Go MultiPlayer."}
+2025-04-26T21:48:58.432+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:58.432+0800	INFO	[松子日志]	{"message": "/auth.php Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:58.763+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:58.763+0800	INFO	[松子日志]	{"message": "/evolve/event Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:58.764+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:48:58.766+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:58.766+0800	INFO	[松子日志]	{"message": "/evolve/config/2357d522a223d8d57b05071505274b6b Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:59.210+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T21:48:59.210+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:59.210+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:48:59.210+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T21:48:59.210+0800	INFO	[松子日志]	{"message": "/PC/Production/252019.252019/micro_patch_version_signed.json Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:20.757+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:20.796+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:20.796+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:20.796+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:21.798+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:21.834+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:21.834+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:21.834+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:22.836+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:22.880+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:22.880+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:22.880+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:23.883+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:23.926+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:23.927+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:23.927+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:24.929+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:24.977+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:24.977+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:24.977+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:25.979+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:26.015+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:26.015+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:26.015+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:27.017+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:27.054+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:27.054+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:27.054+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:28.056+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:28.102+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:28.102+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:28.102+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:29.103+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:29.149+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:29.149+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:29.149+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:30.152+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:30.200+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:30.200+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:30.200+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:47.104+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:50:47.155+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:50:47.155+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:47.155+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:50.362+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:50:50.448+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:50:57.253+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:57.253+0800	INFO	[松子日志]	{"message": "/8112690398592087182/auth/two_k Something I forgot to emulate but seems okay"}
+2025-04-26T21:50:57.455+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:50:57.455+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:30.872+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:30.910+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:30.910+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:30.910+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:31.912+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:31.957+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:31.957+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:31.957+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:32.959+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:33.007+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:33.007+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:33.007+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:34.009+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:34.053+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:34.053+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:34.053+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:35.056+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:35.102+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:35.103+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:35.103+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:36.104+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:36.140+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:36.140+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:36.140+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:37.142+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:37.182+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:37.182+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:37.182+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:38.184+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:38.222+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:38.222+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:38.222+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:39.224+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:39.272+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:39.273+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:39.273+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:40.275+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:40.332+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:40.332+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:40.332+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:51:52.516+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:51:52.582+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:51:52.583+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:51:52.583+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:52:22.870+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:52:22.916+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:52:22.916+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:52:22.916+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:53:00.062+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:53:00.102+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:53:00.102+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:53:00.102+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:53:25.684+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:53:25.699+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:53:25.699+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:53:32.918+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:53:33.011+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:53:51.117+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:53:51.135+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:53:51.135+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:53:55.164+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:53:55.281+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:53:55.281+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:53:55.281+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:53:56.283+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:53:56.320+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:53:56.320+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:53:56.320+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:53:57.322+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:53:57.368+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:53:57.368+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:53:57.368+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:53:58.369+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:53:58.427+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:53:58.427+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:53:58.427+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:53:59.429+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:53:59.473+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:53:59.473+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:53:59.473+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:54:00.474+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:54:00.519+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:54:00.519+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:54:00.519+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:54:01.521+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:54:01.564+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:54:01.564+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:54:01.564+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:54:02.565+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:54:02.608+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:54:02.608+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:54:02.608+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:54:03.610+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:54:03.648+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:54:03.648+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:54:03.648+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:54:04.649+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:54:04.695+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:54:04.696+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:54:04.696+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:54:06.305+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:55:27.207+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:55:27.207+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:55:27.207+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:55:27.207+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:55:27.207+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:55:33.384+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:55:33.400+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:55:33.400+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:55:50.554+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:55:53.256+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:55:53.257+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:55:53.257+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:55:56.832+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:55:56.955+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:56:08.080+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:56:17.929+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:56:35.536+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:56:35.574+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:56:35.574+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:56:35.574+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:56:36.576+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:56:36.614+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:56:36.615+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:56:36.615+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:56:37.616+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:56:37.653+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:56:37.653+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:56:37.653+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:56:38.655+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:56:38.699+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:56:38.700+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:56:38.700+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:56:39.701+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:57:25.153+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:57:25.153+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:57:50.012+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:57:50.013+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:57:50.013+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:57:51.845+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:57:51.845+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:58:06.736+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:58:41.915+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:58:41.969+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:58:41.969+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:58:41.969+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:58:47.935+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T21:58:47.951+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T21:58:47.951+0800	INFO	Server is running, Port = 2000
+2025-04-26T21:58:50.632+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T21:58:53.140+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T21:59:24.920+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:27.693+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:27.693+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:32.204+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:33.205+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:36.642+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:36.642+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:36.642+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:37.644+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:37.688+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:37.689+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:37.689+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:38.690+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:38.726+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:38.728+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:38.728+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:39.730+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:39.767+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:39.767+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:39.767+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:40.769+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:40.823+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:40.823+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:40.823+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:41.824+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:41.860+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:41.861+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:41.861+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:42.862+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:42.899+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:42.899+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:42.899+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:43.900+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:43.946+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:43.946+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:43.947+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T21:59:44.948+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T21:59:51.147+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T21:59:56.172+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T21:59:56.172+0800	INFO	[松子日志]	{"message": "/doorman/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:00:57.809+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:00:57.827+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:00:57.827+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:01:00.066+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:02.702+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:07.772+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:01:07.953+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:01:27.020+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:27.059+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:28.062+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:28.100+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:29.101+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:29.145+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:30.148+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:30.196+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:31.197+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:31.244+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:32.246+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:32.292+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:33.293+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:33.332+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:34.334+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:34.387+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:35.389+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:35.430+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:36.432+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:36.477+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:38.156+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:01:38.196+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:01:48.731+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:01:48.745+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:01:48.745+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:02:01.433+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:02:01.521+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:02:13.794+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:02:13.809+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:02:13.809+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:02:19.456+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:29.484+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:44.285+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:46.800+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:47.802+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:47.846+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:48.848+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:48.893+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:49.896+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:49.940+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:50.942+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:50.986+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:51.989+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:52.035+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:53.037+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:53.084+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:02:54.815+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:02:54.854+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:03:03.173+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:06.702+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:12.382+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:12.388+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:13.888+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:03:13.928+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:03:40.289+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:03:40.310+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:03:40.310+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:03:42.703+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:45.009+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:45.018+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:03:59.936+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:04:04.191+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:04:43.939+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:04:43.955+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:04:43.955+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:04:52.080+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:04:53.707+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:04:53.716+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:04:57.704+0800	ERROR	解析请求体失败: unexpected end of JSON input
+2025-04-26T22:04:57.704+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:04:58.062+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:33.767+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:05:33.783+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:05:33.784+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:05:35.084+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:35.219+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:05:35.224+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:35.272+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:05:35.272+0800	INFO	[松子日志]	{"message": "/telemetry/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:05:35.273+0800	INFO	[松子日志]	{"message": "Game is Trying to request news in 2K"}
+2025-04-26T22:05:36.476+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:37.976+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:37.982+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:37.986+0800	ERROR	解析请求体失败: unexpected end of JSON input
+2025-04-26T22:05:37.986+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:05:38.280+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:43.677+0800	ERROR	解析请求体失败: unexpected end of JSON input
+2025-04-26T22:05:43.677+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:05:43.970+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:55.394+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:05:55.551+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:05:55.818+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:55.865+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:05:55.865+0800	INFO	[松子日志]	{"message": "/content/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:05:56.053+0800	INFO	[松子日志]	{"message": "Game is Trying to request sso-authlogon in 2K"}
+2025-04-26T22:05:56.156+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:56.194+0800	INFO	[松子日志]	{"message": "Game is Trying to request stats in 2K"}
+2025-04-26T22:05:56.252+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:05:56.252+0800	INFO	[松子日志]	{"message": "/8112690398592087182/auth/two_k Something I forgot to emulate but seems okay"}
+2025-04-26T22:05:56.482+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:05:56.482+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T22:05:56.606+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:56.643+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T22:05:56.645+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:56.690+0800	INFO	[松子日志]	{"message": "Game is Trying to request getFirstPartyMapping in 2K"}
+2025-04-26T22:05:56.708+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:05:56.753+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:05:56.753+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:05:56.755+0800	INFO	[松子日志]	{"message": "Game is Trying to request grantsfind in 2K"}
+2025-04-26T22:06:15.851+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:06:16.183+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:06:16.183+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T22:06:16.300+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:06:16.343+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T22:06:16.363+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:06:16.408+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:06:16.408+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:06:23.050+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T22:06:32.499+0800	INFO	[松子日志]	{"message": "Game is Trying to Go MultiPlayer."}
+2025-04-26T22:06:32.838+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:06:32.838+0800	INFO	[松子日志]	{"message": "/evolve/event Something I forgot to emulate but seems okay"}
+2025-04-26T22:06:32.838+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:06:32.841+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:06:32.841+0800	INFO	[松子日志]	{"message": "/evolve/config/2357d522a223d8d57b05071505274b6b Something I forgot to emulate but seems okay"}
+2025-04-26T22:06:33.307+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T22:06:33.307+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:06:33.307+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:06:35.358+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:07:10.146+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:07:10.477+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:07:10.477+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T22:07:10.699+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:07:10.739+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T22:07:10.757+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:07:10.803+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:07:10.803+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:07:10.805+0800	INFO	[松子日志]	{"message": "Game is Trying to request grantsfind in 2K"}
+2025-04-26T22:13:46.932+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:13:46.972+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T22:13:46.984+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:13:47.023+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:13:47.024+0800	INFO	[松子日志]	{"message": "/telemetry/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:13:47.025+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:13:47.025+0800	INFO	[松子日志]	{"message": "/content/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:13:47.076+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T22:13:47.186+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:13:47.232+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T22:13:47.293+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:13:47.343+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T22:13:47.397+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:13:47.448+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T22:13:47.501+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:13:47.550+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T22:14:04.760+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:14:04.812+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:14:15.592+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:14:15.766+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:14:16.014+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:14:16.051+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:16.051+0800	INFO	[松子日志]	{"message": "/content/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:14:16.248+0800	INFO	[松子日志]	{"message": "Game is Trying to request sso-authlogon in 2K"}
+2025-04-26T22:14:16.476+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:16.476+0800	INFO	[松子日志]	{"message": "/8112690398592087182/auth/two_k Something I forgot to emulate but seems okay"}
+2025-04-26T22:14:16.676+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:16.676+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T22:14:16.796+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:14:16.849+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T22:14:16.852+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:14:16.907+0800	INFO	[松子日志]	{"message": "Game is Trying to request getFirstPartyMapping in 2K"}
+2025-04-26T22:14:16.931+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:14:16.992+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:16.992+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:14:16.997+0800	INFO	[松子日志]	{"message": "Game is Trying to request grantsfind in 2K"}
+2025-04-26T22:14:27.127+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T22:14:35.370+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:14:35.415+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:14:36.751+0800	INFO	[松子日志]	{"message": "Game is Trying to Go MultiPlayer."}
+2025-04-26T22:14:37.088+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:37.088+0800	INFO	[松子日志]	{"message": "/evolve/event Something I forgot to emulate but seems okay"}
+2025-04-26T22:14:37.088+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:14:37.090+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:37.090+0800	INFO	[松子日志]	{"message": "/evolve/config/2357d522a223d8d57b05071505274b6b Something I forgot to emulate but seems okay"}
+2025-04-26T22:14:37.553+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T22:14:37.553+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:14:37.553+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:15:26.061+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:15:26.103+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:16:16.420+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:16:16.466+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:17:06.436+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:17:06.483+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:17:56.557+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:17:56.609+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:18:47.010+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:18:47.050+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:19:37.369+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:19:37.417+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:19:40.790+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:19:40.790+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:20:28.169+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:20:28.211+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:21:18.851+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:21:18.902+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:22:09.062+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:22:09.107+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:22:59.418+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:22:59.464+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:23:49.485+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:23:49.526+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:24:40.279+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:24:40.318+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:24:41.573+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:24:41.573+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:25:30.550+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:25:30.591+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:26:20.965+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:26:21.014+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:27:11.551+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:27:11.591+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:28:02.481+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:28:02.522+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:28:53.221+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:28:53.262+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:29:42.498+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:29:42.498+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:29:43.369+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:29:43.419+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:29:51.676+0800	INFO	[松子日志]	{"message": "Game is Trying to Go MultiPlayer."}
+2025-04-26T22:30:33.933+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:30:33.978+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:31:24.683+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:31:24.730+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:32:14.919+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:32:14.958+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:33:05.701+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:33:05.739+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:33:55.880+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:33:55.953+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:34:45.594+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:34:45.594+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:34:46.029+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:34:46.069+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:35:36.049+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:35:36.093+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:36:26.867+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:36:26.911+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:37:17.471+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:37:17.511+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:38:08.244+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:38:08.291+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:38:58.872+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:38:58.913+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:39:48.148+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:39:48.148+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:39:49.202+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:39:49.243+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:40:19.065+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:40:19.084+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:40:19.084+0800	INFO	Server is running, Port = %!d(string=2000)
+2025-04-26T22:40:19.094+0800	WARN	Server run failed as: listen tcp: lookup tcp/%!d(string=2000): unknown port, YOUR CRACK WILL WONT WORK
+2025-04-26T22:41:12.586+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:41:12.600+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:41:12.600+0800	INFO	Server is running, Port = 2000
+2025-04-26T22:41:29.750+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:41:29.774+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:41:38.751+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T22:41:38.755+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:41:39.051+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:41:39.051+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T22:41:39.305+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:41:39.342+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T22:41:39.360+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:41:39.380+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:41:39.380+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:41:39.382+0800	INFO	[松子日志]	{"message": "Game is Trying to request grantsfind in 2K"}
+2025-04-26T22:41:44.983+0800	INFO	[松子日志]	{"message": "Game is Trying to request micro version from updateserver."}
+2025-04-26T22:41:54.449+0800	INFO	[松子日志]	{"message": "Game is Trying to Go MultiPlayer."}
+2025-04-26T22:41:54.783+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:41:55.239+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:41:55.239+0800	INFO	[松子日志]	{"message": "/queue/waittime?platformId=2&regionId=IAD Something I forgot to emulate but seems okay"}
+2025-04-26T22:42:20.040+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:42:20.056+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T22:42:23.582+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T22:42:23.916+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:42:23.916+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T22:42:24.164+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:42:24.179+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T22:42:24.196+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T22:42:24.212+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T22:42:24.212+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T22:42:48.838+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T22:42:48.850+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T22:42:48.851+0800	INFO	Server is running, Port = 2000
+2025-04-26T23:05:49.436+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T23:05:49.449+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T23:05:49.449+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-26T23:13:11.936+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T23:13:11.949+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T23:13:11.949+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-26T23:36:35.458+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:35.481+0800	INFO	[松子日志]	{"message": "Game is Trying to request doorman in 2K"}
+2025-04-26T23:36:35.483+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:35.497+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T23:36:35.497+0800	INFO	[松子日志]	{"message": "/telemetry/1 Something I forgot to emulate but seems okay"}
+2025-04-26T23:36:35.498+0800	INFO	[松子日志]	{"message": "Game is Trying to request news in 2K"}
+2025-04-26T23:36:35.499+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:35.513+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T23:36:35.513+0800	INFO	[松子日志]	{"message": "/content/1 Something I forgot to emulate but seems okay"}
+2025-04-26T23:36:35.590+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T23:36:35.692+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:35.707+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T23:36:35.795+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:35.810+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T23:36:35.896+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:35.910+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T23:36:36.003+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:36:36.017+0800	INFO	[松子日志]	{"message": "Game is Trying to request storages - iteminsert in 2K"}
+2025-04-26T23:37:02.073+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:37:02.089+0800	INFO	[松子日志]	{"message": "Game is Trying to request sessions-heartbeat in 2K"}
+2025-04-26T23:37:07.632+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-26T23:37:07.803+0800	INFO	[松子日志]	{"message": "Game is Trying to request another build_config from updateserver."}
+2025-04-26T23:37:08.149+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:37:08.167+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T23:37:08.167+0800	INFO	[松子日志]	{"message": "/content/1 Something I forgot to emulate but seems okay"}
+2025-04-26T23:37:08.373+0800	INFO	[松子日志]	{"message": "Game is Trying to request sso-authlogon in 2K"}
+2025-04-26T23:37:08.518+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:37:08.536+0800	INFO	[松子日志]	{"message": "Game is Trying to request stats in 2K"}
+2025-04-26T23:37:08.639+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T23:37:08.639+0800	INFO	[松子日志]	{"message": "/8112690398592087182/auth/two_k Something I forgot to emulate but seems okay"}
+2025-04-26T23:37:08.842+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T23:37:08.842+0800	INFO	[松子日志]	{"message": "/8112690398592087182/profile/get_by_platform_account_id Something I forgot to emulate but seems okay"}
+2025-04-26T23:37:08.955+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:37:08.970+0800	INFO	[松子日志]	{"message": "Game is Trying to request checkAppOwnership in 2K"}
+2025-04-26T23:37:08.972+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:37:08.986+0800	INFO	[松子日志]	{"message": "Game is Trying to request getFirstPartyMapping in 2K"}
+2025-04-26T23:37:09.001+0800	INFO	发现域名和IP的组合，域名为：*.my.2k.com,IP为:127.0.0.1:2000
+
+2025-04-26T23:37:09.017+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-26T23:37:09.018+0800	INFO	[松子日志]	{"message": "/entitlements/1 Something I forgot to emulate but seems okay"}
+2025-04-26T23:37:09.019+0800	INFO	[松子日志]	{"message": "Game is Trying to request grantsfind in 2K"}
+2025-04-26T23:56:42.414+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-26T23:56:42.429+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-26T23:56:42.429+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T16:01:40.032+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T16:01:40.047+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T16:01:40.047+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T16:01:46.916+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T16:01:46.935+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T16:01:46.935+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T16:07:22.925+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T16:07:22.945+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T16:07:22.945+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T16:07:38.743+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T16:07:44.036+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T16:07:44.038+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T16:07:44.040+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T16:07:44.040+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-28T17:31:53.912+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T17:31:53.928+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T17:31:53.928+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T17:32:24.432+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T17:32:24.442+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T17:32:24.442+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-28T17:35:00.688+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T17:35:00.716+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T17:35:00.716+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T17:35:03.730+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T17:35:03.737+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T17:35:03.737+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-28T17:35:45.187+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T17:35:45.203+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T17:35:45.203+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T17:36:06.928+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T17:36:06.937+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T17:36:06.937+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-28T17:36:38.026+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T17:36:38.047+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T17:36:38.047+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T17:36:41.667+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T17:36:41.676+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T17:36:41.677+0800	INFO	[松子日志]	{"message": "/ Something I forgot to emulate but seems okay"}
+2025-04-28T17:37:29.552+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T17:37:29.552+0800	INFO	[松子日志]	{"message": "/.well-known/appspecific/com.chrome.devtools.json Something I forgot to emulate but seems okay"}
+2025-04-28T17:37:30.976+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T17:37:30.976+0800	INFO	[松子日志]	{"message": "/.well-known/appspecific/com.chrome.devtools.json Something I forgot to emulate but seems okay"}
+2025-04-28T18:03:05.971+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T18:03:05.987+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T18:03:05.988+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T18:03:11.493+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T18:04:54.254+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T18:04:54.270+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T18:04:54.271+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T18:05:03.572+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T18:05:03.611+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T18:05:03.611+0800	INFO	[松子日志]	{"message": "/.well-known/appspecific/com.chrome.devtools.json Something I forgot to emulate but seems okay"}
+2025-04-28T18:06:25.895+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T18:06:25.909+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T18:06:25.909+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T18:06:31.760+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T18:06:31.793+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T18:06:31.793+0800	INFO	[松子日志]	{"message": "/.well-known/appspecific/com.chrome.devtools.json Something I forgot to emulate but seems okay"}
+2025-04-28T18:07:23.414+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T18:07:23.433+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T18:07:23.434+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T18:07:31.332+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T18:07:31.365+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T18:07:31.365+0800	INFO	[松子日志]	{"message": "/.well-known/appspecific/com.chrome.devtools.json Something I forgot to emulate but seems okay"}
+2025-04-28T18:12:02.047+0800	INFO	Welcome to use EvolveReborn Software By Pinenut. 严禁倒卖!正版/盗版联机群：366237012
+2025-04-28T18:12:02.062+0800	INFO	Lots of thanks:Nemirtingas,schmogmog,nemerod,kiagam
+2025-04-28T18:12:02.062+0800	INFO	Server is running, Port = 2000 YOU CAN TEST WITH HTTPS.
+2025-04-28T18:12:07.816+0800	INFO	仅发现IP，目标IP为：127.0.0.1
+2025-04-28T18:12:07.853+0800	WARN	[松子日志]	{"message": "Maybe there are something I forgot to emulate.\nIt's okay as seems there are lots of them just need a response..."}
+2025-04-28T18:12:07.854+0800	INFO	[松子日志]	{"message": "/.well-known/appspecific/com.chrome.devtools.json Something I forgot to emulate but seems okay"}

@@ -1,0 +1,32 @@
+{
+	"result": {
+		"cacheFrequency": 3600,
+		"channelMap": [
+			{
+				"name": "system",
+				"channelId": "010101010300300030003000030000",
+				"options": {
+					"timeSensitive": false
+				}
+			}
+		],
+		"lookAheadMax": 3,
+		"lookBackMax": 3,
+		"maxItems": 100,
+		"onlineTtl": 3600,
+		"offlineTtl": -1
+	},
+	"header": {
+		"appContext": 0,
+		"appVersion": "1.8.1.3",
+		"code": 0,
+		"cache": {
+			"onlineTtl": 3600,
+			"offlineTtl": -1,
+			"ignoreFields": {
+				"header": "appContext,appVersion,productVersion,accessToken,gameVersion"
+			},
+			"cacheId": "cfe150a083bcb81e48f662f4bd7c0053"
+		}
+	}
+}
