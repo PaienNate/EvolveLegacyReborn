@@ -1,0 +1,75 @@
+name: prerelease
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: windows-2022
+    env:
+      VCPKG_ROOT: ${{ github.workspace }}\vcpkg
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+
+      - name: Bootstrap vcpkg
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "$env:VCPKG_ROOT\.git")) {
+            git clone https://github.com/microsoft/vcpkg $env:VCPKG_ROOT
+          }
+          & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat"
+
+      - name: Build Release x64 solution
+        shell: pwsh
+        run: |
+          msbuild EvolveHooker\EvolveHooker.sln /m /p:Configuration=Release /p:Platform=x64 /p:VcpkgEnableManifest=true
+
+      - name: Resolve release metadata
+        shell: pwsh
+        run: |
+          $shortSha = "${env:GITHUB_SHA}".Substring(0, 7)
+          "SHORT_SHA=$shortSha" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "RELEASE_TAG=pre-main-${env:GITHUB_RUN_NUMBER}-$shortSha" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "RELEASE_NAME=Prerelease main #${env:GITHUB_RUN_NUMBER} ($shortSha)" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Package prerelease zip
+        shell: pwsh
+        run: |
+          $bintrust = Get-ChildItem -Recurse -Filter BINTRUST.dll | Select-Object -First 1 -ExpandProperty FullName
+          if (-not $bintrust) {
+            throw "BINTRUST.dll not found after build"
+          }
+
+          New-Item -ItemType Directory -Force -Path artifacts | Out-Null
+          $zipPath = Join-Path $PWD "artifacts\EvolveLegacyReborn-dev-win64-${env:SHORT_SHA}.zip"
+          & .\scripts\package-prerelease.ps1 -BintrustPath $bintrust -OutputZip $zipPath
+          "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prerelease-win64
+          path: ${{ env.ZIP_PATH }}
+
+      - name: Publish GitHub prerelease
+        shell: pwsh
+        run: |
+          gh release create `
+            "${env:RELEASE_TAG}" `
+            "${env:ZIP_PATH}" `
+            --title "${env:RELEASE_NAME}" `
+            --notes-file "packaging/README-prerelease.md" `
+            --prerelease `
+            --target "${env:GITHUB_SHA}"

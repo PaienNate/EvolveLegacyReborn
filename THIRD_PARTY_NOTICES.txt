@@ -1,0 +1,23 @@
+EvolveLegacyReborn bundles or depends on the following third-party components:
+
+- CivetWeb
+  License: MIT
+  Source: https://github.com/civetweb/civetweb
+
+- OpenSSL
+  License: Apache-2.0
+  Source: https://github.com/openssl/openssl
+
+- KNSoft.SlimDetours
+  License: MIT
+  Source: https://github.com/KNSoft/KNSoft.SlimDetours
+
+- SimpleIni
+  License: MIT
+  Source: https://github.com/brofield/simpleini
+
+- EasyLogging++
+  License: MIT
+  Source: https://github.com/abumq/easyloggingpp
+
+See the repository LICENSE and the upstream project notices for full terms.

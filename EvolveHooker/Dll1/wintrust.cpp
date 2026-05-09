@@ -25,6 +25,7 @@
 
 // READ INI
 #include "simpleini/SimpleIni.h"
+#include <evolve/server_core.hpp>
 
 // Using certain input methods can cause game crashes, which can be resolved by forcibly closing the program's input method context.
 #include <imm.h>
@@ -44,6 +45,18 @@ int server_port;
 bool emu_func = false;
 std::string dll_path;
 bool enable_console = false;
+bool use_internal_server = false;
+std::string internal_bind_address = "127.0.0.1";
+std::string internal_asset_root = "EvolveCrack";
+std::string internal_ca_cert_path = "certs\\mitmproxy-ca-cert.pem";
+std::string internal_ca_key_path = "certs\\mitmproxy-ca.pem";
+std::string internal_steam_id = "76561101839859666";
+INIT_ONCE internal_server_init_once = INIT_ONCE_STATIC_INIT;
+HANDLE internal_server_ready_event = nullptr;
+HANDLE internal_server_stop_event = nullptr;
+HANDLE internal_server_thread = nullptr;
+std::unique_ptr<evolve::server::ServerCore> internal_server;
+std::string internal_server_error;
 
 LPCWSTR message =
 L"补丁制作者 / Patch Creator: Pinenut\n"
@@ -141,6 +154,135 @@ std::string get_full_program_path() {
 	return result.substr(0, last_slash + 1);
 }
 
+std::wstring utf8_to_wide(const std::string& value) {
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, value.c_str(), -1, NULL, 0);
+	if (size_needed <= 0) {
+		return L"127.0.0.1";
+	}
+
+	std::wstring wide(size_needed - 1, L'\0');
+	MultiByteToWideChar(CP_UTF8, 0, value.c_str(), -1, &wide[0], size_needed);
+	return wide;
+}
+
+void update_redirect_server(const std::string& host, int port) {
+	server_ip = host;
+	server_port = port;
+	wServerIP = utf8_to_wide(host);
+}
+
+bool is_absolute_path(const std::string& path) {
+	if (path.size() > 2 && path[1] == ':') {
+		return true;
+	}
+	if (path.rfind("\\\\", 0) == 0 || path.rfind("/", 0) == 0) {
+		return true;
+	}
+	return false;
+}
+
+std::string resolve_runtime_path(const std::string& path) {
+	if (path.empty() || is_absolute_path(path)) {
+		return path;
+	}
+	return get_full_program_path() + path;
+}
+
+DWORD WINAPI InternalServerThreadProc(LPVOID) {
+	evolve::server::ServerConfig config;
+	config.bind_address = internal_bind_address;
+	config.preferred_port = static_cast<uint16_t>(server_port);
+	config.asset_root = resolve_runtime_path(internal_asset_root);
+	config.ca_certificate_path = resolve_runtime_path(internal_ca_cert_path);
+	config.ca_private_key_path = resolve_runtime_path(internal_ca_key_path);
+	config.steam_id = internal_steam_id;
+
+	internal_server = std::make_unique<evolve::server::ServerCore>(std::move(config));
+	if (!internal_server->Start()) {
+		internal_server_error = internal_server->GetLastError();
+		SetEvent(internal_server_ready_event);
+		return 1;
+	}
+
+	update_redirect_server(internal_server->GetRedirectHost(),
+		static_cast<int>(internal_server->GetBoundPort()));
+	internal_server_error.clear();
+	SetEvent(internal_server_ready_event);
+
+	if (internal_server_stop_event) {
+		WaitForSingleObject(internal_server_stop_event, INFINITE);
+	}
+
+	if (internal_server) {
+		internal_server->Stop();
+	}
+	return 0;
+}
+
+BOOL CALLBACK InitInternalServerOnce(PINIT_ONCE, PVOID, PVOID*) {
+	internal_server_ready_event = CreateEvent(nullptr, TRUE, FALSE, nullptr);
+	internal_server_stop_event = CreateEvent(nullptr, TRUE, FALSE, nullptr);
+	if (!internal_server_ready_event || !internal_server_stop_event) {
+		internal_server_error = "failed to create internal server synchronization objects";
+		if (internal_server_ready_event) {
+			SetEvent(internal_server_ready_event);
+		}
+		return TRUE;
+	}
+
+	internal_server_thread = CreateThread(nullptr, 0, InternalServerThreadProc, nullptr, 0, nullptr);
+	if (!internal_server_thread) {
+		internal_server_error = "failed to create internal server thread";
+		SetEvent(internal_server_ready_event);
+	}
+	return TRUE;
+}
+
+bool EnsureInternalServerStarted() {
+	if (!use_internal_server) {
+		return true;
+	}
+
+	InitOnceExecuteOnce(&internal_server_init_once, InitInternalServerOnce, nullptr, nullptr);
+	if (!internal_server_ready_event) {
+		LOG(ERROR) << "[SERVER_EMU] internal server ready event was not created\n";
+		return false;
+	}
+
+	const DWORD wait_result = WaitForSingleObject(internal_server_ready_event, 10000);
+	if (wait_result != WAIT_OBJECT_0) {
+		LOG(ERROR) << "[SERVER_EMU] waiting for internal server timed out\n";
+		return false;
+	}
+
+	if (!internal_server || !internal_server->IsReady()) {
+		LOG(ERROR) << "[SERVER_EMU] internal server failed to start: " << internal_server_error << "\n";
+		return false;
+	}
+
+	return true;
+}
+
+void StopInternalServer() {
+	if (internal_server_stop_event) {
+		SetEvent(internal_server_stop_event);
+	}
+	if (internal_server_thread) {
+		WaitForSingleObject(internal_server_thread, 5000);
+		CloseHandle(internal_server_thread);
+		internal_server_thread = nullptr;
+	}
+	if (internal_server_ready_event) {
+		CloseHandle(internal_server_ready_event);
+		internal_server_ready_event = nullptr;
+	}
+	if (internal_server_stop_event) {
+		CloseHandle(internal_server_stop_event);
+		internal_server_stop_event = nullptr;
+	}
+	internal_server.reset();
+}
+
 // =====================
 //    CRACK SERVER
 // =====================
@@ -150,6 +292,9 @@ int (WSAAPI* Real_getaddrinfo)(PCSTR pNodeName, PCSTR pServiceName, const ADDRIN
 int WSAAPI Evolve_getaddrinfo(PCSTR pNodeName, PCSTR pServiceName,
 	const ADDRINFOA* pHints, PADDRINFOA* ppResult) {
 	if (pNodeName && strstr(pNodeName, "2k.com") != nullptr) {
+		if (use_internal_server && !EnsureInternalServerStarted()) {
+			return Real_getaddrinfo(pNodeName, pServiceName, pHints, ppResult);
+		}
 		sockaddr_in* addr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
 		if (addr == NULL) {
 			return EAI_MEMORY;
@@ -177,6 +322,9 @@ HINTERNET(WINAPI* Real_WinHttpConnect)(HINTERNET hSession, LPCWSTR pswzServerNam
 
 HINTERNET WINAPI Evolve_WinHttpConnect(HINTERNET hSession, LPCWSTR pswzServerName,
 	INTERNET_PORT nServerPort, DWORD dwReserved) {
+	if (use_internal_server && !EnsureInternalServerStarted()) {
+		return Real_WinHttpConnect(hSession, pswzServerName, nServerPort, dwReserved);
+	}
 	pswzServerName = wServerIP.c_str();
 	nServerPort = static_cast<INTERNET_PORT>(server_port);
 	return Real_WinHttpConnect(hSession, pswzServerName, nServerPort, dwReserved);
@@ -349,17 +497,20 @@ void InitConfiguration() {
 		);
 		exit(0);
 	}
-	server_ip = ini.GetValue("server", "server_domain", "117.72.125.6");
-	int size_needed = MultiByteToWideChar(CP_UTF8, 0, server_ip.c_str(), -1, NULL, 0);
-	if (size_needed <= 0) {
-		LOG(ERROR) << "Failed to convert server_ip to wide string\n";
-		wServerIP = L"117.72.125.6";
+	use_internal_server = ini.GetBoolValue("server", "use_internal_server", false);
+	server_port = ini.GetLongValue("server", "server_port", 2000);
+	internal_bind_address = ini.GetValue("server", "internal_bind_address", "127.0.0.1");
+	internal_asset_root = ini.GetValue("server", "internal_asset_root", "EvolveCrack");
+	internal_ca_cert_path = ini.GetValue("server", "internal_ca_cert_path", "certs\\mitmproxy-ca-cert.pem");
+	internal_ca_key_path = ini.GetValue("server", "internal_ca_key_path", "certs\\mitmproxy-ca.pem");
+	internal_steam_id = ini.GetValue("server", "steam_id", "76561101839859666");
+	if (use_internal_server) {
+		update_redirect_server(internal_bind_address == "0.0.0.0" ? "127.0.0.1" : internal_bind_address,
+			server_port);
 	}
 	else {
-		wServerIP.resize(size_needed - 1);
-		MultiByteToWideChar(CP_UTF8, 0, server_ip.c_str(), -1, &wServerIP[0], size_needed);
+		update_redirect_server(ini.GetValue("server", "server_domain", "117.72.125.6"), server_port);
 	}
-	server_port = ini.GetLongValue("server", "server_port", 2000);
 }
 
 void InitHooker() {
@@ -449,6 +600,7 @@ void UninstallHooker() {
 			LOG(ERROR) << "[STEAM_EMU] Evolve_RegQueryValueExA hook uninstall failed\n";
 		}
 	}
+	StopInternalServer();
 }
 
 // =====================

@@ -1,1 +1,7 @@
 EvolveHooker/.vs/
+.idea/
+build/
+build-*/
+out/
+artifacts/
+.cache/
