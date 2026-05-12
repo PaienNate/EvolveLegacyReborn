@@ -3,64 +3,84 @@ name: prerelease
 on:
   push:
     branches:
-      - main
+      - new
 
 permissions:
   contents: write
 
 jobs:
   build-and-release:
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install MinGW-w64
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-mingw-w64-x86-64 cmake ninja-build zip
+
       - name: Configure
         run: >
-          cmake -S . -B build
-          -G "Visual Studio 17 2022" -A x64
+          cmake -S . -B build-mingw -G Ninja
+          -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-x86_64.cmake
+          -DCMAKE_BUILD_TYPE=Release
           -DEVOLVE_BUILD_BINTRUST=ON
           -DEVOLVE_BINTRUST_INTERNAL_SERVER=ON
+          -DEVOLVE_BUILD_TESTING=OFF
 
-      - name: Build Release
-        run: cmake --build build --config Release
+      - name: Build
+        run: cmake --build build-mingw
 
       - name: Resolve release metadata
-        shell: pwsh
         run: |
-          $shortSha = "${env:GITHUB_SHA}".Substring(0, 7)
-          "SHORT_SHA=$shortSha" | Out-File -FilePath $env:GITHUB_ENV -Append
-          "RELEASE_TAG=pre-main-${env:GITHUB_RUN_NUMBER}-$shortSha" | Out-File -FilePath $env:GITHUB_ENV -Append
-          "RELEASE_NAME=Prerelease main #${env:GITHUB_RUN_NUMBER} ($shortSha)" | Out-File -FilePath $env:GITHUB_ENV -Append
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          echo "SHORT_SHA=${SHORT_SHA}" >> "${GITHUB_ENV}"
+          echo "RELEASE_TAG=pre-new-${GITHUB_RUN_NUMBER}-${SHORT_SHA}" >> "${GITHUB_ENV}"
+          echo "RELEASE_NAME=Prerelease new #${GITHUB_RUN_NUMBER} (${SHORT_SHA})" >> "${GITHUB_ENV}"
 
       - name: Package prerelease zip
-        shell: pwsh
         run: |
-          $bintrust = Get-ChildItem -Recurse -Filter BINTRUST.dll | Select-Object -First 1 -ExpandProperty FullName
-          if (-not $bintrust) {
-            throw "BINTRUST.dll not found after build"
-          }
+          BINTRUST_PATH="build-mingw/EvolveHooker/BINTRUST.dll"
+          if [ ! -f "${BINTRUST_PATH}" ]; then
+            echo "BINTRUST.dll not found after build"
+            exit 1
+          fi
 
-          New-Item -ItemType Directory -Force -Path artifacts | Out-Null
-          $zipPath = Join-Path $PWD "artifacts\EvolveLegacyReborn-dev-win64-${env:SHORT_SHA}.zip"
-          & .\scripts\package-prerelease.ps1 -BintrustPath $bintrust -OutputZip $zipPath
-          "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
+          STAGING="artifacts/prerelease-staging"
+          rm -rf "${STAGING}"
+          mkdir -p "${STAGING}/EvolveCrack"
+          mkdir -p "${STAGING}/certs"
+
+          cp "${BINTRUST_PATH}" "${STAGING}/BINTRUST.dll"
+          cp "EvolveHooker/Dll1/EvolveLogging.ini" "${STAGING}/EvolveLogging.ini"
+          cp "packaging/EvolveLogging.internal.example.ini" "${STAGING}/EvolveLogging.internal.example.ini"
+          cp "packaging/README-prerelease.md" "${STAGING}/README-prerelease.md"
+          cp "THIRD_PARTY_NOTICES.txt" "${STAGING}/THIRD_PARTY_NOTICES.txt"
+          cp "LICENSE" "${STAGING}/LICENSE"
+          cp -r "assets/EvolveCrack/"* "${STAGING}/EvolveCrack/"
+          cp "assets/certs/mitmproxy-ca-cert.pem" "${STAGING}/certs/mitmproxy-ca-cert.pem"
+          cp "assets/certs/mitmproxy-ca.pem" "${STAGING}/certs/mitmproxy-ca.pem"
+
+          mkdir -p artifacts
+          ZIP_PATH="artifacts/EvolveLegacyReborn-dev-win64-${SHORT_SHA}.zip"
+          (cd "${STAGING}" && zip -r "../../${ZIP_PATH}" .)
+          echo "ZIP_PATH=${ZIP_PATH}" >> "${GITHUB_ENV}"
 
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: prerelease-win64
+          name: prerelease-mingw64
           path: ${{ env.ZIP_PATH }}
 
       - name: Publish GitHub prerelease
-        shell: pwsh
         run: |
-          gh release create `
-            "${env:RELEASE_TAG}" `
-            "${env:ZIP_PATH}" `
-            --title "${env:RELEASE_NAME}" `
-            --notes-file "packaging/README-prerelease.md" `
-            --prerelease `
-            --target "${env:GITHUB_SHA}"
+          gh release create \
+            "${RELEASE_TAG}" \
+            "${ZIP_PATH}" \
+            --title "${RELEASE_NAME}" \
+            --notes-file "packaging/README-prerelease.md" \
+            --prerelease \
+            --target "${GITHUB_SHA}"
