@@ -42,9 +42,9 @@ bool enable_console = false;
 #ifdef EVOLVE_INTERNAL_SERVER
 bool use_internal_server = false;
 std::string internal_bind_address = "127.0.0.1";
-std::string internal_asset_root = "EvolveCrack";
-std::string internal_ca_cert_path = "certs\\mitmproxy-ca-cert.pem";
-std::string internal_ca_key_path = "certs\\mitmproxy-ca.pem";
+std::string internal_asset_root = "assets/EvolveCrack";
+std::string internal_ca_cert_path = "assets/certs/mitmproxy-ca-cert.pem";
+std::string internal_ca_key_path = "assets/certs/mitmproxy-ca.pem";
 std::string internal_steam_id = "76561101839859666";
 INIT_ONCE internal_server_init_once = INIT_ONCE_STATIC_INIT;
 HANDLE internal_server_ready_event = nullptr;

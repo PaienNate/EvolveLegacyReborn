@@ -26,16 +26,16 @@ jobs:
       - name: Run HTTPS smoke test
         run: |
           ./build/server_core/server_harness \
-            EvolveServerEmulator/EvolveCrack \
+            assets/EvolveCrack \
             2000 \
             127.0.0.1 \
-            EvolveServerEmulator/certs/mitmproxy-ca-cert.pem \
-            EvolveServerEmulator/certs/mitmproxy-ca.pem \
+            assets/certs/mitmproxy-ca-cert.pem \
+            assets/certs/mitmproxy-ca.pem \
             10 &
           HARNESS_PID=$!
           sleep 1
           curl --silent --show-error \
-            --cacert EvolveServerEmulator/certs/mitmproxy-ca-cert.pem \
+            --cacert assets/certs/mitmproxy-ca-cert.pem \
             --resolve 508223012e5a5ff19f30a391b2bdadc0.my.2k.com:2000:127.0.0.1 \
             https://508223012e5a5ff19f30a391b2bdadc0.my.2k.com:2000/doorman/1 > /tmp/doorman.json
           grep '"isOnline": true' /tmp/doorman.json
@@ -80,6 +80,7 @@ jobs:
           -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-x86_64.cmake
           -DCMAKE_BUILD_TYPE=Release
           -DEVOLVE_BUILD_BINTRUST=ON
+          -DEVOLVE_BINTRUST_INTERNAL_SERVER=ON
           -DEVOLVE_BUILD_TESTING=OFF
 
       - name: Build

@@ -10,9 +10,9 @@ namespace {
 
 evolve::server::ServerConfig BuildConfig(int argc, char** argv) {
   evolve::server::ServerConfig config;
-  config.asset_root = "EvolveServerEmulator/EvolveCrack";
-  config.ca_certificate_path = "EvolveServerEmulator/certs/mitmproxy-ca-cert.pem";
-  config.ca_private_key_path = "EvolveServerEmulator/certs/mitmproxy-ca.pem";
+  config.asset_root = "assets/EvolveCrack";
+  config.ca_certificate_path = "assets/certs/mitmproxy-ca-cert.pem";
+  config.ca_private_key_path = "assets/certs/mitmproxy-ca.pem";
   if (argc > 1) {
     config.asset_root = argv[1];
   }

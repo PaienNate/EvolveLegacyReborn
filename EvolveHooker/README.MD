@@ -42,8 +42,7 @@ cmake --build build-mingw
 
 Output: `build-mingw/EvolveHooker/BINTRUST.dll`
 
-> **Note:** MinGW builds produce a basic BINTRUST.dll without the embedded internal server.
-> Use the external Python `mitmserver.py` for server emulation with MinGW builds.
+MSVC and MinGW builds produce functionally identical `BINTRUST.dll` with the embedded server.
 
 ### Build Options
 

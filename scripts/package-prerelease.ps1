@@ -25,9 +25,9 @@ Copy-Item (Join-Path $repoRoot "packaging\EvolveLogging.internal.example.ini") (
 Copy-Item (Join-Path $repoRoot "packaging\README-prerelease.md") (Join-Path $stagingRoot "README-prerelease.md")
 Copy-Item (Join-Path $repoRoot "THIRD_PARTY_NOTICES.txt") (Join-Path $stagingRoot "THIRD_PARTY_NOTICES.txt")
 Copy-Item (Join-Path $repoRoot "LICENSE") (Join-Path $stagingRoot "LICENSE")
-Copy-Item (Join-Path $repoRoot "EvolveServerEmulator\EvolveCrack\*") (Join-Path $stagingRoot "EvolveCrack") -Recurse
-Copy-Item (Join-Path $repoRoot "EvolveServerEmulator\certs\mitmproxy-ca-cert.pem") (Join-Path $stagingRoot "certs\mitmproxy-ca-cert.pem")
-Copy-Item (Join-Path $repoRoot "EvolveServerEmulator\certs\mitmproxy-ca.pem") (Join-Path $stagingRoot "certs\mitmproxy-ca.pem")
+Copy-Item (Join-Path $repoRoot "assets\EvolveCrack\*") (Join-Path $stagingRoot "EvolveCrack") -Recurse
+Copy-Item (Join-Path $repoRoot "assets\certs\mitmproxy-ca-cert.pem") (Join-Path $stagingRoot "certs\mitmproxy-ca-cert.pem")
+Copy-Item (Join-Path $repoRoot "assets\certs\mitmproxy-ca.pem") (Join-Path $stagingRoot "certs\mitmproxy-ca.pem")
 
 if (Test-Path $OutputZip) {
     Remove-Item $OutputZip -Force
