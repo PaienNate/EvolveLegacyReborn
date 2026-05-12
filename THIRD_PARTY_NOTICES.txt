@@ -1,16 +1,16 @@
 EvolveLegacyReborn bundles or depends on the following third-party components:
 
+- MinHook
+  License: BSD-2-Clause
+  Source: https://github.com/TsudaKageyu/minhook
+
 - CivetWeb
   License: MIT
   Source: https://github.com/civetweb/civetweb
 
-- OpenSSL
+- MbedTLS
   License: Apache-2.0
-  Source: https://github.com/openssl/openssl
-
-- KNSoft.SlimDetours
-  License: MIT
-  Source: https://github.com/KNSoft/KNSoft.SlimDetours
+  Source: https://github.com/Mbed-TLS/mbedtls
 
 - SimpleIni
   License: MIT

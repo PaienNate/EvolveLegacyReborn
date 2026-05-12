@@ -9,38 +9,23 @@ on:
 jobs:
   linux-cmake:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Bootstrap vcpkg
-        shell: bash
-        run: |
-          if [ ! -d "$HOME/.cache/vcpkg/.git" ]; then
-            git clone https://github.com/microsoft/vcpkg "$HOME/.cache/vcpkg"
-          fi
-          "$HOME/.cache/vcpkg/bootstrap-vcpkg.sh"
-
       - name: Configure
-        shell: bash
         run: >
-          cmake -S . -B build-vcpkg
-          -DCMAKE_TOOLCHAIN_FILE=$HOME/.cache/vcpkg/scripts/buildsystems/vcpkg.cmake
-          -DEVOLVE_BUILD_RUNTIME=ON
+          cmake -S . -B build
           -DEVOLVE_BUILD_HARNESS=ON
 
       - name: Build logic tests and harness
-        shell: bash
-        run: cmake --build build-vcpkg --target server_logic_tests server_harness
+        run: cmake --build build --target server_logic_tests server_harness
 
       - name: Run logic tests
-        shell: bash
-        run: ctest --test-dir build-vcpkg --output-on-failure -R server_logic_tests
+        run: ctest --test-dir build --output-on-failure -R server_logic_tests
 
       - name: Run HTTPS smoke test
-        shell: bash
         run: |
-          ./build-vcpkg/server_core/server_harness \
+          ./build/server_core/server_harness \
             EvolveServerEmulator/EvolveCrack \
             2000 \
             127.0.0.1 \
@@ -56,39 +41,52 @@ jobs:
           grep '"isOnline": true' /tmp/doorman.json
           wait $HARNESS_PID
 
-  windows-msbuild:
+  windows-cmake:
     runs-on: windows-2022
-    env:
-      VCPKG_ROOT: ${{ github.workspace }}\vcpkg
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Add MSBuild to PATH
-        uses: microsoft/setup-msbuild@v2
-        with:
-          msbuild-architecture: x64
+      - name: Configure
+        run: >
+          cmake -S . -B build
+          -G "Visual Studio 17 2022" -A x64
+          -DEVOLVE_BUILD_BINTRUST=ON
+          -DEVOLVE_BINTRUST_INTERNAL_SERVER=ON
 
-      - name: Bootstrap vcpkg
-        shell: pwsh
-        run: |
-          if (-not (Test-Path "$env:VCPKG_ROOT\.git")) {
-            git clone https://github.com/microsoft/vcpkg $env:VCPKG_ROOT
-          }
-          & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat"
-
-      - name: Build Release x64 solution
-        shell: pwsh
-        run: |
-          msbuild EvolveHooker\EvolveHooker.sln /m /p:Configuration=Release /p:Platform=x64 /p:VcpkgEnableManifest=true
+      - name: Build
+        run: cmake --build build --config Release
 
       - name: Upload BINTRUST artifact
         uses: actions/upload-artifact@v4
         with:
           name: bintrust-win64
           path: |
-            **/BINTRUST.dll
+            build/EvolveHooker/Release/BINTRUST.dll
             EvolveHooker/Dll1/EvolveLogging.ini
-            packaging/EvolveLogging.internal.example.ini
-            packaging/README-prerelease.md
-            THIRD_PARTY_NOTICES.txt
+
+  linux-mingw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install MinGW-w64
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-mingw-w64-x86-64 cmake ninja-build
+
+      - name: Configure
+        run: >
+          cmake -S . -B build-mingw -G Ninja
+          -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-x86_64.cmake
+          -DCMAKE_BUILD_TYPE=Release
+          -DEVOLVE_BUILD_BINTRUST=ON
+          -DEVOLVE_BUILD_TESTING=OFF
+
+      - name: Build
+        run: cmake --build build-mingw
+
+      - name: Upload MinGW artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bintrust-mingw64
+          path: build-mingw/EvolveHooker/BINTRUST.dll

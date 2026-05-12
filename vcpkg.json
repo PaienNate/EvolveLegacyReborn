@@ -1,13 +1,5 @@
 {
   "name": "evolve-legacy-reborn",
-  "version-string": "0.1.0",
-  "builtin-baseline": "4bc07e3eb00c5a9539a5a7a83415150a9260f8db",
-  "dependencies": [
-    {
-      "name": "civetweb",
-      "features": [
-        "ssl"
-      ]
-    }
-  ]
+  "version-string": "0.2.0",
+  "dependencies": []
 }

@@ -7,27 +7,23 @@
 #include <windows.h>
 #include <ws2tcpip.h>
 #include <processthreadsapi.h>
-#include <windows.h>
 #include <direct.h>
-#include <iphlpapi.h> // Include winsock2 before this, or winsock2 iphlpapi will be unavailable(goldberg)
+#include <iphlpapi.h>
 #include <shlobj.h>
 
-// C++ 
-#include<string>
-#include<memory>
-#include<vector>
-#include<tchar.h>
-#include<atlstr.h>
+#include <string>
+#include <memory>
+#include <vector>
+#include <tchar.h>
 #include <iostream>
 
-// DETOURS(SlimDetours)
-#include <KNSoft/SlimDetours/SlimDetours.h> 
+#include "MinHook.h"
 
-// READ INI
 #include "simpleini/SimpleIni.h"
+#ifdef EVOLVE_INTERNAL_SERVER
 #include <evolve/server_core.hpp>
+#endif
 
-// Using certain input methods can cause game crashes, which can be resolved by forcibly closing the program's input method context.
 #include <imm.h>
 
 // ===============
@@ -35,16 +31,15 @@
 // ===============
 CSimpleIniA ini;
 
-// INI SERVER
 std::string server_ip;
-// FOR WINHTTP HOOK
 std::wstring wServerIP;
 int server_port;
 
-// INI EMU VARIABLE
 bool emu_func = false;
 std::string dll_path;
 bool enable_console = false;
+
+#ifdef EVOLVE_INTERNAL_SERVER
 bool use_internal_server = false;
 std::string internal_bind_address = "127.0.0.1";
 std::string internal_asset_root = "EvolveCrack";
@@ -57,13 +52,13 @@ HANDLE internal_server_stop_event = nullptr;
 HANDLE internal_server_thread = nullptr;
 std::unique_ptr<evolve::server::ServerCore> internal_server;
 std::string internal_server_error;
+#endif
 
 LPCWSTR message =
-L"补丁制作者 / Patch Creator: Pinenut\n"
-L"B站账号 / Bilibili ID: Pinenutn\n\n"
-L"本补丁用于实现游戏验证重定向功能。\n"
+L"Patch Creator: Pinenut\n"
+L"Bilibili ID: Pinenutn\n\n"
 L"This patch enables game verification redirection.\n\n"
-L"特别感谢 / Special Thanks To:\n"
+L"Special Thanks To:\n"
 L"- Nemirtingas (cs.rin.ru)\n"
 L"- Schmogmog (Discord)\n"
 L"- Nemerod (Discord)\n"
@@ -71,37 +66,24 @@ L"- Kiagam (Discord)\n"
 L"- DeinAlbtraum (Discord)\n"
 L"- bluem (Discord)\n"
 L"- Archetype_4 (Discord)\n"
-L"- Pikapika 和国内进化QQ群(366237012)管理、群友\n"
-L"[Pikapika (group owner of Evolution QQ group) and the group admins and members]\n\n"
-L"重要声明 / Important Notice:\n"
-L"本补丁为免费提供，严禁倒卖或用于不正当获利！\n"
+L"- Pikapika (Evolution QQ group owner) and group admins/members\n\n"
+L"Important Notice:\n"
 L"This patch is provided for free. Reselling or using it for improper profit is strictly prohibited!\n"
-L"点击“确定”开始游戏。\n"
 L"Click \"OK\" to start the game.\n\n"
-L"官方网站 / Official Website: firehomework.top\n\n";
+L"Official Website: firehomework.top\n\n";
 
 // ===============
 // BETTER LOGGING
 // ===============
-
 #include "logging/easylogging++.h"
 INITIALIZE_EASYLOGGINGPP
-// TODO: LOGGING HOOK FUNCTION WITH PROPER WAY
 el::Logger* defaultLogger = el::Loggers::getLogger("default");
-
-
-// Crack Server
-#pragma comment(lib, "winhttp.lib")
-#pragma comment(lib, "ws2_32.lib")
-// SteamEmu
-#pragma comment(lib, "kernel32.lib")
-#pragma comment(lib, "advapi32.lib")
-// IMM Hook
-#pragma comment(lib, "imm32.lib")
 
 // ===============
 //      UTILS
 // ===============
+static HMODULE g_hModule = nullptr;
+static HANDLE g_hInitComplete = nullptr;
 
 void InitLogging() {
 	el::Configurations conf;
@@ -154,6 +136,7 @@ std::string get_full_program_path() {
 	return result.substr(0, last_slash + 1);
 }
 
+#ifdef EVOLVE_INTERNAL_SERVER
 std::wstring utf8_to_wide(const std::string& value) {
 	int size_needed = MultiByteToWideChar(CP_UTF8, 0, value.c_str(), -1, NULL, 0);
 	if (size_needed <= 0) {
@@ -282,19 +265,21 @@ void StopInternalServer() {
 	}
 	internal_server.reset();
 }
+#endif
 
 // =====================
 //    CRACK SERVER
 // =====================
 int (WSAAPI* Real_getaddrinfo)(PCSTR pNodeName, PCSTR pServiceName, const ADDRINFOA* pHints, PADDRINFOA* ppResult) = getaddrinfo;
 
-// Game seems will cache this ip in somewhere but I can't find where.
 int WSAAPI Evolve_getaddrinfo(PCSTR pNodeName, PCSTR pServiceName,
 	const ADDRINFOA* pHints, PADDRINFOA* ppResult) {
 	if (pNodeName && strstr(pNodeName, "2k.com") != nullptr) {
+#ifdef EVOLVE_INTERNAL_SERVER
 		if (use_internal_server && !EnsureInternalServerStarted()) {
 			return Real_getaddrinfo(pNodeName, pServiceName, pHints, ppResult);
 		}
+#endif
 		sockaddr_in* addr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
 		if (addr == NULL) {
 			return EAI_MEMORY;
@@ -322,9 +307,11 @@ HINTERNET(WINAPI* Real_WinHttpConnect)(HINTERNET hSession, LPCWSTR pswzServerNam
 
 HINTERNET WINAPI Evolve_WinHttpConnect(HINTERNET hSession, LPCWSTR pswzServerName,
 	INTERNET_PORT nServerPort, DWORD dwReserved) {
+#ifdef EVOLVE_INTERNAL_SERVER
 	if (use_internal_server && !EnsureInternalServerStarted()) {
 		return Real_WinHttpConnect(hSession, pswzServerName, nServerPort, dwReserved);
 	}
+#endif
 	pswzServerName = wServerIP.c_str();
 	nServerPort = static_cast<INTERNET_PORT>(server_port);
 	return Real_WinHttpConnect(hSession, pswzServerName, nServerPort, dwReserved);
@@ -351,7 +338,6 @@ HINTERNET WINAPI Evolve_WinHttpOpenRequest(
 ) {
 	dwFlags |= WINHTTP_FLAG_SECURE;
 	HINTERNET hRequest = Real_WinHttpOpenRequest(hConnect, pwszVerb, pwszObjectName, pwszVersion, pwszReferrer, ppwszAcceptTypes, dwFlags);
-	DWORD okdwFlags = SECURITY_FLAG_IGNORE_ALL_CERT_ERRORS;
 	if (hRequest) {
 		DWORD okdwFlags = SECURITY_FLAG_IGNORE_ALL_CERT_ERRORS;
 		WinHttpSetOption(hRequest, WINHTTP_OPTION_SECURITY_FLAGS, &okdwFlags, sizeof(okdwFlags));
@@ -361,23 +347,23 @@ HINTERNET WINAPI Evolve_WinHttpOpenRequest(
 	}
 	return hRequest;
 }
-// CRACK SERVER REDIRECT CODE END
 
 // =====================
 //    Steam EMU HOOK
 // =====================
 DWORD(WINAPI* Real_GetEnvironmentVariableA)(
-	IN LPCSTR lpName,        // 环境变量的名称 / Name of the environment variable
-	OUT LPSTR lpBuffer,      // 存放环境变量值的缓冲区 / Buffer to store the environment variable value
-	IN DWORD nSize           // 缓冲区大小 / Size of the buffer
+	IN LPCSTR lpName,
+	OUT LPSTR lpBuffer,
+	IN DWORD nSize
 	) = GetEnvironmentVariableA;
+
 LSTATUS(WINAPI* Real_RegQueryValueExA)(
-	IN HKEY hKey,                // 注册表的句柄 / Handle to the registry key
-	IN LPCSTR lpValueName,       // 注册表值的名称 / Name of the registry value
-	IN LPDWORD lpReserved,       // 保留参数 / Reserved parameter
-	OUT LPDWORD lpType,          // 值的数据类型 / Type of data stored in the value
-	OUT LPBYTE lpData,           // 存放注册表值数据的缓冲区 / Buffer to store the registry value data
-	IN LPDWORD lpcbData          // 缓冲区的大小 / Size of the buffer
+	IN HKEY hKey,
+	IN LPCSTR lpValueName,
+	IN LPDWORD lpReserved,
+	OUT LPDWORD lpType,
+	OUT LPBYTE lpData,
+	IN LPDWORD lpcbData
 	) = RegQueryValueExA;
 
 DWORD WINAPI Evolve_GetEnvironmentVariableA(
@@ -385,19 +371,17 @@ DWORD WINAPI Evolve_GetEnvironmentVariableA(
 	OUT LPSTR  lpBuffer,
 	IN  DWORD  nSize
 ) {
-	// 预定义的 AppId 字符串
 	const char* predefinedAppId = "273350";
 	const DWORD predefinedAppIdLength = 6;
 
-	// 判断是否是 "SteamAppId" 或 "SteamGameId"
 	if (strcmp(lpName, "SteamAppId") == 0 || strcmp(lpName, "SteamGameId") == 0) {
 		if (lpBuffer != NULL) {
-			if (nSize >= predefinedAppIdLength + 1) {  // +1 是为了容纳 '\0'
+			if (nSize >= predefinedAppIdLength + 1) {
 				strcpy_s(lpBuffer, nSize, predefinedAppId);
 				return predefinedAppIdLength;
 			}
 			else {
-				return predefinedAppIdLength + 1;  // 返回所需的缓冲区大小
+				return predefinedAppIdLength + 1;
 			}
 		}
 	}
@@ -416,12 +400,11 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 
 	if (keyname == "SteamClientDll64") {
 		if (lpData != NULL && lpcbData != NULL) {
-			// 拼接dll_path
 			std::string steamClientPath = get_full_program_path() + dll_path;
 			size_t dataSize = steamClientPath.size();
 
 			if (*lpcbData >= dataSize + 1) {
-				memcpy(lpData, steamClientPath.c_str(), dataSize + 1); // 复制路径及末尾的 '\0'
+				memcpy(lpData, steamClientPath.c_str(), dataSize + 1);
 				*lpcbData = static_cast<DWORD>(dataSize + 1);
 				return ERROR_SUCCESS;
 			}
@@ -433,11 +416,11 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 	}
 	else if (keyname == "pid") {
 		if (lpData != NULL && lpcbData != NULL) {
-			DWORD processId = GetCurrentProcessId(); // 获取当前进程的 PID
+			DWORD processId = GetCurrentProcessId();
 
 			if (*lpcbData >= sizeof(DWORD)) {
-				memcpy(lpData, &processId, sizeof(processId)); // 将 PID 复制到 lpData
-				*lpcbData = sizeof(DWORD); // 设置返回数据的大小
+				memcpy(lpData, &processId, sizeof(processId));
+				*lpcbData = sizeof(DWORD);
 				return ERROR_SUCCESS;
 			}
 			else {
@@ -461,14 +444,8 @@ LSTATUS WINAPI Evolve_RegQueryValueExA(
 			}
 		}
 	}
-	// 其他情况调用原始函数
 	return Real_RegQueryValueExA(hKey, lpValueName, lpReserved, lpType, lpData, lpcbData);
 }
-// =====================
-//       IMM HOOK
-// =====================
-// TODO: FIND HOW THIS GAME USE IMM
-
 
 // =====================
 //       WINTRUST
@@ -490,26 +467,43 @@ void InitConfiguration() {
 	if (rc < 0) {
 		MessageBox(
 			NULL,
-			L"配置文件不存在。\n请检查Bin64_SteamRetail目录是否存在EvolveLogging.ini。\n\n"
 			L"The configuration file does not exist.\nPlease check if the EvolveLogging.ini file exists in the Bin64_SteamRetail directory.",
-			L"错误 / Error",
+			L"Error",
 			MB_ICONERROR | MB_OK
 		);
 		exit(0);
 	}
+
+#ifdef EVOLVE_INTERNAL_SERVER
 	use_internal_server = ini.GetBoolValue("server", "use_internal_server", false);
-	server_port = ini.GetLongValue("server", "server_port", 2000);
 	internal_bind_address = ini.GetValue("server", "internal_bind_address", "127.0.0.1");
 	internal_asset_root = ini.GetValue("server", "internal_asset_root", "EvolveCrack");
 	internal_ca_cert_path = ini.GetValue("server", "internal_ca_cert_path", "certs\\mitmproxy-ca-cert.pem");
 	internal_ca_key_path = ini.GetValue("server", "internal_ca_key_path", "certs\\mitmproxy-ca.pem");
 	internal_steam_id = ini.GetValue("server", "steam_id", "76561101839859666");
+#endif
+
+	server_port = ini.GetLongValue("server", "server_port", 2000);
+
+#ifdef EVOLVE_INTERNAL_SERVER
 	if (use_internal_server) {
-		update_redirect_server(internal_bind_address == "0.0.0.0" ? "127.0.0.1" : internal_bind_address,
-			server_port);
+		server_ip = (internal_bind_address == "0.0.0.0" ? "127.0.0.1" : internal_bind_address);
 	}
 	else {
-		update_redirect_server(ini.GetValue("server", "server_domain", "117.72.125.6"), server_port);
+		server_ip = ini.GetValue("server", "server_domain", "117.72.125.6");
+	}
+#else
+	server_ip = ini.GetValue("server", "server_domain", "117.72.125.6");
+#endif
+
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, server_ip.c_str(), -1, NULL, 0);
+	if (size_needed <= 0) {
+		LOG(ERROR) << "Failed to convert server_ip to wide string\n";
+		wServerIP = L"127.0.0.1";
+	}
+	else {
+		wServerIP.resize(size_needed - 1);
+		MultiByteToWideChar(CP_UTF8, 0, server_ip.c_str(), -1, &wServerIP[0], size_needed);
 	}
 }
 
@@ -519,88 +513,93 @@ void InitHooker() {
 	GetModuleFileName(NULL, szCurName, MAX_PATH);
 	PathStripPath(szCurName);
 
-	if (StrCmpI(szCurName, szAppName) == 0)
-	{
-		int x;
-		x = MessageBox(GetForegroundWindow(), message, L"【注意事项/NOTICE】", 1);
-		if (x != 1)
-		{
+	if (StrCmpI(szCurName, szAppName) != 0) {
+		return;
+	}
+
+	int x;
+	x = MessageBox(GetForegroundWindow(), message, L"NOTICE", 1);
+	if (x != 1) {
+		exit(0);
+	}
+
+	MH_STATUS mh_status;
+	mh_status = MH_Initialize();
+	if (mh_status != MH_OK) {
+		LOG(ERROR) << "[HOOK] MH_Initialize failed: " << MH_StatusToString(mh_status) << "\n";
+		return;
+	}
+
+	mh_status = MH_CreateHook((LPVOID)Real_getaddrinfo, (LPVOID)Evolve_getaddrinfo, (LPVOID*)&Real_getaddrinfo);
+	if (mh_status != MH_OK) {
+		LOG(ERROR) << "[SERVER_EMU] MH_CreateHook getaddrinfo failed: " << MH_StatusToString(mh_status) << "\n";
+	}
+	LOG(DEBUG) << "[SERVER_EMU] getaddrinfo hook created\n";
+
+	mh_status = MH_CreateHook((LPVOID)Real_WinHttpConnect, (LPVOID)Evolve_WinHttpConnect, (LPVOID*)&Real_WinHttpConnect);
+	if (mh_status != MH_OK) {
+		LOG(ERROR) << "[SERVER_EMU] MH_CreateHook WinHttpConnect failed: " << MH_StatusToString(mh_status) << "\n";
+	}
+	LOG(DEBUG) << "[SERVER_EMU] WinHttpConnect hook created\n";
+
+	mh_status = MH_CreateHook((LPVOID)Real_WinHttpOpenRequest, (LPVOID)Evolve_WinHttpOpenRequest, (LPVOID*)&Real_WinHttpOpenRequest);
+	if (mh_status != MH_OK) {
+		LOG(ERROR) << "[SERVER_EMU] MH_CreateHook WinHttpOpenRequest failed: " << MH_StatusToString(mh_status) << "\n";
+	}
+	LOG(DEBUG) << "[SERVER_EMU] WinHttpOpenRequest hook created\n";
+
+	if (ini.GetBoolValue("steam", "emu_steam", "false")) {
+		dll_path = ini.GetValue("steam", "dll_path", "");
+		if (dll_path != "") {
+			mh_status = MH_CreateHook((LPVOID)Real_GetEnvironmentVariableA, (LPVOID)Evolve_GetEnvironmentVariableA, (LPVOID*)&Real_GetEnvironmentVariableA);
+			if (mh_status != MH_OK) {
+				LOG(ERROR) << "[STEAM_EMU] MH_CreateHook GetEnvironmentVariableA failed: " << MH_StatusToString(mh_status) << "\n";
+			}
+			LOG(DEBUG) << "[STEAM_EMU] GetEnvironmentVariableA hook created\n";
+
+			mh_status = MH_CreateHook((LPVOID)Real_RegQueryValueExA, (LPVOID)Evolve_RegQueryValueExA, (LPVOID*)&Real_RegQueryValueExA);
+			if (mh_status != MH_OK) {
+				LOG(ERROR) << "[STEAM_EMU] MH_CreateHook RegQueryValueExA failed: " << MH_StatusToString(mh_status) << "\n";
+			}
+			LOG(DEBUG) << "[STEAM_EMU] RegQueryValueExA hook created\n";
+			emu_func = true;
+		}
+		else {
+			MessageBox(
+				NULL,
+				L"EMU DLL PATH does not exist. Please check the configuration file.",
+				L"Error",
+				MB_ICONERROR | MB_OK
+			);
 			exit(0);
 		}
-		HRESULT hr;
-		hr = SlimDetoursInlineHook(TRUE, &(PVOID&)Real_getaddrinfo, Evolve_getaddrinfo);
-		if (FAILED(hr)) {
-			LOG(ERROR) << "[SERVER_EMU] Evolve_getaddrinfo hook failed\n";
-		}
-		LOG(DEBUG) << "[SERVER_EMU] Evolve_getaddrinfo hook success\n";
-		hr = SlimDetoursInlineHook(TRUE, &(PVOID&)Real_WinHttpConnect, Evolve_WinHttpConnect);
-		if (FAILED(hr)) {
-			LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpConnect hook failed\n";
-		}
-		LOG(DEBUG) << "[SERVER_EMU] Evolve_WinHttpConnect hook success\n";
-		hr = SlimDetoursInlineHook(TRUE, &(PVOID&)Real_WinHttpOpenRequest, Evolve_WinHttpOpenRequest);
-		if (FAILED(hr)) {
-			LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook failed\n";
-		}
-		LOG(DEBUG) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook success\n";
-
-
-		// EMU MODE PATCH
-		if (ini.GetBoolValue("steam", "emu_steam", "false")) {
-			// emu hook start
-			dll_path = ini.GetValue("steam", "dll_path", "");
-			if (dll_path != "") {
-				hr = SlimDetoursInlineHook(TRUE, &(PVOID&)Real_GetEnvironmentVariableA, Evolve_GetEnvironmentVariableA);
-				if (FAILED(hr)) {
-					LOG(ERROR) << "[STEAM_EMU] Evolve_GetEnvironmentVariableA hook failed\n";
-				}
-				LOG(DEBUG) << "[STEAM_EMU] Evolve_GetEnvironmentVariableA hook success\n";
-				hr = SlimDetoursInlineHook(TRUE, &(PVOID&)Real_RegQueryValueExA, Evolve_RegQueryValueExA);
-				if (FAILED(hr)) {
-					LOG(ERROR) << "[STEAM_EMU] Evolve_RegQueryValueExA hook failed\n";
-				}
-				LOG(DEBUG) << "[STEAM_EMU] Evolve_RegQueryValueExA hook success\n";
-				emu_func = true;
-			}
-			else {
-				MessageBox(
-					NULL,
-					L"不存在EMU DLL PATH，请检查配置文件。\n\n"
-					L"EMU DLL PATH does not exist. Please check the configuration file.",
-					L"错误 / Error",
-					MB_ICONERROR | MB_OK
-				);
-				exit(0);
-			}
-		}
 	}
+
+	mh_status = MH_EnableHook(MH_ALL_HOOKS);
+	if (mh_status != MH_OK) {
+		LOG(ERROR) << "[HOOK] MH_EnableHook failed: " << MH_StatusToString(mh_status) << "\n";
+	}
+	LOG(DEBUG) << "[HOOK] All hooks enabled\n";
 }
 
 void UninstallHooker() {
-	HRESULT hr;
-	hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_getaddrinfo, Evolve_getaddrinfo);
-	if (FAILED(hr)) {
-		LOG(ERROR) << "[SERVER_EMU] Evolve_getaddrinfo hook uninstall failed\n";
-	}
-	hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_WinHttpConnect, Evolve_WinHttpConnect);
-	if (FAILED(hr)) {
-		LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpConnect hook uninstall failed\n";
-	}
-	hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_WinHttpOpenRequest, Evolve_WinHttpOpenRequest);
-	if (FAILED(hr)) {
-		LOG(ERROR) << "[SERVER_EMU] Evolve_WinHttpOpenRequest hook uninstall failed\n";
-	}
-	if (emu_func) {
-		hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_GetEnvironmentVariableA, Evolve_GetEnvironmentVariableA);
-		if (FAILED(hr)) {
-			LOG(ERROR) << "[STEAM_EMU] Evolve_GetEnvironmentVariableA hook uninstall failed\n";
-		}
-		hr = SlimDetoursInlineHook(FALSE, &(PVOID&)Real_RegQueryValueExA, Evolve_RegQueryValueExA);
-		if (FAILED(hr)) {
-			LOG(ERROR) << "[STEAM_EMU] Evolve_RegQueryValueExA hook uninstall failed\n";
-		}
-	}
+	MH_DisableHook(MH_ALL_HOOKS);
+	MH_Uninitialize();
+
+#ifdef EVOLVE_INTERNAL_SERVER
 	StopInternalServer();
+#endif
+}
+
+DWORD WINAPI InitWorkerThread(LPVOID) {
+	InitLogging();
+	InitConfiguration();
+	InitHooker();
+
+	if (g_hInitComplete) {
+		SetEvent(g_hInitComplete);
+	}
+	return 0;
 }
 
 // =====================
@@ -610,8 +609,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
+		g_hModule = hModule;
 		DisableThreadLibraryCalls(hModule);
-		// Intercept the game launch and redirect to launcher if --no-launcher is not present in argv
+
 		std::wstring cmdLine = GetCommandLineW();
 
 		if (cmdLine.find(L"--no-launcher") == std::string::npos) {
@@ -643,7 +643,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 			LPWSTR launcherCmdLine = new WCHAR[length];
 			wcscpy_s(launcherCmdLine, length, launcherCmd.c_str());
 
-			// Check if launcher is present, else we just run normally
 			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(L"EvolveLauncher.exe")) {
 				CreateProcess(
 					nullptr,
@@ -658,9 +657,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 					&pi
 				);
 
-
-				//WaitForSingleObject(pi.hProcess, INFINITE);
-
 				CloseHandle(pi.hProcess);
 				CloseHandle(pi.hThread);
 				delete[] launcherCmdLine;
@@ -669,14 +665,21 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 			}
 		}
 
-		// Turn off IME
 		ImmDisableIME(0);
-		InitLogging();
-		InitConfiguration();
-		InitHooker();
+
+		g_hInitComplete = CreateEvent(NULL, TRUE, FALSE, NULL);
+		HANDLE hThread = CreateThread(NULL, 0, InitWorkerThread, NULL, 0, NULL);
+		if (hThread) {
+			CloseHandle(hThread);
+		}
 	}
 	else if (dwReason == DLL_PROCESS_DETACH)
 	{
+		if (g_hInitComplete) {
+			WaitForSingleObject(g_hInitComplete, 5000);
+			CloseHandle(g_hInitComplete);
+			g_hInitComplete = nullptr;
+		}
 		UninstallHooker();
 	}
 	return TRUE;

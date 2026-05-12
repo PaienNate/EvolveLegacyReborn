@@ -4,12 +4,14 @@
 #include "evolve/server_logic.hpp"
 
 #include <civetweb.h>
-#include <openssl/err.h>
-#include <openssl/evp.h>
-#include <openssl/pem.h>
-#include <openssl/rsa.h>
-#include <openssl/x509.h>
-#include <openssl/x509v3.h>
+
+#include <mbedtls/ctr_drbg.h>
+#include <mbedtls/entropy.h>
+#include <mbedtls/error.h>
+#include <mbedtls/oid.h>
+#include <mbedtls/pk.h>
+#include <mbedtls/rsa.h>
+#include <mbedtls/x509_crt.h>
 
 #include <array>
 #include <atomic>
@@ -39,11 +41,14 @@
 namespace evolve::server {
 namespace {
 
-using X509Ptr = std::unique_ptr<X509, decltype(&X509_free)>;
-using EvpKeyPtr = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>;
-using BioPtr = std::unique_ptr<BIO, decltype(&BIO_free)>;
-using BignumPtr = std::unique_ptr<BIGNUM, decltype(&BN_free)>;
-using X509ExtPtr = std::unique_ptr<X509_EXTENSION, decltype(&X509_EXTENSION_free)>;
+using CertPtr = std::unique_ptr<mbedtls_x509_crt, decltype(&mbedtls_x509_crt_free)>;
+using PkPtr = std::unique_ptr<mbedtls_pk_context, decltype(&mbedtls_pk_free)>;
+
+std::string MbedTlsError(int err) {
+  char buf[256];
+  mbedtls_strerror(err, buf, sizeof(buf));
+  return std::string(buf);
+}
 
 std::string BuildListeningPortsOption(const std::string& bind_address, std::uint16_t port) {
   return bind_address + ":" + std::to_string(port) + "s";
@@ -155,114 +160,211 @@ std::optional<std::uint16_t> SelectPort(const ServerConfig& config) {
   return ProbePort(config.bind_address, 0);
 }
 
-X509Ptr LoadCertificate(const std::filesystem::path& path) {
-  auto bio = BioPtr(BIO_new_file(path.string().c_str(), "r"), BIO_free);
-  if (!bio) {
-    return {nullptr, X509_free};
-  }
-  return X509Ptr(PEM_read_bio_X509(bio.get(), nullptr, nullptr, nullptr), X509_free);
+bool LoadCaCert(const std::filesystem::path& path, mbedtls_x509_crt& out) {
+  return mbedtls_x509_crt_parse_file(&out, path.string().c_str()) == 0;
 }
 
-EvpKeyPtr LoadPrivateKey(const std::filesystem::path& path) {
-  auto bio = BioPtr(BIO_new_file(path.string().c_str(), "r"), BIO_free);
-  if (!bio) {
-    return {nullptr, EVP_PKEY_free};
-  }
-  return EvpKeyPtr(PEM_read_bio_PrivateKey(bio.get(), nullptr, nullptr, nullptr), EVP_PKEY_free);
+bool LoadCaKey(const std::filesystem::path& path, mbedtls_pk_context& out) {
+  return mbedtls_pk_parse_keyfile(&out, path.string().c_str(), nullptr) == 0;
 }
 
-bool AddExtension(X509* certificate,
-                  X509* issuer,
-                  int nid,
-                  const std::string& value) {
-  X509V3_CTX context{};
-  X509V3_set_ctx(&context, issuer, certificate, nullptr, nullptr, 0);
-  auto extension = X509ExtPtr(
-      X509V3_EXT_conf_nid(nullptr, &context, nid, const_cast<char*>(value.c_str())),
-      X509_EXTENSION_free);
-  if (!extension) {
-    return false;
-  }
-  return X509_add_ext(certificate, extension.get(), -1) == 1;
+std::vector<unsigned char> BuildSubjectAltNameDer(const std::string& hostname) {
+  size_t host_len = hostname.size();
+  std::vector<unsigned char> der;
+  der.reserve(4 + host_len);
+  der.push_back(0x30);
+  der.push_back(static_cast<unsigned char>(2 + host_len));
+  der.push_back(0x82);
+  der.push_back(static_cast<unsigned char>(host_len));
+  der.insert(der.end(), hostname.begin(), hostname.end());
+  return der;
 }
 
 std::optional<std::filesystem::path> GenerateServerPem(const ServerConfig& config,
                                                        std::string* error_out) {
-  auto issuer_certificate = LoadCertificate(config.ca_certificate_path);
-  auto issuer_key = LoadPrivateKey(config.ca_private_key_path);
-  if (!issuer_certificate || !issuer_key) {
+  mbedtls_x509_crt ca_cert;
+  mbedtls_x509_crt_init(&ca_cert);
+  if (!LoadCaCert(config.ca_certificate_path, ca_cert)) {
+    mbedtls_x509_crt_free(&ca_cert);
     if (error_out) {
-      *error_out = "failed to load CA certificate or private key";
+      *error_out = "failed to load CA certificate";
     }
     return std::nullopt;
   }
 
-  auto server_key = EvpKeyPtr(EVP_PKEY_new(), EVP_PKEY_free);
-  if (!server_key) {
+  mbedtls_pk_context ca_key;
+  mbedtls_pk_init(&ca_key);
+  if (!LoadCaKey(config.ca_private_key_path, ca_key)) {
+    mbedtls_x509_crt_free(&ca_cert);
+    mbedtls_pk_free(&ca_key);
     if (error_out) {
-      *error_out = "failed to allocate server key";
+      *error_out = "failed to load CA private key";
     }
     return std::nullopt;
   }
 
-  auto rsa = RSA_new();
-  auto exponent = BignumPtr(BN_new(), BN_free);
-  if (!rsa || !exponent || BN_set_word(exponent.get(), RSA_F4) != 1 ||
-      RSA_generate_key_ex(rsa, 2048, exponent.get(), nullptr) != 1 ||
-      EVP_PKEY_assign_RSA(server_key.get(), rsa) != 1) {
-    RSA_free(rsa);
+  mbedtls_entropy_context entropy;
+  mbedtls_ctr_drbg_context ctr_drbg;
+  mbedtls_entropy_init(&entropy);
+  mbedtls_ctr_drbg_init(&ctr_drbg);
+
+  const char* pers = "evolve_server_keygen";
+  int ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy,
+                                   reinterpret_cast<const unsigned char*>(pers), strlen(pers));
+  if (ret != 0) {
+    mbedtls_x509_crt_free(&ca_cert);
+    mbedtls_pk_free(&ca_key);
+    mbedtls_ctr_drbg_free(&ctr_drbg);
+    mbedtls_entropy_free(&entropy);
     if (error_out) {
-      *error_out = "failed to generate server RSA key";
+      *error_out = "failed to seed RNG: " + MbedTlsError(ret);
     }
     return std::nullopt;
   }
 
-  auto server_certificate = X509Ptr(X509_new(), X509_free);
-  if (!server_certificate) {
+  mbedtls_pk_context server_key;
+  mbedtls_pk_init(&server_key);
+
+  ret = mbedtls_pk_setup(&server_key, mbedtls_pk_info_from_type(MBEDTLS_PK_RSA));
+  if (ret != 0) {
+    mbedtls_x509_crt_free(&ca_cert);
+    mbedtls_pk_free(&ca_key);
+    mbedtls_pk_free(&server_key);
+    mbedtls_ctr_drbg_free(&ctr_drbg);
+    mbedtls_entropy_free(&entropy);
     if (error_out) {
-      *error_out = "failed to allocate server certificate";
+      *error_out = "failed to setup server key: " + MbedTlsError(ret);
     }
     return std::nullopt;
   }
 
-  X509_set_version(server_certificate.get(), 2);
-  ASN1_INTEGER_set(X509_get_serialNumber(server_certificate.get()),
-                   static_cast<long>(std::time(nullptr)));
-  X509_gmtime_adj(X509_get_notBefore(server_certificate.get()), 0);
-  X509_gmtime_adj(X509_get_notAfter(server_certificate.get()), 60L * 60L * 24L * 365L * 5L);
-  X509_set_pubkey(server_certificate.get(), server_key.get());
-  X509_set_issuer_name(server_certificate.get(), X509_get_subject_name(issuer_certificate.get()));
-
-  auto* subject = X509_get_subject_name(server_certificate.get());
-  X509_NAME_add_entry_by_txt(
-      subject, "CN", MBSTRING_ASC,
-      reinterpret_cast<const unsigned char*>(config.certificate_host_pattern.c_str()), -1, -1, 0);
-
-  if (!AddExtension(server_certificate.get(), issuer_certificate.get(), NID_basic_constraints,
-                    "CA:FALSE") ||
-      !AddExtension(server_certificate.get(), issuer_certificate.get(), NID_key_usage,
-                    "digitalSignature,keyEncipherment") ||
-      !AddExtension(server_certificate.get(), issuer_certificate.get(), NID_ext_key_usage,
-                    "serverAuth") ||
-      !AddExtension(server_certificate.get(), issuer_certificate.get(), NID_subject_alt_name,
-                    "DNS:" + config.certificate_host_pattern) ||
-      X509_sign(server_certificate.get(), issuer_key.get(), EVP_sha256()) <= 0) {
+  ret = mbedtls_rsa_gen_key(mbedtls_pk_rsa(server_key), mbedtls_ctr_drbg_random, &ctr_drbg,
+                             2048, 65537);
+  if (ret != 0) {
+    mbedtls_x509_crt_free(&ca_cert);
+    mbedtls_pk_free(&ca_key);
+    mbedtls_pk_free(&server_key);
+    mbedtls_ctr_drbg_free(&ctr_drbg);
+    mbedtls_entropy_free(&entropy);
     if (error_out) {
-      *error_out = "failed to sign runtime TLS certificate";
+      *error_out = "failed to generate server RSA key: " + MbedTlsError(ret);
     }
     return std::nullopt;
   }
+
+  mbedtls_x509write_crt crt;
+  mbedtls_x509write_crt_init(&crt);
+
+  mbedtls_x509write_crt_set_version(&crt, MBEDTLS_X509_CRT_VERSION_3);
+  mbedtls_x509write_crt_set_md_alg(&crt, MBEDTLS_MD_SHA256);
+
+  mbedtls_mpi serial;
+  mbedtls_mpi_init(&serial);
+  auto serial_str = std::to_string(std::time(nullptr));
+  mbedtls_mpi_read_string(&serial, 10, serial_str.c_str());
+  mbedtls_x509write_crt_set_serial(&crt, &serial);
+  mbedtls_mpi_free(&serial);
+
+  char not_before[16];
+  char not_after[16];
+  time_t now = std::time(nullptr);
+  strftime(not_before, sizeof(not_before), "%Y%m%d%H%M%S", gmtime(&now));
+  time_t later = now + 60L * 60L * 24L * 365L * 5L;
+  strftime(not_after, sizeof(not_after), "%Y%m%d%H%M%S", gmtime(&later));
+  mbedtls_x509write_crt_set_validity(&crt, not_before, not_after);
+
+  mbedtls_x509write_crt_set_subject_name(&crt,
+                                         ("CN=" + config.certificate_host_pattern).c_str());
+
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+  char issuer_name[512];
+  mbedtls_x509_dn_gets(issuer_name, sizeof(issuer_name), &ca_cert.subject);
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
+  mbedtls_x509write_crt_set_issuer_name(&crt, issuer_name);
+
+  mbedtls_x509write_crt_set_subject_key(&crt, &server_key);
+  mbedtls_x509write_crt_set_issuer_key(&crt, &ca_key);
+
+  mbedtls_x509write_crt_set_basic_constraints(&crt, 0, -1);
+  mbedtls_x509write_crt_set_key_usage(&crt,
+                                       MBEDTLS_X509_KU_DIGITAL_SIGNATURE |
+                                           MBEDTLS_X509_KU_KEY_ENCIPHERMENT);
+  mbedtls_x509write_crt_set_ns_cert_type(&crt, MBEDTLS_X509_NS_CERT_TYPE_SSL_SERVER);
+
+  static const unsigned char ext_key_usage_val[] = {
+      0x30, 0x08, 0x06, 0x06, 0x2B, 0x06, 0x01, 0x05, 0x05, 0x07, 0x03, 0x01};
+  mbedtls_x509write_crt_set_extension(&crt, MBEDTLS_OID_EXTENDED_KEY_USAGE,
+                                       MBEDTLS_OID_SIZE(MBEDTLS_OID_EXTENDED_KEY_USAGE), 0,
+                                       ext_key_usage_val, sizeof(ext_key_usage_val));
+
+  auto san_der = BuildSubjectAltNameDer(config.certificate_host_pattern);
+  mbedtls_x509write_crt_set_extension(&crt, MBEDTLS_OID_SUBJECT_ALT_NAME,
+                                       MBEDTLS_OID_SIZE(MBEDTLS_OID_SUBJECT_ALT_NAME), 0,
+                                       san_der.data(), san_der.size());
+
+  mbedtls_x509write_crt_set_subject_key_identifier(&crt);
+  mbedtls_x509write_crt_set_authority_key_identifier(&crt);
+
+  unsigned char cert_pem[8192];
+  ret = mbedtls_x509write_crt_pem(&crt, cert_pem, sizeof(cert_pem), mbedtls_ctr_drbg_random,
+                                   &ctr_drbg);
+  if (ret < 0) {
+    mbedtls_x509write_crt_free(&crt);
+    mbedtls_pk_free(&server_key);
+    mbedtls_pk_free(&ca_key);
+    mbedtls_x509_crt_free(&ca_cert);
+    mbedtls_ctr_drbg_free(&ctr_drbg);
+    mbedtls_entropy_free(&entropy);
+    if (error_out) {
+      *error_out = "failed to write server certificate PEM: " + MbedTlsError(ret);
+    }
+    return std::nullopt;
+  }
+
+  unsigned char key_pem[4096];
+  ret = mbedtls_pk_write_key_pem(&server_key, key_pem, sizeof(key_pem));
+  if (ret < 0) {
+    mbedtls_x509write_crt_free(&crt);
+    mbedtls_pk_free(&server_key);
+    mbedtls_pk_free(&ca_key);
+    mbedtls_x509_crt_free(&ca_cert);
+    mbedtls_ctr_drbg_free(&ctr_drbg);
+    mbedtls_entropy_free(&entropy);
+    if (error_out) {
+      *error_out = "failed to write server key PEM: " + MbedTlsError(ret);
+    }
+    return std::nullopt;
+  }
+
+  mbedtls_x509write_crt_free(&crt);
+  mbedtls_pk_free(&server_key);
+  mbedtls_pk_free(&ca_key);
+  mbedtls_x509_crt_free(&ca_cert);
+  mbedtls_ctr_drbg_free(&ctr_drbg);
+  mbedtls_entropy_free(&entropy);
 
   const auto cache_dir = std::filesystem::current_path() / ".cache" / "server_core";
   std::filesystem::create_directories(cache_dir);
   const auto pem_path = cache_dir / "runtime-server.pem";
 
-  auto output = BioPtr(BIO_new_file(pem_path.string().c_str(), "w"), BIO_free);
-  if (!output || PEM_write_bio_X509(output.get(), server_certificate.get()) != 1 ||
-      PEM_write_bio_PrivateKey(output.get(), server_key.get(), nullptr, nullptr, 0, nullptr,
-                               nullptr) != 1) {
+  std::ofstream out(pem_path, std::ios::binary);
+  if (!out) {
     if (error_out) {
-      *error_out = "failed to write runtime TLS certificate";
+      *error_out = "failed to open PEM output file";
+    }
+    return std::nullopt;
+  }
+  out.write(reinterpret_cast<const char*>(cert_pem), strlen(reinterpret_cast<const char*>(cert_pem)));
+  out.write(reinterpret_cast<const char*>(key_pem), strlen(reinterpret_cast<const char*>(key_pem)));
+  out.close();
+  if (!out.good()) {
+    if (error_out) {
+      *error_out = "failed to write PEM file";
     }
     return std::nullopt;
   }
