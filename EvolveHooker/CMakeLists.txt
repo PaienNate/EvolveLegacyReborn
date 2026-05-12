@@ -14,9 +14,16 @@ target_include_directories(BINTRUST PRIVATE
   ${CMAKE_SOURCE_DIR}/server_core/include
 )
 
+if(TARGET minhook)
+  get_target_property(_minhook_include_dirs minhook INTERFACE_INCLUDE_DIRECTORIES)
+  if(_minhook_include_dirs)
+    target_include_directories(BINTRUST PRIVATE ${_minhook_include_dirs})
+  endif()
+endif()
+
 target_link_libraries(BINTRUST PRIVATE
   minhook
-  ws2_32 winhttp kernel32 advapi32 imm32 user32 shlwapi
+  ws2_32 winhttp kernel32 advapi32 imm32 user32 shlwapi winpthread
 )
 
 target_compile_definitions(BINTRUST PRIVATE
@@ -24,6 +31,8 @@ target_compile_definitions(BINTRUST PRIVATE
   _WINDOWS
   _CRT_SECURE_NO_WARNINGS
   _WINSOCK_DEPRECATED_NO_WARNINGS
+  UNICODE
+  _UNICODE
 )
 
 if(NOT DEFINED EVOLVE_BINTRUST_INTERNAL_SERVER)

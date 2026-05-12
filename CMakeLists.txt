@@ -24,7 +24,7 @@ set(ENABLE_PROGRAMS OFF CACHE BOOL "" FORCE)
 set(ENABLE_TESTING OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(mbedtls
   GIT_REPOSITORY https://github.com/Mbed-TLS/mbedtls.git
-  GIT_TAG v3.6.0
+  GIT_TAG v3.6.6
 )
 
 # ---- CivetWeb ----
@@ -66,13 +66,26 @@ if(EVOLVE_NEED_SERVER_DEPS)
   if(WIN32)
     target_compile_definitions(civetweb_obj PRIVATE _CRT_SECURE_NO_WARNINGS)
   endif()
-  target_compile_definitions(civetweb_obj PRIVATE CIVETWEB_ENABLE_MBEDTLS NOT_OPENSSL)
+  target_compile_definitions(civetweb_obj PRIVATE USE_MBEDTLS NOT_OPENSSL)
   target_link_libraries(civetweb_obj PUBLIC mbedtls mbedcrypto mbedx509)
+  if(MINGW)
+    target_link_libraries(civetweb_obj PUBLIC winpthread)
+  endif()
   add_library(civetweb::civetweb ALIAS civetweb_obj)
 endif()
 
 if(EVOLVE_BUILD_BINTRUST)
-  FetchContent_MakeAvailable(minhook)
+  FetchContent_Populate(minhook)
+
+  add_library(minhook STATIC
+    ${minhook_SOURCE_DIR}/src/hook.c
+    ${minhook_SOURCE_DIR}/src/trampoline.c
+    ${minhook_SOURCE_DIR}/src/buffer.c
+    ${minhook_SOURCE_DIR}/src/hde/hde32.c
+    ${minhook_SOURCE_DIR}/src/hde/hde64.c
+  )
+  target_include_directories(minhook PUBLIC ${minhook_SOURCE_DIR}/include)
+  target_include_directories(minhook PRIVATE ${minhook_SOURCE_DIR}/src)
 endif()
 
 include(CTest)

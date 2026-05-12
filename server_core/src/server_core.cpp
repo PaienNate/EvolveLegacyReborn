@@ -165,7 +165,7 @@ bool LoadCaCert(const std::filesystem::path& path, mbedtls_x509_crt& out) {
 }
 
 bool LoadCaKey(const std::filesystem::path& path, mbedtls_pk_context& out) {
-  return mbedtls_pk_parse_keyfile(&out, path.string().c_str(), nullptr) == 0;
+  return mbedtls_pk_parse_keyfile(&out, path.string().c_str(), nullptr, NULL, NULL) == 0;
 }
 
 std::vector<unsigned char> BuildSubjectAltNameDer(const std::string& hostname) {
@@ -252,7 +252,7 @@ std::optional<std::filesystem::path> GenerateServerPem(const ServerConfig& confi
     return std::nullopt;
   }
 
-  mbedtls_x509write_crt crt;
+  mbedtls_x509write_cert crt;
   mbedtls_x509write_crt_init(&crt);
 
   mbedtls_x509write_crt_set_version(&crt, MBEDTLS_X509_CRT_VERSION_3);
